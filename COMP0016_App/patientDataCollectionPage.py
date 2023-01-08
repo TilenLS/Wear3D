@@ -11,9 +11,9 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import QObject
 from PySide2.QtWidgets import QFileDialog, QMainWindow
+from MainEditingPage import Ui_MainEditingPage
 
-
-class Ui_MainWindow(object):
+class Ui_PatientDataCollectionPage(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1200, 850)
@@ -21,16 +21,18 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
 
         self.please_input_patient_data_label = QtWidgets.QLabel(self.centralwidget)
-        self.please_input_patient_data_label.setGeometry(QtCore.QRect(145, 20, 910, 95))
+        self.please_input_patient_data_label.setGeometry(QtCore.QRect(190, 20, 820, 95))
         self.please_input_patient_data_label.setObjectName("please_input_patient_data_label")
         big_bold_font = QtGui.QFont()
         big_bold_font.setPointSize(35)
         big_bold_font.setBold(True)
         big_bold_font.setWeight(75)
+        big_bold_font.setFamily("Bahnschrift Light")
         self.please_input_patient_data_label.setFont(big_bold_font)
 
         label_font = QtGui.QFont()
         label_font.setPointSize(20)
+        label_font.setFamily("Bahnschrift Light")
 
         self.name_label = QtWidgets.QLabel(self.centralwidget)
         self.name_label.setGeometry(QtCore.QRect(30, 150, 200, 50))
@@ -63,7 +65,7 @@ class Ui_MainWindow(object):
         self.sociobehavioral_history_label.setFont(label_font)
 
         self.financial_resources_label = QtWidgets.QLabel(self.centralwidget)
-        self.financial_resources_label.setGeometry(QtCore.QRect(30, 570, 360, 50))
+        self.financial_resources_label.setGeometry(QtCore.QRect(30, 570, 370, 50))
         self.financial_resources_label.setObjectName("financial_resources_label")
         self.financial_resources_label.setFont(label_font)
 
@@ -90,6 +92,7 @@ class Ui_MainWindow(object):
 
         combo_font = QtGui.QFont()
         combo_font.setPointSize(9)
+        combo_font.setFamily("Bahnschrift Light")
 
         self.medical_history_input = QtWidgets.QComboBox(self.centralwidget)
         self.medical_history_input.setGeometry(QtCore.QRect(470, 290, 700, 50))
@@ -146,12 +149,28 @@ class Ui_MainWindow(object):
         self.next_button.setGeometry(QtCore.QRect(1050, 770, 100, 50))
         self.next_button.setObjectName("next_button")
         self.next_button.setFont(label_font)
+        self.next_button.setStyleSheet("QPushButton {\n"
+                                    "    border-radius: 5px;\n"
+                                    "    background:#678983;\n"
+                                    "    color: #F0E9D2;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover {\n"
+                                    "    background:#F0E9D2;\n"
+                                    "    color: #181D31;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed {\n"
+                                    "    background: #E6DDC4;\n"
+                                    "    color: #181D31;\n"
+                                    "}")
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
+
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -176,15 +195,20 @@ class Ui_MainWindow(object):
         self.choose_lower_jaw_scan_button.setText(_translate("MainWindow", "Choose a lower jaw scan file..."))
         self.next_button.setText(_translate("MainWindow", "Next"))
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_PatientDataCollectionPage):
     def __init__(self):
-        Ui_MainWindow.__init__(self)
+        Ui_PatientDataCollectionPage.__init__(self)
+        Ui_MainEditingPage.__init__(self)
         QMainWindow.__init__(self)
+        self.uiWindow1 = Ui_PatientDataCollectionPage()
+        self.uiWindow2 = Ui_MainEditingPage()
+        self.startPatientDataCollectionPage()
 
-        # Initialize UI
-        self.setupUi(self)
-        self.choose_upper_jaw_scan_button.clicked.connect(self.choose_file)
-        self.choose_lower_jaw_scan_button.clicked.connect(self.choose_file)
+    def startPatientDataCollectionPage(self):
+        self.uiWindow1.setupUi(self)
+        self.uiWindow1.choose_upper_jaw_scan_button.clicked.connect(self.choose_file)
+        self.uiWindow1.choose_lower_jaw_scan_button.clicked.connect(self.choose_file)
+        self.uiWindow1.next_button.clicked.connect(self.startMainEditingPage)
 
     def tr(self, text):
         return QObject.tr(self, text)
@@ -193,16 +217,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         fileName = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"));
 
-
+    def startMainEditingPage(self):
+        self.uiWindow2.setupUi(self)
+        self.uiWindow2.Return.clicked.connect(self.startPatientDataCollectionPage)
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    # MainWindow = QtWidgets.QMainWindow()
-    # ui = Ui_MainWindow()
-    # ui.setupUi(MainWindow)
-    # MainWindow.show()
     main_window = MainWindow()
     main_window.show()
     sys.exit(app.exec_())
