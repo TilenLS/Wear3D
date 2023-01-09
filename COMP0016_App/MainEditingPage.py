@@ -9,6 +9,7 @@
 
 
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtWidgets import QFileDialog, QMainWindow
 
 
 class Ui_MainEditingPage(object):
@@ -411,7 +412,6 @@ class Ui_MainEditingPage(object):
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionLoad_file.setText(_translate("MainWindow", "Load file"))
         self.actionSave_file.setText(_translate("MainWindow", "Save file"))
-
 
 # if __name__ == "__main__":
 #     import sys
