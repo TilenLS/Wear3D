@@ -12,7 +12,28 @@ from PySide2.QtWidgets import QFileDialog, QMainWindow
 from MainEditingPage import Ui_MainEditingPage
 import open3d as o3d
 import win32gui
-import sys
+import sqlite3
+
+def openDataBase():
+    try:
+        global conn
+        conn = sqlite3.connect("Patient data.db")
+        global crsr
+        crsr = conn.cursor()
+    except:
+        print("Cannot connect to the database.")
+    crsr.execute("PRAGMA foreign_keys = ON")
+
+def closeDataBase():
+    conn.commit()  # saves any changes made to the database
+    conn.close()
+
+def createPatientTable():
+    crsr.execute(
+        'CREATE TABLE Patients (Name TEXT NOT NULL, Age INTEGER NOT NULL, MedicalHistory TEXT NOT NULL, '
+        'PainComplaint TEXT NOT NULL, DentalHistory TEXT NOT NULL, SociobehavioralHistory TEXT NOT NULL, '
+        'FinancialResources TEXT NOT NULL, UpperJawPath TEXT NOT NULL, LowerJawPath TEXT NOT NULL)')
+
 
 class Ui_PatientDataCollectionPage(object):
     def setupUi(self, MainWindow):
@@ -129,14 +150,23 @@ class Ui_PatientDataCollectionPage(object):
         self.dental_history_input = QtWidgets.QComboBox(self.centralwidget)
         self.dental_history_input.setGeometry(QtCore.QRect(470, 430, 700, 50))
         self.dental_history_input.setObjectName("dental_history_input")
+        self.dental_history_input.addItem("dummy1")
+        self.dental_history_input.addItem("dummy2")
+        self.dental_history_input.setFont(combo_font)
 
         self.sociobehavioral_history_input = QtWidgets.QComboBox(self.centralwidget)
         self.sociobehavioral_history_input.setGeometry(QtCore.QRect(470, 500, 700, 50))
         self.sociobehavioral_history_input.setObjectName("sociobehavioral_history_input")
+        self.sociobehavioral_history_input.addItem("dummy1")
+        self.sociobehavioral_history_input.addItem("dummy2")
+        self.sociobehavioral_history_input.setFont(combo_font)
 
         self.financial_resources_input = QtWidgets.QComboBox(self.centralwidget)
         self.financial_resources_input.setGeometry(QtCore.QRect(470, 570, 700, 50))
         self.financial_resources_input.setObjectName("financial_resources_input")
+        self.financial_resources_input.addItem("dummy1")
+        self.financial_resources_input.addItem("dummy2")
+        self.financial_resources_input.setFont(combo_font)
 
         self.choose_upper_jaw_scan_button = QtWidgets.QPushButton(self.centralwidget)
         self.choose_upper_jaw_scan_button.setGeometry(QtCore.QRect(470, 640, 300, 50))
@@ -211,7 +241,7 @@ class MainWindow(QMainWindow, Ui_PatientDataCollectionPage):
         self.uiWindow1.setupUi(self)
         self.uiWindow1.choose_upper_jaw_scan_button.clicked.connect(lambda: self.choose_file(False, True))
         self.uiWindow1.choose_lower_jaw_scan_button.clicked.connect(lambda: self.choose_file(True, False))
-        self.uiWindow1.next_button.clicked.connect(self.startMainEditingPage)
+        self.uiWindow1.next_button.clicked.connect(self.insertPatientData)
 
     def tr(self, text):
         return QObject.tr(self, text)
@@ -230,6 +260,31 @@ class MainWindow(QMainWindow, Ui_PatientDataCollectionPage):
         self.uiWindow2.Return.clicked.connect(self.startPatientDataCollectionPage)
         #self.uiWindow2.actionLoad_file.clicked.connect(self.choose_file())
         self.Image_viewer = ImageViewer(self.uiWindow2, self.lowerFilePath, self.upperFilePath)
+
+    def insertPatientData(self):
+        openDataBase()
+        #createPatientTable()
+
+        patientName = self.uiWindow1.name_input.text()
+        patientAge = self.uiWindow1.age_input.value()
+        patientMedicalHistory = self.uiWindow1.medical_history_input.currentText()
+        patientPainComplaint = self.uiWindow1.pain_complaint_input.currentText()
+        patientDentalHistory = self.uiWindow1.dental_history_input.currentText()
+        patientSociobehavioralHistory = self.uiWindow1.sociobehavioral_history_input.currentText()
+        patientFinancialResources = self.uiWindow1.financial_resources_input.currentText()
+        patientUpperScanFilePath = self.upperFilePath
+        patientLowerFilePath = self.lowerFilePath
+
+        crsr.execute(
+            "INSERT INTO Patients (Name, Age, MedicalHistory, PainComplaint, DentalHistory, SociobehavioralHistory, "
+            "FinancialResources, UpperJawPath, LowerJawPath) VALUES (?,?,?,?,?,?,?,?,?)",
+            (patientName, patientAge, patientMedicalHistory, patientPainComplaint, patientDentalHistory,
+             patientSociobehavioralHistory, patientFinancialResources, patientUpperScanFilePath, patientLowerFilePath))
+
+        crsr.execute("SELECT * FROM Patients")
+        print("data: ", crsr.fetchall()) # to show every user in the database
+        closeDataBase()
+        self.startMainEditingPage()
 
 class ImageViewer(QMainWindow):
     def __init__(self, uiWindow2, filePath1, filePath2):
