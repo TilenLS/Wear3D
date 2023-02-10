@@ -1,0 +1,126 @@
+from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import QObject
+from PySide2.QtWidgets import QFileDialog, QMainWindow, QMessageBox
+
+class Ui_SignInPage(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(1200, 850)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+
+        self.account_login_label = QtWidgets.QLabel(self.centralwidget)
+        self.account_login_label.setGeometry(QtCore.QRect(0, 20, 1200, 100))
+        self.account_login_label.setObjectName("account_login_label")
+        big_bold_font = QtGui.QFont()
+        big_bold_font.setPointSize(35)
+        big_bold_font.setBold(True)
+        big_bold_font.setWeight(75)
+        big_bold_font.setFamily("Bahnschrift Light")
+        self.account_login_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.account_login_label.setFont(big_bold_font)
+
+        self.reminder_text = QtWidgets.QLabel(self.centralwidget)
+        self.reminder_text.setGeometry(QtCore.QRect(0, 120, 1200, 50))
+        self.reminder_text.setObjectName("reminder_text")
+        text_font = QtGui.QFont()
+        text_font.setPointSize(14)
+        text_font.setFamily("Bahnschrift Light")
+        self.reminder_text.setAlignment(QtCore.Qt.AlignCenter)
+        self.reminder_text.setFont(text_font)
+
+        self.no_account_yet_text = QtWidgets.QLabel(self.centralwidget)
+        self.no_account_yet_text.setGeometry(QtCore.QRect(0, 700, 1200, 50))
+        self.no_account_yet_text.setObjectName("no_account_yet_text")
+        text_font = QtGui.QFont()
+        text_font.setPointSize(12)
+        text_font.setFamily("Bahnschrift Light")
+        self.no_account_yet_text.setAlignment(QtCore.Qt.AlignCenter)
+        self.no_account_yet_text.setFont(text_font)
+
+        self.register_button = QtWidgets.QPushButton(self.centralwidget)
+        self.register_button.setGeometry(QtCore.QRect(550, 750, 100, 45))
+        self.register_button.setObjectName("register_button")
+        self.register_button.setFont(text_font)
+        self.register_button.setStyleSheet("QPushButton {\n"
+                                       "    border-radius: 5px;\n"
+                                       "    background:#678983;\n"
+                                       "    color: #F0E9D2;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QPushButton::hover {\n"
+                                       "    background:#F0E9D2;\n"
+                                       "    color: #181D31;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QPushButton::pressed {\n"
+                                       "    background: #E6DDC4;\n"
+                                       "    color: #181D31;\n"
+                                       "}")
+
+        label_font = QtGui.QFont()
+        label_font.setPointSize(20)
+        label_font.setFamily("Bahnschrift Light")
+
+        self.username_label = QtWidgets.QLabel(self.centralwidget)
+        self.username_label.setGeometry(QtCore.QRect(200, 220, 200, 50))
+        self.username_label.setObjectName("username_label")
+        self.username_label.setFont(label_font)
+
+        self.password_label = QtWidgets.QLabel(self.centralwidget)
+        self.password_label.setGeometry(QtCore.QRect(200, 400, 200, 50))
+        self.password_label.setObjectName("password_label")
+        self.password_label.setFont(label_font)
+
+        self.username_input = QtWidgets.QLineEdit(self.centralwidget)
+        self.username_input.setGeometry(QtCore.QRect(200, 290, 800, 50))
+        self.username_input.setPlaceholderText("Please enter your email...")
+        self.username_input.setObjectName("username_input")
+        self.username_input.setFont(label_font)
+
+        self.password_input = QtWidgets.QLineEdit(self.centralwidget)
+        self.password_input.setGeometry(QtCore.QRect(200, 470, 800, 50))
+        self.password_input.setPlaceholderText("Please enter your password...")
+        self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.password_input.setObjectName("password_input")
+        self.password_input.setFont(label_font)
+
+        self.sign_in_button = QtWidgets.QPushButton(self.centralwidget)
+        self.sign_in_button.setGeometry(QtCore.QRect(450, 600, 300, 70))
+        self.sign_in_button.setObjectName("sign_in_button")
+        label_font.setBold(True)
+        self.sign_in_button.setFont(label_font)
+        self.sign_in_button.setStyleSheet("QPushButton {\n"
+                                       "    border-radius: 5px;\n"
+                                       "    background:#F0E9D2;\n"
+                                       "    color: #181D31;\n"
+                                       "}\n"
+                                       "\n"
+                                       "\n"
+                                       "QPushButton::hover {\n"
+                                       "    background: #E6DDC4;\n"
+                                       "}")
+
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 22))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.account_login_label.setText(_translate("MainWindow", "Account Login"))
+        self.reminder_text.setText(_translate("MainWindow", "Please enter your details to get sign in to your account"))
+        self.no_account_yet_text.setText(_translate("MainWindow", "No account yet?"))
+        self.username_label.setText(_translate("MainWindow", "Username:"))
+        self.password_label.setText(_translate("MainWindow", "Password:"))
+        self.sign_in_button.setText(_translate("MainWindow", "Sign In"))
+        self.register_button.setText(_translate("MainWindow", "Register"))
