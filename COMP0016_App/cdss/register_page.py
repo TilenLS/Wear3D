@@ -4,6 +4,20 @@ class Ui_RegisterPage(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1200, 850)
+        MainWindow.setStyleSheet(u"*{\n"
+                                 "	border: none;\n"
+                                 "	background-color: transparent;\n"
+                                 "	background: transparent;\n"
+                                 "	padding: 0;\n"
+                                 "	margin: 0;\n"
+                                 "	color: #fff;\n"
+                                 "}\n"
+                                 "\n"
+                                 "#centralwidget,  #homeButton,  #mainBodyContent,  QLineEdit{\n"
+                                 "	background-color: #1b1b27;\n"
+                                 "}\n"
+                                 "\n"
+                                 "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
@@ -19,7 +33,7 @@ class Ui_RegisterPage(object):
         self.register_account_label.setFont(big_bold_font)
 
         self.already_have_an_account_text = QtWidgets.QLabel(self.centralwidget)
-        self.already_have_an_account_text.setGeometry(QtCore.QRect(0, 700, 1200, 50))
+        self.already_have_an_account_text.setGeometry(QtCore.QRect(0, 693, 1200, 50))
         self.already_have_an_account_text.setObjectName("no_account_yet_text")
         text_font = QtGui.QFont()
         text_font.setPointSize(12)
@@ -33,17 +47,12 @@ class Ui_RegisterPage(object):
         self.sign_in_button.setFont(text_font)
         self.sign_in_button.setStyleSheet("QPushButton {\n"
                                            "    border-radius: 5px;\n"
-                                           "    background:#678983;\n"
-                                           "    color: #F0E9D2;\n"
+                                           "    background:#5D3891;\n"
+                                           "    color: #FFCEFE;\n"
                                            "}\n"
                                            "\n"
                                            "QPushButton::hover {\n"
-                                           "    background:#F0E9D2;\n"
-                                           "    color: #181D31;\n"
-                                           "}\n"
-                                           "\n"
-                                           "QPushButton::pressed {\n"
-                                           "    background: #E6DDC4;\n"
+                                           "    background:#BFACE2;\n"
                                            "    color: #181D31;\n"
                                            "}")
 
@@ -93,13 +102,13 @@ class Ui_RegisterPage(object):
         self.register_button.setFont(label_font)
         self.register_button.setStyleSheet("QPushButton {\n"
                                           "    border-radius: 5px;\n"
-                                          "    background:#F0E9D2;\n"
+                                          "    background:#C3ACD0;\n"
                                           "    color: #181D31;\n"
                                           "}\n"
                                           "\n"
-                                          "\n"
                                           "QPushButton::hover {\n"
-                                          "    background: #E6DDC4;\n"
+                                          "    background:#BFACE2;\n"
+                                          "    color: #674188;\n"
                                           "}")
 
         MainWindow.setCentralWidget(self.centralwidget)
