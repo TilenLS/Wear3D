@@ -1,6 +1,7 @@
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import QObject
-from PySide2.QtWidgets import QFileDialog, QMainWindow, QMessageBox
+from PySide2.QtCore import QObject, QSize
+from PySide2.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QFrame, QVBoxLayout
+
 
 class Ui_SignInPage(object):
     def setupUi(self, MainWindow):
@@ -23,8 +24,22 @@ class Ui_SignInPage(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
+        self.widget1 = QtWidgets.QWidget(self.centralwidget)
+        self.widget1.setObjectName("widget1")
+        self.widget1.setMinimumSize(QSize(800, 800))
+        self.widget1.move(200, 50)
+        self.frame = QFrame()
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.frame.setStyleSheet("background-color: #515064")
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.frame)
+        self.widget1.setLayout(layout)
+
+
         self.account_login_label = QtWidgets.QLabel(self.centralwidget)
-        self.account_login_label.setGeometry(QtCore.QRect(0, 20, 1200, 100))
+        self.account_login_label.setGeometry(QtCore.QRect(0, 80, 1200, 100))
         self.account_login_label.setObjectName("account_login_label")
         big_bold_font = QtGui.QFont()
         big_bold_font.setPointSize(35)
@@ -35,7 +50,7 @@ class Ui_SignInPage(object):
         self.account_login_label.setFont(big_bold_font)
 
         self.reminder_text = QtWidgets.QLabel(self.centralwidget)
-        self.reminder_text.setGeometry(QtCore.QRect(0, 120, 1200, 50))
+        self.reminder_text.setGeometry(QtCore.QRect(0, 200, 1200, 50))
         self.reminder_text.setObjectName("reminder_text")
         text_font = QtGui.QFont()
         text_font.setPointSize(14)
@@ -68,27 +83,17 @@ class Ui_SignInPage(object):
                                        "}")
 
         label_font = QtGui.QFont()
-        label_font.setPointSize(20)
+        label_font.setPointSize(14)
         label_font.setFamily("Bahnschrift Light")
 
-        self.username_label = QtWidgets.QLabel(self.centralwidget)
-        self.username_label.setGeometry(QtCore.QRect(200, 220, 200, 50))
-        self.username_label.setObjectName("username_label")
-        self.username_label.setFont(label_font)
-
-        self.password_label = QtWidgets.QLabel(self.centralwidget)
-        self.password_label.setGeometry(QtCore.QRect(200, 400, 200, 50))
-        self.password_label.setObjectName("password_label")
-        self.password_label.setFont(label_font)
-
         self.username_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.username_input.setGeometry(QtCore.QRect(200, 290, 800, 70))
+        self.username_input.setGeometry(QtCore.QRect(350, 320, 500, 70))
         self.username_input.setPlaceholderText("Please enter your email...")
         self.username_input.setObjectName("username_input")
         self.username_input.setFont(label_font)
 
         self.password_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.password_input.setGeometry(QtCore.QRect(200, 470, 800, 70))
+        self.password_input.setGeometry(QtCore.QRect(350, 470, 500, 70))
         self.password_input.setPlaceholderText("Please enter your password...")
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.setObjectName("password_input")
@@ -129,7 +134,5 @@ class Ui_SignInPage(object):
         self.account_login_label.setText(_translate("MainWindow", "Account Login"))
         self.reminder_text.setText(_translate("MainWindow", "Please enter your details to get sign in to your account"))
         self.no_account_yet_text.setText(_translate("MainWindow", "No account yet?"))
-        self.username_label.setText(_translate("MainWindow", "Username:"))
-        self.password_label.setText(_translate("MainWindow", "Password:"))
         self.sign_in_button.setText(_translate("MainWindow", "Sign In"))
         self.register_button.setText(_translate("MainWindow", "Register"))
