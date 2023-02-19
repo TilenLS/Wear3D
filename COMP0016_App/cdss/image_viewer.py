@@ -22,7 +22,7 @@ class ImageViewer(QMainWindow):
         self.widget = ui.widget_3
         self.layout = ui.widget_3_layout
         self.vis = o3d.visualization.Visualizer()
-        self.vis.create_window()
+        self.vis.create_window(visible=False)
         if self.meshLower:
             self.vis.add_geometry(self.meshLower)
             self.lowerPresent = True
