@@ -2,6 +2,7 @@
 
 ################################################################################
 ## Form generated from reading UI file 'interfaceTIzdfT.ui'
+## Form generated from reading UI file 'interfaceYDckni.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -22,7 +23,7 @@ class Ui_HomePage(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 850)
+        MainWindow.resize(1200, 800)
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
@@ -365,9 +366,9 @@ class Ui_HomePage(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.widget_3 = QWidget(self.viewPage)
         self.widget_3.setObjectName(u"widget_3")
-        self.label_3 = QLabel(self.widget_3)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(60, 190, 131, 71))
+        # self.label_3 = QLabel(self.widget_3)
+        # self.label_3.setObjectName(u"label_3")
+        # self.label_3.setGeometry(QRect(60, 190, 131, 71))
 
         self.horizontalLayout_6.addWidget(self.widget_3)
 
@@ -389,6 +390,123 @@ class Ui_HomePage(object):
 
         self.verticalLayout_10.addWidget(self.pushButton_4, 0, Qt.AlignHCenter)
 
+        self.horizontalLayout_6.addWidget(self.viewingTools, 0, Qt.AlignRight)
+
+        self.viewPage = QSplitter()
+        self.viewPage.setMidLineWidth(800)
+        self.viewPage.setOrientation(Qt.Horizontal)
+        self.viewPage.setHandleWidth(20)
+        self.viewPage.setChildrenCollapsible(False)
+        self.viewPage.setObjectName(u"viewPage")
+
+        self.widget_3 = QWidget(self.viewPage)
+        self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setMinimumSize(QSize(0, 0))
+        self.widget_3.setMaximumSize(QSize(16777215,16777215))
+        self.widget_3_layout = QVBoxLayout(self.widget_3)
+        self.widget_3_layout.setSpacing(0)
+        self.widget_3_layout.setObjectName(u"widget_3_layout")
+        self.widget_3_layout.setContentsMargins(0,0,0,0)
+
+        self.viewingTools = QWidget(self.viewPage)
+        self.viewingTools.setObjectName(u"viewingTools")
+        self.viewingTools.setMinimumSize(QSize(270, 500))
+        self.viewingTools.setMaximumSize(QSize(400, 16777215))
+        self.verticalLayout_10 = QGridLayout(self.viewingTools)
+        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(40, 50, 40, 50)
+        self.verticalLayout_10.setSpacing(10)
+
+        self.pushButton_3 = QCheckBox(self.viewingTools)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setStyleSheet(
+        "QCheckBox {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        "QCheckBox::indicator {\n"
+        "color: #FFF \n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.pushButton_3, 0, 0, Qt.AlignVCenter)
+
+        self.pushButton_4 = QCheckBox(self.viewingTools)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setStyleSheet(
+        "QCheckBox {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        "QCheckBox::indicator {\n"
+        "color: #FFF \n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.pushButton_4, 1, 0, Qt.AlignVCenter)
+
+        self.loadUpperMesh = QPushButton(self.viewingTools)
+        self.loadUpperMesh = QPushButton(u"loadUpperMesh")
+        self.loadUpperMesh.setCursor(QCursor(Qt.PointingHandCursor))
+        self.loadUpperMesh.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.loadUpperMesh, 2, 0, Qt.AlignVCenter)
+
+        self.loadLowerMesh = QPushButton(self.viewingTools)
+        self.loadLowerMesh = QPushButton(u"loadLowerMesh")
+        self.loadLowerMesh.setCursor(QCursor(Qt.PointingHandCursor))
+        self.loadLowerMesh.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.loadLowerMesh, 3, 0, Qt.AlignVCenter)
+
+        self.resetViewPoint = QPushButton(self.viewingTools)
+        self.resetViewPoint = QPushButton(u"resetViewPoint")
+        self.resetViewPoint.setCursor(QCursor(Qt.PointingHandCursor))
+        self.resetViewPoint.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.resetViewPoint, 4, 0, Qt.AlignVCenter)
+
+        self.horizontalLayout_6 = QGridLayout(self.viewPage)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
 
         self.horizontalLayout_6.addWidget(self.viewingTools, 0, Qt.AlignRight)
 
@@ -434,6 +552,10 @@ class Ui_HomePage(object):
 
         self.verticalLayout_11.addWidget(self.widget_7)
 
+        # self.label_7 = QLabel(self.analysisPage)
+        # self.label_7.setObjectName(u"label_7")
+        # self.label_7.setGeometry(QRect(150, 140, 181, 61))
+        # self.label_7.setFont(font1)
         self.pages.addWidget(self.analysisPage)
         self.settingPage = QWidget()
         self.settingPage.setObjectName(u"settingPage")
@@ -738,7 +860,7 @@ class Ui_HomePage(object):
 
 
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
+
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -791,13 +913,20 @@ class Ui_HomePage(object):
         ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(17)
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Lower jaw scan", None));
 
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Viewing 3D model", None))
+        # self.label_3.setText(QCoreApplication.translate("MainWindow", u"Viewing 3D model", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
-        self.label_7.setText("")
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Patient Tooth Wear Grade", None))
         self.label_10.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Treatment Plans", None))
+
+        self.loadUpperMesh.setText(QCoreApplication.translate("MainWindow", u"Load upper", None))
+        self.loadLowerMesh.setText(QCoreApplication.translate("MainWindow", u"Load lower", None))
+        self.resetViewPoint.setText(QCoreApplication.translate("MainWindow", u"Reset camera", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
+
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"setting", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Help", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"About", None))
@@ -859,4 +988,6 @@ class ProxyModel(QAbstractProxyModel):
 
     def removeRows(self, row: int, count: int, parent: QModelIndex = ...) -> bool:
         return self.sourceModel().removeRows(row, count - 1)
+
+
 
