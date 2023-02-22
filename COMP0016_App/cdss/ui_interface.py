@@ -371,7 +371,7 @@ class Ui_HomePage(object):
 
         dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
         AppFunctions.main(dbFolder)
-        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder), dbFolder)
+        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
 
         for i in range(patientNumber):
             self.viewSpecificButton = QPushButton(self.tableWidget)

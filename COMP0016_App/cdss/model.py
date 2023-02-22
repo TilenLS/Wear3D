@@ -223,7 +223,7 @@ class AppFunctions():
 
             AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
 
-    def displayPatients(self, rows, dbFolder):
+    def displayPatients(self, rows):
         for row in rows:
             row_position = self.tableWidget.rowCount()
 
@@ -234,12 +234,6 @@ class AppFunctions():
             self.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
             self.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
-            # self.ui3.button = QPushButton(self.ui3.tableWidget)
-            # self.ui3.button.setObjectName(u"viewSpecificButton")
-            # self.ui3.tableWidget.setCellWidget(row_position, 0, self.ui3.button)
-            # self.ui3.button.setText(str(row[0]))
-            # self.ui3.button.clicked.connect(lambda *args, i=row_position+1, f=dbFolder: AppFunctions.viewImage(self, i, f))
-
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
