@@ -552,10 +552,6 @@ class Ui_HomePage(object):
 
         self.verticalLayout_11.addWidget(self.widget_7)
 
-        # self.label_7 = QLabel(self.analysisPage)
-        # self.label_7.setObjectName(u"label_7")
-        # self.label_7.setGeometry(QRect(150, 140, 181, 61))
-        # self.label_7.setFont(font1)
         self.pages.addWidget(self.analysisPage)
         self.settingPage = QWidget()
         self.settingPage.setObjectName(u"settingPage")

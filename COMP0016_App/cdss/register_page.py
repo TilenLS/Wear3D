@@ -1,6 +1,6 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import QSize
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QFrame
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QFrame, QGridLayout
 
 
 class Ui_RegisterPage(object):
@@ -26,13 +26,14 @@ class Ui_RegisterPage(object):
         self.widget1 = QtWidgets.QWidget(self.centralwidget)
         self.widget1.setObjectName("widget1")
         self.widget1.setMinimumSize(QSize(800, 800))
+        self.widget1.setMaximumSize(16777215, 16777215)
         self.widget1.move(200, 50)
         self.frame = QFrame()
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.frame.setStyleSheet("background-color: #515064")
 
-        layout = QVBoxLayout()
+        layout = QGridLayout()
         layout.addWidget(self.frame)
         self.widget1.setLayout(layout)
 
