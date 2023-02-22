@@ -8,11 +8,14 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+import os
+
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from typing import Any
 
+from model import AppFunctions
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
 from iconify.qt import QtCore
@@ -20,7 +23,7 @@ from iconify.qt import QtCore
 import QSS_Resources_rc
 
 class Ui_HomePage(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, patientNumber):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1200, 800)
@@ -200,6 +203,16 @@ class Ui_HomePage(object):
 
         self.verticalLayout_5.addWidget(self.viewButton)
 
+        # self.viewSButton = QPushButton(self.frame_3)
+        # self.viewSButton.setObjectName(u"viewSButton")
+        # self.viewSButton.setCursor(QCursor(Qt.PointingHandCursor))
+        # icon4 = QIcon()
+        # icon4.addFile(u":/icons/Icons/archive.png", QSize(), QIcon.Normal, QIcon.Off)
+        # self.viewSButton.setIcon(icon4)
+        # self.viewSButton.setIconSize(QSize(16, 16))
+        #
+        # self.verticalLayout_5.addWidget(self.viewSButton)
+
         self.analysisButton = QPushButton(self.frame_3)
         self.analysisButton.setObjectName(u"analysisButton")
         self.analysisButton.setCursor(QCursor(Qt.PointingHandCursor))
@@ -356,6 +369,18 @@ class Ui_HomePage(object):
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
+        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        AppFunctions.main(dbFolder)
+        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder), dbFolder)
+
+        for i in range(patientNumber):
+            self.viewSpecificButton = QPushButton(self.tableWidget)
+            self.viewSpecificButton.setObjectName(u"viewSpecificButton")
+            self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
+            self.viewSpecificButton.setText(str(i+1))
+            self.viewSpecificButton.clicked.connect(
+                        lambda *args, i=i + 1, f=dbFolder: AppFunctions.viewImage(self, i, f))
+
 
         self.vboxLayout.addWidget(self.widget_4)
 
@@ -366,9 +391,6 @@ class Ui_HomePage(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.widget_3 = QWidget(self.viewPage)
         self.widget_3.setObjectName(u"widget_3")
-        # self.label_3 = QLabel(self.widget_3)
-        # self.label_3.setObjectName(u"label_3")
-        # self.label_3.setGeometry(QRect(60, 190, 131, 71))
 
         self.horizontalLayout_6.addWidget(self.widget_3)
 

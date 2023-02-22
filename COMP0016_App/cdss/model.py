@@ -4,8 +4,10 @@ import sys
 import sqlite3
 from sqlite3 import Error
 
+from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
-from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox
+from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox, QPushButton, QMainWindow
+
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -157,6 +159,17 @@ class AppFunctions():
         except Error as e:
             print(e)
 
+    def getPatientNumber(dbFolder):
+        conn = AppFunctions.create_connection(dbFolder)
+
+        toExecute = "SELECT MAX(PATIENT_ID) FROM Patients"
+        crsr = conn.cursor()
+        crsr.execute(toExecute)
+
+        numberOfPatients = crsr.fetchall()[0]
+
+        return numberOfPatients[0]
+
     def addPatient(self, dbFolder):
         conn = AppFunctions.create_connection(dbFolder)
 
@@ -210,23 +223,49 @@ class AppFunctions():
 
             AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
 
-    def displayPatients(self, rows):
+    def displayPatients(self, rows, dbFolder):
         for row in rows:
-            row_position = self.ui.tableWidget.rowCount()
+            row_position = self.tableWidget.rowCount()
 
             if row_position + 1 > row[0]:
                 continue
 
             item_count = 0
-            self.ui3.tableWidget.setRowCount(row_position + 1)
+            self.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
-            self.ui3.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            # self.ui3.button = QPushButton(self.ui3.tableWidget)
+            # self.ui3.button.setObjectName(u"viewSpecificButton")
+            # self.ui3.tableWidget.setCellWidget(row_position, 0, self.ui3.button)
+            # self.ui3.button.setText(str(row[0]))
+            # self.ui3.button.clicked.connect(lambda *args, i=row_position+1, f=dbFolder: AppFunctions.viewImage(self, i, f))
+
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
+                self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
                 self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
+
+    def viewImage(self, id, dbFolder):
+
+        print(id)
+        self.pages.setCurrentWidget(self.viewPage)
+        conn = AppFunctions.create_connection(dbFolder)
+
+        patientID = id
+
+        toExecute = "SELECT PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN FROM Patients WHERE PATIENT_ID = :id"
+        crsr = conn.cursor()
+        crsr.execute(toExecute, {"id": patientID})
+
+        upper_path, lower_path = crsr.fetchall()[0]
+
+        self.imageViewer = ImageViewer()
+        self.imageViewer.initialise_viewer(self)
+        self.imageViewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+
+

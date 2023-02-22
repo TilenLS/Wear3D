@@ -27,7 +27,7 @@ class MainWindow(QMainWindow, Ui_SignInPage):
         self.lowerFilePath = None
         self.upperFilePath = None
         self.imageViewer = ImageViewer()
-        self.startSignInPage()
+        self.startHomePage()
 
     def startSignInPage(self):
         self.ui1.setupUi(self)
@@ -44,13 +44,13 @@ class MainWindow(QMainWindow, Ui_SignInPage):
         self.ui2.sign_in_button.clicked.connect(self.startSignInPage)
 
     def startHomePage(self):
-        self.ui3.setupUi(self)
+        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        num_of_patient = AppFunctions.getPatientNumber(dbFolder)
+        self.ui3.setupUi(self, num_of_patient)
         loadJsonStyle(self, self.ui3)
         self.show()
         self.imageViewer.initialise_viewer(self.ui3)
-        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
         AppFunctions.main(dbFolder)
-        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
         self.ui3.addPatientButton.clicked.connect(lambda: AppFunctions.addPatient(self, dbFolder))
         self.ui3.upperJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, False, True))
         self.ui3.lowerJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, True, False))

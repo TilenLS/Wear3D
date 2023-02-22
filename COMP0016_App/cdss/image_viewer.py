@@ -58,7 +58,7 @@ class ImageViewer(QMainWindow):
             self.lowerPresent = False
 
     def load_mesh(self, lowerFilePath=False, upperFilePath=False):
-        if lowerFilePath:
+        if lowerFilePath == True:
             lowerFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
             if self.meshLower:
@@ -69,7 +69,7 @@ class ImageViewer(QMainWindow):
                 self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
                 self.vis.add_geometry(self.meshLower)
                 self.lowerPresent = True
-        if upperFilePath:
+        if upperFilePath == True:
             upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
             if self.meshUpper:
@@ -80,6 +80,25 @@ class ImageViewer(QMainWindow):
                 self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
                 self.vis.add_geometry(self.meshUpper)
                 self.upperPresent = True
+        else:
+            if self.meshLower:
+                self.vis.remove_geometry(self.meshLower, False)
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower, False)
+            if not self.meshLower:
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower)
+                self.lowerPresent = True
+            if self.meshUpper:
+                self.vis.remove_geometry(self.meshUpper, False)
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper, False)
+            if not self.meshUpper:
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper)
+                self.upperPresent = True
+
+
 
     def reset_view(self):
         self.vis.reset_view_point(True)
