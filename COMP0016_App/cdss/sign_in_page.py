@@ -42,7 +42,7 @@ class Ui_SignInPage(object):
         self.widget1.setMinimumSize(QSize(800, 800))
         self.widget1.setStyleSheet("background-color: #515064")
         self.vertical_layout = QGridLayout(self.widget1)
-        self.vertical_layout.setContentsMargins(200,50,200,50)
+        self.vertical_layout.setContentsMargins(100,50,100,50)
         self.vertical_layout.setSpacing(20)
         self.central_layout.addWidget(self.widget1, 0, Qt.AlignCenter)
 
@@ -56,7 +56,7 @@ class Ui_SignInPage(object):
         big_bold_font.setWeight(75)
         big_bold_font.setFamily("Bahnschrift Light")
         self.account_login_label.setFont(big_bold_font)
-        self.account_login_label.setAlignment(Qt.AlignVCenter)
+        self.account_login_label.setAlignment(Qt.AlignCenter)
         self.vertical_layout.addWidget(self.account_login_label, 0, 0, Qt.AlignHCenter)
 
         self.reminder_text = QtWidgets.QLabel(self.centralwidget, wordWrap=True)
@@ -106,7 +106,7 @@ class Ui_SignInPage(object):
                                           "}"
                                           )
         self.username_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.username_input, 2, 0)
+        self.vertical_layout.addWidget(self.username_input, 2, 0, Qt.AlignHCenter)
 
         self.password_input = QtWidgets.QLineEdit(self.centralwidget)
         self.password_input.setPlaceholderText("Please enter your password...")
@@ -118,7 +118,7 @@ class Ui_SignInPage(object):
                                           "}"
                                           )
         self.password_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.password_input, 3, 0)
+        self.vertical_layout.addWidget(self.password_input, 3, 0, Qt.AlignHCenter)
 
         self.sign_in_button = QtWidgets.QPushButton(self.centralwidget)
         self.sign_in_button.setObjectName("sign_in_button")

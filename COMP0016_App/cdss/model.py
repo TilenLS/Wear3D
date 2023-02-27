@@ -89,7 +89,7 @@ class AppFunctions():
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
-            msg.setText("Password and confirm password is different. Please try again")
+            msg.setText("Password and confirm password are different. Please try again")
             msg.exec_()
 
     def create_connection(db_file):
@@ -225,7 +225,7 @@ class AppFunctions():
 
     def displayPatients(self, rows):
         for row in rows:
-            row_position = self.tableWidget.rowCount()
+            row_position = self.ui3.tableWidget.rowCount()
 
             if row_position + 1 > row[0]:
                 continue
