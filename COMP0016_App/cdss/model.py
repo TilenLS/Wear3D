@@ -243,9 +243,8 @@ class AppFunctions():
                 item_count += 1
             row_position += 1
 
-    def viewImage(self, id, dbFolder):
+    def viewImage(self, id, dbFolder, viewer):
 
-        print(id)
         self.pages.setCurrentWidget(self.viewPage)
         conn = AppFunctions.create_connection(dbFolder)
 
@@ -257,8 +256,6 @@ class AppFunctions():
 
         upper_path, lower_path = crsr.fetchall()[0]
 
-        self.imageViewer = ImageViewer()
-        self.imageViewer.initialise_viewer(self)
-        self.imageViewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+        viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
 
 

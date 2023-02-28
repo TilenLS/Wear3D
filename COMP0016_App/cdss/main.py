@@ -46,7 +46,7 @@ class MainWindow(QMainWindow, Ui_SignInPage):
     def startHomePage(self):
         dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
         num_of_patient = AppFunctions.getPatientNumber(dbFolder)
-        self.ui3.setupUi(self, num_of_patient)
+        self.ui3.setupUi(self, num_of_patient, self.imageViewer)
         loadJsonStyle(self, self.ui3)
         self.show()
         self.imageViewer.initialise_viewer(self.ui3)

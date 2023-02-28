@@ -23,7 +23,7 @@ from iconify.qt import QtCore
 import QSS_Resources_rc
 
 class Ui_HomePage(object):
-    def setupUi(self, MainWindow, patientNumber):
+    def setupUi(self, MainWindow, patientNumber, imageViewer):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1200, 800)
@@ -379,7 +379,7 @@ class Ui_HomePage(object):
             self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
             self.viewSpecificButton.setText(str(i+1))
             self.viewSpecificButton.clicked.connect(
-                        lambda *args, i=i + 1, f=dbFolder: AppFunctions.viewImage(self, i, f))
+                        lambda *args, i=i + 1, f=dbFolder, v=imageViewer: AppFunctions.viewImage(self, i, f, v))
 
 
         self.vboxLayout.addWidget(self.widget_4)
