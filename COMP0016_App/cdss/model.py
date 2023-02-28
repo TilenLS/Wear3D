@@ -49,7 +49,6 @@ class AppFunctions():
                 toCheckPassword.append(i)
 
             encryptedPassword = encrypt(passwordSignIn)
-
             if encryptedPassword == toCheckPassword[0]:
                 self.startHomePage()
             else:
@@ -225,7 +224,7 @@ class AppFunctions():
 
     def displayPatients(self, rows):
         for row in rows:
-            row_position = self.ui3.tableWidget.rowCount()
+            row_position = self.tableWidget.rowCount()
 
             if row_position + 1 > row[0]:
                 continue
