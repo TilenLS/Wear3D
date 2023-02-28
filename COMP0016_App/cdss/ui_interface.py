@@ -554,6 +554,11 @@ class Ui_HomePage(object):
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(60, 20, 281, 31))
         self.label_9.setFont(font)
+        self.show_grading = QListWidget(self.widget_5)
+        self.show_grading.setObjectName(u"show_grading")
+        self.show_grading.setGeometry(QRect(80, 90, 260, 80))
+        self.show_grading.setFont(font)
+        self.show_grading.addItems(["Your tooth wear grading is: ", ""])
 
         self.verticalLayout_12.addWidget(self.widget_5)
 
@@ -943,7 +948,7 @@ class Ui_HomePage(object):
         self.resetViewPoint.setText(QCoreApplication.translate("MainWindow", u"Reset camera", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
+        # self.label_7.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
 
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"setting", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Help", None))
