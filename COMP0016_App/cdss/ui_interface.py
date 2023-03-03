@@ -203,15 +203,6 @@ class Ui_HomePage(object):
 
         self.verticalLayout_5.addWidget(self.viewButton)
 
-        # self.viewSButton = QPushButton(self.frame_3)
-        # self.viewSButton.setObjectName(u"viewSButton")
-        # self.viewSButton.setCursor(QCursor(Qt.PointingHandCursor))
-        # icon4 = QIcon()
-        # icon4.addFile(u":/icons/Icons/archive.png", QSize(), QIcon.Normal, QIcon.Off)
-        # self.viewSButton.setIcon(icon4)
-        # self.viewSButton.setIconSize(QSize(16, 16))
-        #
-        # self.verticalLayout_5.addWidget(self.viewSButton)
 
         self.analysisButton = QPushButton(self.frame_3)
         self.analysisButton.setObjectName(u"analysisButton")
@@ -327,8 +318,8 @@ class Ui_HomePage(object):
         self.verticalLayout_14.addWidget(self.frame_6)
 
         self.tableWidget = QTableWidget(self.widget_4)
-        if (self.tableWidget.columnCount() < 18):
-            self.tableWidget.setColumnCount(18)
+        if (self.tableWidget.columnCount() < 19):
+            self.tableWidget.setColumnCount(19)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -365,6 +356,8 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(16, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(17, __qtablewidgetitem17)
+        __qtablewidgetitem18 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.verticalLayout_14.addWidget(self.tableWidget)
@@ -855,6 +848,15 @@ class Ui_HomePage(object):
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
+        self.sextantScanButton = QPushButton(self.widget_2)
+        self.sextantScanButton.setObjectName(u"sextantScanButton")
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.sextantScanButton.setIcon(icon10)
+        self.sextantScanButton.setIconSize(QSize(24, 24))
+
+        self.verticalLayout_9.addWidget(self.sextantScanButton)
+
         self.verticalLayout_8.addWidget(self.frame_5, 0, Qt.AlignTop)
 
         self.addPatientButton = QPushButton(self.widget_2)
@@ -935,8 +937,9 @@ class Ui_HomePage(object):
         ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Upper jaw scan", None));
         ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(17)
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Lower jaw scan", None));
+        ___qtablewidgetitem18 = self.tableWidget.horizontalHeaderItem(18)
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Sextant scan", None));
 
-        # self.label_3.setText(QCoreApplication.translate("MainWindow", u"Viewing 3D model", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Patient Tooth Wear Grade", None))
@@ -948,7 +951,6 @@ class Ui_HomePage(object):
         self.resetViewPoint.setText(QCoreApplication.translate("MainWindow", u"Reset camera", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
-        # self.label_7.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
 
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"setting", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Help", None))
@@ -959,6 +961,7 @@ class Ui_HomePage(object):
         self.occupation.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Occupation", None))
         self.upperJawScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose upper jaw scan", None))
         self.lowerJawScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose lower jaw scan", None))
+        self.sextantScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose sextant file", None))
         self.addPatientButton.setText(QCoreApplication.translate("MainWindow", u"Add Patient", None))
 
     # retranslateUi

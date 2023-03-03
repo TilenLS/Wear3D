@@ -30,6 +30,11 @@ class AppFunctions():
             self.upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
+    def chooseSextantFile(self):
+        self.sextantFilePath = QFileDialog.getOpenFileName(self,
+                                                self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
+
+
     def checkSignInDetails(self, dbFolder):
 
         conn = AppFunctions.create_connection(dbFolder)
@@ -257,5 +262,12 @@ class AppFunctions():
         upper_path, lower_path = crsr.fetchall()[0]
 
         viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+
+        self.homeButton.setStyleSheet(
+        "QPushButton {background-color: transparent; border: none}"
+        )
+        self.viewButton.setStyleSheet(
+        "QPushButton {background-color: #1b1b27; font-weight: bold}"
+        )
 
 
