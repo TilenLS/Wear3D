@@ -249,6 +249,15 @@ class AppFunctions():
         return upper_path
 
     def predict():
+        """
+        This function is used to send a request to the inference module and get the prediction
+        
+        The input should be a patient id and the database folder, then get the result from self.__get_sextant(id, dbFolder), i.e. the path of the sextant scan
+
+        The function should find the .ply file and send it to the sever in a POST request
+
+        The output is a jason file with predictions
+        """
         # sextant = self.__get_sextant(id, dbFolder)
         sextant = '../inference_module/JawScan_1.ply'
         url = 'http://20.127.200.67:8080/predict'
@@ -259,6 +268,3 @@ class AppFunctions():
 
         return response.json()
 
-if __name__ == "__main__":
-    pred = AppFunctions.predict()
-    print(pred)
