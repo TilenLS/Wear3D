@@ -251,7 +251,7 @@ class AppFunctions():
     def predict():
         # sextant = self.__get_sextant(id, dbFolder)
         sextant = '../inference_module/JawScan_1.ply'
-        url = 'http://127.0.0.1:80/predict'
+        url = 'http://20.127.200.67:8080/predict'
         
         with open(sextant, 'rb') as f:
             files = {'file': (sextant, f)}
