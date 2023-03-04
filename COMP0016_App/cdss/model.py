@@ -3,6 +3,10 @@ import os
 import sys
 import sqlite3
 from sqlite3 import Error
+import requests
+from plyfile import PlyData
+import numpy as np
+from requests.exceptions import ConnectionError
 
 from PySide2.QtCore import QObject
 from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox
@@ -230,3 +234,31 @@ class AppFunctions():
 
                 item_count += 1
             row_position += 1
+
+    def __get_sextant(self, id, dbFolder):
+        conn = AppFunctions.create_connection(dbFolder)
+
+        patientID = id
+
+        toExecute = "SELECT PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN FROM Patients WHERE PATIENT_ID = :id"
+        crsr = conn.cursor()
+        crsr.execute(toExecute, {"id": patientID})
+
+        upper_path, lower_path = crsr.fetchall()[0]
+
+        return upper_path
+
+    def predict():
+        # sextant = self.__get_sextant(id, dbFolder)
+        sextant = '../inference_module/JawScan_1.ply'
+        url = 'http://127.0.0.1:80/predict'
+        
+        with open(sextant, 'rb') as f:
+            files = {'file': (sextant, f)}
+            response = requests.post(url, files=files)
+
+        return response.json()
+
+if __name__ == "__main__":
+    pred = AppFunctions.predict()
+    print(pred)

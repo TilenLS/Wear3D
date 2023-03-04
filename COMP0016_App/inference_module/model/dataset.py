@@ -1,12 +1,10 @@
 import os
-import open3d as o3d
 import glob
 import numpy as np
 import torch.utils.data as data
 import os.path
 import torch
-from tqdm import tqdm 
-from plyfile import PlyData, PlyElement
+from plyfile import PlyData
 
 input_file = 'COMP0016_App/inference_module/model/All_teeth'
 

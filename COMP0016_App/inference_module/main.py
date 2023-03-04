@@ -5,18 +5,11 @@ from model.model import PointNetReg
 
 N_POINTS = 2048
 
-def get_prediction(filename):
+def get_prediction(plydata):
     # Load the trained model 
     model = PointNetReg(feature_transform = False)
     model.load_state_dict(torch.load('trained_models/cls_model_49.pth', map_location=torch.device('cpu')))
 
-
-    # Load the data
-    # file = 'teeth/' + filename
-    # JawScan_1.ply
-    file = '' + filename
-    with open(file, 'rb') as f:
-        plydata = PlyData.read(f)
     pts = np.vstack([plydata['vertex']['x'], plydata['vertex']['y'], plydata['vertex']['z']]).T
     choice = np.random.choice(len(pts), N_POINTS, replace=True)
     point_set = pts[choice, :]
