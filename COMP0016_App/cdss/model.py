@@ -132,7 +132,8 @@ class AppFunctions():
                                     PATIENT_EXERCISE TEXT,
                                     PATIENT_DRUG_USE TEXT,
                                     PATIENT_UPPER_JAW_SCAN TEXT,
-                                    PATIENT_LOWER_JAW_SCAN TEXT
+                                    PATIENT_LOWER_JAW_SCAN TEXT,
+                                    PATIENT_SEXTANT_SCAN TEXT
                                 );
                             """
         create_dentist_table = """ CREATE TABLE IF NOT EXISTS Dentists (
@@ -194,15 +195,17 @@ class AppFunctions():
         drugUse = self.ui3.drugUse.currentText()
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
+        sextantScan = self.sextantFilePath
 
         insert_patient_data_sql = f"""
         INSERT INTO Patients (PATIENT_NAME, PATIENT_AGE, PATIENT_OCCUPATION, PATIENT_MEDICAL_HISTORY, 
         PATIENT_PAIN_COMPLAINT, PATIENT_FINANCIAL_RESOURCES, PATIENT_BRUSHING_METHOD, PATIENT_BRUSHING_FREQUENCY,
         PATIENT_BRUSHING_TIMING, PATIENT_ALCOHOL_INTAKE, PATIENT_STRESS_LEVEL, PATIENT_SLEEP_APNOEA, 
-        PATIENT_SNORING_HABIT, PATIENT_EXERCISE, PATIENT_DRUG_USE, PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN) 
+        PATIENT_SNORING_HABIT, PATIENT_EXERCISE, PATIENT_DRUG_USE, PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN, 
+        PATIENT_SEXTANT_SCAN) 
         VALUES ('{name}', '{age}', '{occupation}', '{medicalHistory}', '{painComplaint}', '{financialResources}', 
         '{brushingMethod}', '{brushingFrequency}', '{brushingTiming}', '{alocholIntake}', '{stressLevel}', 
-        '{sleepApnoea}', '{snoringHabit}', '{exercise}', '{drugUse}', '{upperScan}', '{lowerScan}')
+        '{sleepApnoea}', '{snoringHabit}', '{exercise}', '{drugUse}', '{upperScan}', '{lowerScan}', '{sextantScan}')
         """
 
         if not conn.cursor().execute(insert_patient_data_sql):
