@@ -1,5 +1,4 @@
 import argparse
-import os
 import random
 import torch
 import torch.nn as nn
@@ -38,6 +37,7 @@ print("Random Seed: ", opt.manualSeed)
 random.seed(opt.manualSeed)
 torch.manual_seed(opt.manualSeed)
 
+#  Data Loading  
 dataset = JawDataset(root=opt.dataset, npoints=opt.num_points, split='train')
 test_dataset = JawDataset(root=opt.dataset, split='test', npoints=opt.num_points, data_augmentation=False)
 
@@ -51,7 +51,7 @@ testdataloader = torch.utils.data.DataLoader(
         batch_size=opt.batchSize,
         shuffle=True)
 
-
+# Model Training
 classifier = PointNetReg(feature_transform=opt.feature_transform)
 
 if opt.model != '':
@@ -69,13 +69,11 @@ for epoch in range(opt.nepoch):
     for i, data in enumerate(dataloader):
         points, target = data
         # target = target[:, 0]
-        # print("target", target)
         points = points.transpose(2, 1)
         points, target = points.cuda(), target.cuda()
         optimizer.zero_grad()
         classifier = classifier.train()
         pred, trans, trans_feat = classifier(points)
-        # print("pred: ", pred)
 
         L = nn.MSELoss()
         loss = L(pred, target)

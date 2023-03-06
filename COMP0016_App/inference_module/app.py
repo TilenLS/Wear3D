@@ -16,6 +16,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # predict
 @app.route('/predict', methods=['POST'])
 def submit_file():
+    """
+    Looking for a POST request, if found, save it to the UPLOAD_FOLDER then call the prediction function and return the result back to the client.
+    """
     result = {}
     if request.method == 'POST':
         if 'file' not in request.files:

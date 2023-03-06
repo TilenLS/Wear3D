@@ -4,8 +4,6 @@ import sys
 import sqlite3
 from sqlite3 import Error
 import requests
-from plyfile import PlyData
-import numpy as np
 from requests.exceptions import ConnectionError
 
 from PySide2.QtCore import QObject
@@ -236,6 +234,10 @@ class AppFunctions():
             row_position += 1
 
     def __get_sextant(self, id, dbFolder):
+        """
+        This is a private function and it is used to get the path of the sextant scan from the database
+
+        """
         conn = AppFunctions.create_connection(dbFolder)
 
         patientID = id

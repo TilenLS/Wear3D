@@ -6,6 +6,10 @@ from model.model import PointNetReg
 N_POINTS = 2048
 
 def get_prediction(plydata):
+    """
+    This is the function that will be called by the app.py when a http request is send to the server. This function will load the trained model and predict the tooth wear grade.
+    """
+
     # Load the trained model 
     model = PointNetReg(feature_transform = False)
     model.load_state_dict(torch.load('trained_models/cls_model_49.pth', map_location=torch.device('cpu')))
@@ -18,6 +22,7 @@ def get_prediction(plydata):
     dist = np.max(np.sqrt(np.sum(point_set ** 2, axis=1)), 0)
     points = point_set / dist
     points = torch.from_numpy(points).float()
+    # fit in the shape of the input
     points = points.unsqueeze(0)
     points = points.transpose(2, 1)
 
@@ -26,6 +31,7 @@ def get_prediction(plydata):
     pred, _, _ = model(points)
     pred_choice = pred.data
     label = pred_choice.cpu().numpy()[0][0]
+    # map the result to each grade
     if label < 0.5:
         label = 0
     elif label >= 0.5 and label < 1.5:

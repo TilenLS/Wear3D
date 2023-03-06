@@ -1,9 +1,11 @@
 import os
+import os.path
 import glob
 import numpy as np
-import torch.utils.data as data
-import os.path
 import torch
+import torch.utils.data as data
+from pytorch3d.structures import Pointclouds
+import matplotlib.pyplot as plt
 from plyfile import PlyData
 
 input_file = 'COMP0016_App/inference_module/model/All_teeth'
@@ -14,6 +16,16 @@ class JawDataset(data.Dataset):
                  npoints=2048,
                  split='train',
                  data_augmentation=True):
+        """
+        Input Arguments: 
+            npoints: number of points to sample from each tooth
+            root: root directory of the dataset
+            split: train or test
+            data_augmentation: usually for training
+
+        points: list of numpy arrays of shape (npoints, 3)
+        labels: list of numpy arrays corresponding to the points of each tooth
+        """
         self.npoints = npoints
         self.root = root
         self.split = split
@@ -23,15 +35,17 @@ class JawDataset(data.Dataset):
         self.labels = []
 
         self.files = glob.glob(os.path.join(input_file, "All_teeth/{}/inputs/*".format(self.split)))
-        # self.test_files = glob.glob(os.path.join(input_file, "test/inputs/*"))
-  
     
-        # for f in self.files:
-        #     print("processing: {}".format(os.path.basename(f)))
-        #     self.point.append(trimesh.load(f).sample(self.npoints))
+        """
+        Could be used if we have a large amount of tooth wear data:
+
+        for f in self.files:
+            print("processing: {}".format(os.path.basename(f)))
+            self.point.append(trimesh.load(f).sample(self.npoints))
+        """
+
         path = os.path.join(input_file, 'All_teeth/{}/labels/label.txt'.format(self.split))
         
-
         with open(path) as f:
             for line in f:
                 ls = line.strip()
@@ -55,8 +69,10 @@ class JawDataset(data.Dataset):
         if self.data_augmentation:
             theta = np.random.uniform(0, np.pi * 2)
             rotation_matrix = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
-            point_set[:, [0, 2]] = point_set[:, [0, 2]].dot(rotation_matrix)  # random rotation
-            point_set += np.random.normal(0, 0.02, size=point_set.shape)  # random jitter
+            # random rotation
+            point_set[:, [0, 2]] = point_set[:, [0, 2]].dot(rotation_matrix)  
+            # random jitter
+            point_set += np.random.normal(0, 0.02, size=point_set.shape)
 
         point_set = torch.from_numpy(point_set.astype(np.float32))
         label = torch.from_numpy(np.array([label]).astype((np.float32)))
@@ -68,10 +84,6 @@ class JawDataset(data.Dataset):
     
 
 if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    import pytorch3d
-    from pytorch3d.structures import Pointclouds
-
     d = JawDataset(input_file)
     print(len(d))
     print(d[0][0], d[0][1])

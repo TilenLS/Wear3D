@@ -130,33 +130,12 @@ class PointNetfeat(nn.Module):
             return torch.cat([x, pointfeat], 1), trans, trans_feat
 
     def forward_1(self, x):
-        n_pts = x.size()[2]     # consider torch.rand(14,3,2048)
-        trans = self.stn(x)
-        x = x.transpose(2, 1)
-        x = torch.bmm(x, trans)
-        x = x.transpose(2, 1)
-        x = F.relu(self.bn1(self.conv1(x)))
+        """
+        An additional forward function for generating architecture summary by using torchsummary library
+        """
+        self.forward(x)
 
-        if self.feature_transform:
-            trans_feat = self.fstn(x)
-            x = x.transpose(2,1)
-            x = torch.bmm(x, trans_feat)
-            x = x.transpose(2,1)
-        else:
-            trans_feat = None
-
-        pointfeat = x
-        x = F.relu(self.bn2(self.conv2(x)))
-        x = self.bn3(self.conv3(x))
-        x = torch.max(x, 2, keepdim=True)[0]
-        x = x.view(-1, 1024)
-        if self.global_feat:
-            return x, trans, trans_feat
-        else:
-            x = x.view(-1, 1024, 1).repeat(1, 1, n_pts)
-            return torch.cat([x, pointfeat], 1), trans, trans_feat
-
-# classification 
+# regression model for tooth wear grading 
 class PointNetReg(nn.Module):
     def __init__(self, feature_transform=False):
         super().__init__()
@@ -179,7 +158,7 @@ class PointNetReg(nn.Module):
         x = self.fc4(x)
         return x, trans, trans_feat
 
-# segmentation
+# segmentation model for tooth wear grading
 class PointNetDenseCls(nn.Module):
     def __init__(self, k = 2, feature_transform=False):
         super().__init__()
