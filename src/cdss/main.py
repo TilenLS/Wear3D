@@ -28,7 +28,7 @@ class MainWindow(QMainWindow, Ui_SignInPage):
         self.upperFilePath = None
         self.sextantFilePath = None
         self.imageViewer = ImageViewer()
-        self.startHomePage()
+        self.startSignInPage()
 
     def startSignInPage(self):
         self.ui1.setupUi(self)

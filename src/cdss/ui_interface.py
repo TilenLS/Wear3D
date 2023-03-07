@@ -10,6 +10,7 @@
 ################################################################################
 import os
 
+from PySide2 import QtGui
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -30,7 +31,7 @@ class Ui_HomePage(object):
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
-# "	background-color: #000000;\n"
+"	background-color: #000000;\n"
 "	background: transparent;\n"
 "	padding: 0;\n"
 "	margin: 0;\n"
@@ -328,7 +329,9 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
-        self.tableWidget.horizontalHeader().setStyleSheet("QTableWidget {background-color: #000000}")
+        # self.tableWidget.horizontalHeaderItem(1).setBackground(QtGui.QColor(100, 100, 150))
+
+        self.tableWidget.horizontalHeader().setStyleSheet("QTableWidgetItem{background: #000000}")
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
@@ -628,6 +631,7 @@ class Ui_HomePage(object):
 
         self.medicalHistory.setModel(ProxyModel(model1, 'Medical History'))
         self.medicalHistory.setCurrentIndex(0)
+        self.medicalHistory.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.medicalHistory.setObjectName(u"medicalHistory")
 
@@ -657,6 +661,7 @@ class Ui_HomePage(object):
 
         self.painComplaint.setModel(ProxyModel(model2, 'Pain Complaint'))
         self.painComplaint.setCurrentIndex(0)
+        self.painComplaint.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.painComplaint)
 
@@ -671,6 +676,7 @@ class Ui_HomePage(object):
 
         self.financialResources.setModel(ProxyModel(model3, 'Financial Resources'))
         self.financialResources.setCurrentIndex(0)
+        self.financialResources.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.financialResources)
 
@@ -685,6 +691,7 @@ class Ui_HomePage(object):
 
         self.brushingMethod.setModel(ProxyModel(model4, 'Brushing Method'))
         self.brushingMethod.setCurrentIndex(0)
+        self.brushingMethod.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.brushingMethod)
 
@@ -699,6 +706,7 @@ class Ui_HomePage(object):
 
         self.brushingFrequency.setModel(ProxyModel(model5, 'Brushing Frequency'))
         self.brushingFrequency.setCurrentIndex(0)
+        self.brushingFrequency.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.brushingFrequency)
 
@@ -712,6 +720,7 @@ class Ui_HomePage(object):
 
         self.brushingTiming.setModel(ProxyModel(model6, 'Brushing Timing'))
         self.brushingTiming.setCurrentIndex(0)
+        self.brushingTiming.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.brushingTiming)
 
@@ -726,6 +735,7 @@ class Ui_HomePage(object):
 
         self.alcoholIntake.setModel(ProxyModel(model7, 'Alcohol Intake'))
         self.alcoholIntake.setCurrentIndex(0)
+        self.alcoholIntake.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.alcoholIntake)
 
@@ -740,6 +750,7 @@ class Ui_HomePage(object):
 
         self.stressLevel.setModel(ProxyModel(model8, 'Stress Level'))
         self.stressLevel.setCurrentIndex(0)
+        self.stressLevel.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.stressLevel)
 
@@ -753,6 +764,7 @@ class Ui_HomePage(object):
 
         self.sleepApnoea.setModel(ProxyModel(model9, 'Sleep Apnoea'))
         self.sleepApnoea.setCurrentIndex(0)
+        self.sleepApnoea.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.sleepApnoea)
 
@@ -766,6 +778,7 @@ class Ui_HomePage(object):
 
         self.snoringHabit.setModel(ProxyModel(model10, 'Snoring Habit'))
         self.snoringHabit.setCurrentIndex(0)
+        self.snoringHabit.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.snoringHabit)
 
@@ -779,6 +792,7 @@ class Ui_HomePage(object):
 
         self.exercise.setModel(ProxyModel(model11, 'Exercise'))
         self.exercise.setCurrentIndex(0)
+        self.exercise.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.exercise)
 
@@ -792,6 +806,7 @@ class Ui_HomePage(object):
 
         self.drugUse.setModel(ProxyModel(model12, 'Drug Use'))
         self.drugUse.setCurrentIndex(0)
+        self.drugUse.setStyleSheet("QComboBox{background: #FFFFFF}")
 
         self.verticalLayout_9.addWidget(self.drugUse)
 
