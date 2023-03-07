@@ -3,6 +3,8 @@ import os
 import sys
 import sqlite3
 from sqlite3 import Error
+import requests
+from requests.exceptions import ConnectionError
 
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
@@ -273,4 +275,23 @@ class AppFunctions():
         "QPushButton {background-color: #1b1b27; font-weight: bold}"
         )
 
+    def predict():
+        """
+        This function is used to send a request to the inference module and get the prediction
+
+        The input should be a patient id and the database folder, then get the result from self.__get_sextant(id, dbFolder), i.e. the path of the sextant scan
+
+        The function should find the .ply file and send it to the sever in a POST request
+
+        The output is a jason file with predictions
+        """
+        # sextant = self.__get_sextant(id, dbFolder)
+        sextant = '../inference_module/JawScan_1.ply'
+        url = 'http://20.127.200.67:8080/predict'
+
+        with open(sextant, 'rb') as f:
+            files = {'file': (sextant, f)}
+            response = requests.post(url, files=files)
+
+        return response.json()
 
