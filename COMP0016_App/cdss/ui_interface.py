@@ -2,16 +2,20 @@
 
 ################################################################################
 ## Form generated from reading UI file 'interfaceTIzdfT.ui'
+## Form generated from reading UI file 'interfaceYDckni.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+import os
+
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from typing import Any
 
+from model import AppFunctions
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
 from iconify.qt import QtCore
@@ -19,10 +23,10 @@ from iconify.qt import QtCore
 import QSS_Resources_rc
 
 class Ui_HomePage(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, patientNumber, imageViewer):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 850)
+        MainWindow.resize(1200, 800)
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
@@ -199,6 +203,7 @@ class Ui_HomePage(object):
 
         self.verticalLayout_5.addWidget(self.viewButton)
 
+
         self.analysisButton = QPushButton(self.frame_3)
         self.analysisButton.setObjectName(u"analysisButton")
         self.analysisButton.setCursor(QCursor(Qt.PointingHandCursor))
@@ -313,8 +318,8 @@ class Ui_HomePage(object):
         self.verticalLayout_14.addWidget(self.frame_6)
 
         self.tableWidget = QTableWidget(self.widget_4)
-        if (self.tableWidget.columnCount() < 18):
-            self.tableWidget.setColumnCount(18)
+        if (self.tableWidget.columnCount() < 19):
+            self.tableWidget.setColumnCount(19)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -351,9 +356,23 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(16, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(17, __qtablewidgetitem17)
+        __qtablewidgetitem18 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.verticalLayout_14.addWidget(self.tableWidget)
+
+        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        AppFunctions.main(dbFolder)
+        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
+
+        for i in range(patientNumber):
+            self.viewSpecificButton = QPushButton(self.tableWidget)
+            self.viewSpecificButton.setObjectName(u"viewSpecificButton")
+            self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
+            self.viewSpecificButton.setText(str(i+1))
+            self.viewSpecificButton.clicked.connect(
+                        lambda *args, i=i + 1, f=dbFolder, v=imageViewer: AppFunctions.viewImage(self, i, f, v))
 
 
         self.vboxLayout.addWidget(self.widget_4)
@@ -365,9 +384,6 @@ class Ui_HomePage(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.widget_3 = QWidget(self.viewPage)
         self.widget_3.setObjectName(u"widget_3")
-        self.label_3 = QLabel(self.widget_3)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(60, 190, 131, 71))
 
         self.horizontalLayout_6.addWidget(self.widget_3)
 
@@ -389,6 +405,123 @@ class Ui_HomePage(object):
 
         self.verticalLayout_10.addWidget(self.pushButton_4, 0, Qt.AlignHCenter)
 
+        self.horizontalLayout_6.addWidget(self.viewingTools, 0, Qt.AlignRight)
+
+        self.viewPage = QSplitter()
+        self.viewPage.setMidLineWidth(800)
+        self.viewPage.setOrientation(Qt.Horizontal)
+        self.viewPage.setHandleWidth(20)
+        self.viewPage.setChildrenCollapsible(False)
+        self.viewPage.setObjectName(u"viewPage")
+
+        self.widget_3 = QWidget(self.viewPage)
+        self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setMinimumSize(QSize(0, 0))
+        self.widget_3.setMaximumSize(QSize(16777215,16777215))
+        self.widget_3_layout = QVBoxLayout(self.widget_3)
+        self.widget_3_layout.setSpacing(0)
+        self.widget_3_layout.setObjectName(u"widget_3_layout")
+        self.widget_3_layout.setContentsMargins(0,0,0,0)
+
+        self.viewingTools = QWidget(self.viewPage)
+        self.viewingTools.setObjectName(u"viewingTools")
+        self.viewingTools.setMinimumSize(QSize(270, 500))
+        self.viewingTools.setMaximumSize(QSize(400, 16777215))
+        self.verticalLayout_10 = QGridLayout(self.viewingTools)
+        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(40, 50, 40, 50)
+        self.verticalLayout_10.setSpacing(10)
+
+        self.pushButton_3 = QCheckBox(self.viewingTools)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setStyleSheet(
+        "QCheckBox {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        "QCheckBox::indicator {\n"
+        "color: #FFF \n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.pushButton_3, 0, 0, Qt.AlignVCenter)
+
+        self.pushButton_4 = QCheckBox(self.viewingTools)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setStyleSheet(
+        "QCheckBox {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        "QCheckBox::indicator {\n"
+        "color: #FFF \n"
+        "background-color: #453C67; \n"
+        "border-radius: 10px; \n"
+        "padding: 10px 20px; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.pushButton_4, 1, 0, Qt.AlignVCenter)
+
+        self.loadUpperMesh = QPushButton(self.viewingTools)
+        self.loadUpperMesh = QPushButton(u"loadUpperMesh")
+        self.loadUpperMesh.setCursor(QCursor(Qt.PointingHandCursor))
+        self.loadUpperMesh.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.loadUpperMesh, 2, 0, Qt.AlignVCenter)
+
+        self.loadLowerMesh = QPushButton(self.viewingTools)
+        self.loadLowerMesh = QPushButton(u"loadLowerMesh")
+        self.loadLowerMesh.setCursor(QCursor(Qt.PointingHandCursor))
+        self.loadLowerMesh.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.loadLowerMesh, 3, 0, Qt.AlignVCenter)
+
+        self.resetViewPoint = QPushButton(self.viewingTools)
+        self.resetViewPoint = QPushButton(u"resetViewPoint")
+        self.resetViewPoint.setCursor(QCursor(Qt.PointingHandCursor))
+        self.resetViewPoint.setStyleSheet(
+        "QPushButton {\n"
+        "background-color: #453C67; \n"
+        "border-radius: 5px; \n"
+        "padding: 10px 20px; \n"
+        "text-align: centre; \n"
+        "}"
+        "QPushButton::hover {\n"
+        "background-color: #373052; \n"
+        "}"
+        )
+
+        self.verticalLayout_10.addWidget(self.resetViewPoint, 4, 0, Qt.AlignVCenter)
+
+        self.horizontalLayout_6 = QGridLayout(self.viewPage)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
 
         self.horizontalLayout_6.addWidget(self.viewingTools, 0, Qt.AlignRight)
 
@@ -412,7 +545,7 @@ class Ui_HomePage(object):
         self.label_7.setScaledContents(True)
         self.label_9 = QLabel(self.widget_5)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(60, 20, 281, 31))
+        self.label_9.setGeometry(QRect(60, 20, 550, 32))
         self.label_9.setFont(font)
 
         self.verticalLayout_12.addWidget(self.widget_5)
@@ -426,7 +559,7 @@ class Ui_HomePage(object):
         self.label_10.setScaledContents(True)
         self.label_11 = QLabel(self.widget_6)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(80, 20, 161, 21))
+        self.label_11.setGeometry(QRect(67, 15, 300, 32))
         self.label_11.setFont(font)
 
         self.verticalLayout_12.addWidget(self.widget_6)
@@ -710,6 +843,15 @@ class Ui_HomePage(object):
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
+        self.sextantScanButton = QPushButton(self.widget_2)
+        self.sextantScanButton.setObjectName(u"sextantScanButton")
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.sextantScanButton.setIcon(icon10)
+        self.sextantScanButton.setIconSize(QSize(24, 24))
+
+        self.verticalLayout_9.addWidget(self.sextantScanButton)
+
         self.verticalLayout_8.addWidget(self.frame_5, 0, Qt.AlignTop)
 
         self.addPatientButton = QPushButton(self.widget_2)
@@ -738,7 +880,7 @@ class Ui_HomePage(object):
 
 
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
+
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -790,14 +932,21 @@ class Ui_HomePage(object):
         ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Upper jaw scan", None));
         ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(17)
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Lower jaw scan", None));
+        ___qtablewidgetitem18 = self.tableWidget.horizontalHeaderItem(18)
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Sextant scan", None));
 
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Viewing 3D model", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
-        self.label_7.setText("")
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Patient Tooth Wear Grade", None))
         self.label_10.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Treatment Plans", None))
+
+        self.loadUpperMesh.setText(QCoreApplication.translate("MainWindow", u"Load upper", None))
+        self.loadLowerMesh.setText(QCoreApplication.translate("MainWindow", u"Load lower", None))
+        self.resetViewPoint.setText(QCoreApplication.translate("MainWindow", u"Reset camera", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
+
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"setting", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Help", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"About", None))
@@ -807,6 +956,7 @@ class Ui_HomePage(object):
         self.occupation.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Occupation", None))
         self.upperJawScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose upper jaw scan", None))
         self.lowerJawScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose lower jaw scan", None))
+        self.sextantScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose sextant file", None))
         self.addPatientButton.setText(QCoreApplication.translate("MainWindow", u"Add Patient", None))
 
     # retranslateUi
@@ -859,4 +1009,6 @@ class ProxyModel(QAbstractProxyModel):
 
     def removeRows(self, row: int, count: int, parent: QModelIndex = ...) -> bool:
         return self.sourceModel().removeRows(row, count - 1)
+
+
 
