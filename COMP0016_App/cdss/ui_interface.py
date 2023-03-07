@@ -545,13 +545,8 @@ class Ui_HomePage(object):
         self.label_7.setScaledContents(True)
         self.label_9 = QLabel(self.widget_5)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(60, 20, 281, 31))
+        self.label_9.setGeometry(QRect(60, 20, 550, 32))
         self.label_9.setFont(font)
-        self.show_grading = QListWidget(self.widget_5)
-        self.show_grading.setObjectName(u"show_grading")
-        self.show_grading.setGeometry(QRect(80, 90, 260, 80))
-        self.show_grading.setFont(font)
-        self.show_grading.addItems(["Your tooth wear grading is: ", ""])
 
         self.verticalLayout_12.addWidget(self.widget_5)
 
@@ -564,7 +559,7 @@ class Ui_HomePage(object):
         self.label_10.setScaledContents(True)
         self.label_11 = QLabel(self.widget_6)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(80, 20, 161, 21))
+        self.label_11.setGeometry(QRect(67, 15, 300, 32))
         self.label_11.setFont(font)
 
         self.verticalLayout_12.addWidget(self.widget_6)
