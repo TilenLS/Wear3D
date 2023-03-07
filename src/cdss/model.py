@@ -254,7 +254,6 @@ class AppFunctions():
             row_position += 1
 
     def viewImage(self, id, dbFolder, viewer):
-
         self.pages.setCurrentWidget(self.viewPage)
         conn = AppFunctions.create_connection(dbFolder)
 
@@ -275,17 +274,34 @@ class AppFunctions():
         "QPushButton {background-color: #1b1b27; font-weight: bold}"
         )
 
-    def predict():
-        """
-        This function is used to send a request to the inference module and get the prediction
+    def __get_sextant(self, id, dbFolder):
+        conn = AppFunctions.create_connection(dbFolder)
 
-        The input should be a patient id and the database folder, then get the result from self.__get_sextant(id, dbFolder), i.e. the path of the sextant scan
+        patientID = id
+
+        toExecute = "SELECT PATIENT_SEXTANT_SCAN FROM Patients WHERE PATIENT_ID = :id"
+        crsr = conn.cursor()
+        crsr.execute(toExecute, {"id": patientID})
+
+        sextant = crsr.fetchall()[0][0]   # after changing the database (store binary file in the database)
+        return sextant
+
+    def predict(self, id, dbFolder):
+        """ This function is used to send a request to the inference module and get the prediction
+
+        Args:
+            id (int): patient id
+            dbFolder (str): path to the database folder
+
+        Returns:
+            json: a json file with the prediction
+
+        The input should be a patient id and the database folder, then get the result from self.__get_sextant(id, dbFolder), i.e. the sextant scan
 
         The function should find the .ply file and send it to the sever in a POST request
-
-        The output is a jason file with predictions
         """
         # sextant = self.__get_sextant(id, dbFolder)
+        # eg.
         sextant = '../inference_module/JawScan_1.ply'
         url = 'http://20.127.200.67:8080/predict'
 
