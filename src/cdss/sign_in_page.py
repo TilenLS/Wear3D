@@ -17,11 +17,11 @@ class Ui_SignInPage(object):
                                  "	background: transparent;\n"
                                  "	padding: 0;\n"
                                  "	margin: 0;\n"
-                                 "	color: #fff;\n"
+                                 "	color: #000000;\n"
                                  "}\n"
                                  "\n"
-                                 "#centralwidget,  #homeButton,  #mainBodyContent,  QLineEdit{\n"
-                                 "	background-color: #1b1b27;\n"
+                                 "#centralwidget{\n"
+                                 "	background-color: #ECF2FF;\n"
                                  "}\n"
                                  "\n"
                                  "")
@@ -40,7 +40,7 @@ class Ui_SignInPage(object):
         self.widget1 = QtWidgets.QWidget(self.centralwidget)
         self.widget1.setObjectName("widget1")
         self.widget1.setMinimumSize(QSize(800, 800))
-        self.widget1.setStyleSheet("background-color: #515064")
+        self.widget1.setStyleSheet("background-color: #BCCEF8")
         self.vertical_layout = QGridLayout(self.widget1)
         self.vertical_layout.setContentsMargins(100,50,100,50)
         self.vertical_layout.setSpacing(20)
@@ -83,13 +83,13 @@ class Ui_SignInPage(object):
         self.register_button.setFont(text_font)
         self.register_button.setStyleSheet("QPushButton {\n"
                                        "    border-radius: 5px;\n"
-                                       "    background:#5D3891;\n"
-                                       "    color: #FFCEFE;\n"
+                                       "    background:#8DCBE6;\n"
+                                       "    color: #111111;\n"
                                        "}\n"
                                        "\n"
                                        "QPushButton::hover {\n"
-                                       "    background:#BFACE2;\n"
-                                       "    color: #181D31;\n"
+                                       "    background:#AEE2FF;\n"
+                                       "    color: #111111;\n"
                                        "}")
 
         label_font = QtGui.QFont()
@@ -102,7 +102,7 @@ class Ui_SignInPage(object):
         self.username_input.setObjectName("username_input")
         self.username_input.setMinimumWidth(500)
         self.username_input.setStyleSheet("QLineEdit {\n"
-                                          "\tbackground-color: #282732;\n"
+                                          "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.username_input.setFont(label_font)
@@ -114,7 +114,7 @@ class Ui_SignInPage(object):
         self.password_input.setObjectName("password_input")
         self.password_input.setMinimumWidth(500)
         self.password_input.setStyleSheet("QLineEdit {\n"
-                                          "\tbackground-color: #282732;\n"
+                                          "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.password_input.setFont(label_font)
@@ -128,13 +128,13 @@ class Ui_SignInPage(object):
         self.sign_in_button.setFont(label_font)
         self.sign_in_button.setStyleSheet("QPushButton {\n"
                                        "    border-radius: 5px;\n"
-                                       "    background:#C3ACD0;\n"
-                                       "    color: #181D31;\n"
+                                       "    background:#B9F3FC;\n"
+                                       "    color: #000000;\n"
                                        "}\n"
                                        "\n"
                                        "QPushButton::hover {\n"
-                                       "    background:#BFACE2;\n"
-                                       "    color: #674188;\n"
+                                       "    background:#E3F6FF;\n"
+                                       "    color: #000000;\n"
                                        "}")
         self.vertical_layout.addWidget(self.sign_in_button, 4, 0, Qt.AlignHCenter)
 
