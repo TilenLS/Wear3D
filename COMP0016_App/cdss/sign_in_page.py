@@ -1,6 +1,10 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import QObject, QSize
-from PySide2.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QFrame, QVBoxLayout
+from PySide2.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QFrame, QVBoxLayout, QGridLayout
+
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
 
 
 class Ui_SignInPage(object):
@@ -23,53 +27,59 @@ class Ui_SignInPage(object):
                                  "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.central_layout = QVBoxLayout(self.centralwidget)
+        self.central_layout.setContentsMargins(150,50,150,50)
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy)
 
         self.widget1 = QtWidgets.QWidget(self.centralwidget)
         self.widget1.setObjectName("widget1")
         self.widget1.setMinimumSize(QSize(800, 800))
-        self.widget1.move(200, 50)
-        self.frame = QFrame()
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.frame.setStyleSheet("background-color: #515064")
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.frame)
-        self.widget1.setLayout(layout)
+        self.widget1.setStyleSheet("background-color: #515064")
+        self.vertical_layout = QGridLayout(self.widget1)
+        self.vertical_layout.setContentsMargins(100,50,100,50)
+        self.vertical_layout.setSpacing(20)
+        self.central_layout.addWidget(self.widget1, 0, Qt.AlignCenter)
 
 
-        self.account_login_label = QtWidgets.QLabel(self.centralwidget)
-        self.account_login_label.setGeometry(QtCore.QRect(0, 80, 1200, 100))
+        self.account_login_label = QtWidgets.QLabel(self.centralwidget, wordWrap=True)
         self.account_login_label.setObjectName("account_login_label")
+        self.account_login_label.setMinimumWidth(600)
         big_bold_font = QtGui.QFont()
-        big_bold_font.setPointSize(35)
+        big_bold_font.setPointSize(30)
         big_bold_font.setBold(True)
         big_bold_font.setWeight(75)
         big_bold_font.setFamily("Bahnschrift Light")
-        self.account_login_label.setAlignment(QtCore.Qt.AlignCenter)
         self.account_login_label.setFont(big_bold_font)
+        self.account_login_label.setAlignment(Qt.AlignCenter)
+        self.vertical_layout.addWidget(self.account_login_label, 0, 0, Qt.AlignHCenter)
 
-        self.reminder_text = QtWidgets.QLabel(self.centralwidget)
-        self.reminder_text.setGeometry(QtCore.QRect(0, 200, 1200, 50))
+        self.reminder_text = QtWidgets.QLabel(self.centralwidget, wordWrap=True)
         self.reminder_text.setObjectName("reminder_text")
         text_font = QtGui.QFont()
         text_font.setPointSize(14)
         text_font.setFamily("Bahnschrift Light")
-        self.reminder_text.setAlignment(QtCore.Qt.AlignCenter)
         self.reminder_text.setFont(text_font)
+        self.reminder_text.setAlignment(Qt.AlignCenter)
+        self.vertical_layout.addWidget(self.reminder_text, 1, 0, Qt.AlignHCenter)
 
         self.no_account_yet_text = QtWidgets.QLabel(self.centralwidget)
-        self.no_account_yet_text.setGeometry(QtCore.QRect(0, 680, 1200, 50))
         self.no_account_yet_text.setObjectName("no_account_yet_text")
         text_font = QtGui.QFont()
         text_font.setPointSize(12)
         text_font.setFamily("Bahnschrift Light")
-        self.no_account_yet_text.setAlignment(QtCore.Qt.AlignCenter)
         self.no_account_yet_text.setFont(text_font)
+        self.vertical_layout.addWidget(self.no_account_yet_text, 5, 0, Qt.AlignHCenter)
 
         self.register_button = QtWidgets.QPushButton(self.centralwidget)
-        self.register_button.setGeometry(QtCore.QRect(550, 750, 100, 45))
         self.register_button.setObjectName("register_button")
+        self.register_button.setFixedWidth(300)
+        self.register_button.setFixedHeight(60)
         self.register_button.setFont(text_font)
         self.register_button.setStyleSheet("QPushButton {\n"
                                        "    border-radius: 5px;\n"
@@ -85,23 +95,35 @@ class Ui_SignInPage(object):
         label_font = QtGui.QFont()
         label_font.setPointSize(14)
         label_font.setFamily("Bahnschrift Light")
+        self.vertical_layout.addWidget(self.register_button, 6, 0, Qt.AlignHCenter)
 
         self.username_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.username_input.setGeometry(QtCore.QRect(350, 320, 500, 70))
         self.username_input.setPlaceholderText("Please enter your email...")
         self.username_input.setObjectName("username_input")
+        self.username_input.setMinimumWidth(500)
+        self.username_input.setStyleSheet("QLineEdit {\n"
+                                          "\tbackground-color: #282732;\n"
+                                          "}"
+                                          )
         self.username_input.setFont(label_font)
+        self.vertical_layout.addWidget(self.username_input, 2, 0, Qt.AlignHCenter)
 
         self.password_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.password_input.setGeometry(QtCore.QRect(350, 470, 500, 70))
         self.password_input.setPlaceholderText("Please enter your password...")
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.setObjectName("password_input")
+        self.password_input.setMinimumWidth(500)
+        self.password_input.setStyleSheet("QLineEdit {\n"
+                                          "\tbackground-color: #282732;\n"
+                                          "}"
+                                          )
         self.password_input.setFont(label_font)
+        self.vertical_layout.addWidget(self.password_input, 3, 0, Qt.AlignHCenter)
 
         self.sign_in_button = QtWidgets.QPushButton(self.centralwidget)
-        self.sign_in_button.setGeometry(QtCore.QRect(450, 600, 300, 70))
         self.sign_in_button.setObjectName("sign_in_button")
+        self.sign_in_button.setFixedWidth(300)
+        self.sign_in_button.setFixedHeight(60)
         label_font.setBold(True)
         self.sign_in_button.setFont(label_font)
         self.sign_in_button.setStyleSheet("QPushButton {\n"
@@ -114,10 +136,10 @@ class Ui_SignInPage(object):
                                        "    background:#BFACE2;\n"
                                        "    color: #674188;\n"
                                        "}")
+        self.vertical_layout.addWidget(self.sign_in_button, 4, 0, Qt.AlignHCenter)
 
-        MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
 

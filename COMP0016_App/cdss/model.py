@@ -4,8 +4,10 @@ import sys
 import sqlite3
 from sqlite3 import Error
 
+from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
-from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox
+from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox, QPushButton, QMainWindow
+
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -28,6 +30,11 @@ class AppFunctions():
             self.upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
+    def chooseSextantFile(self):
+        self.sextantFilePath = QFileDialog.getOpenFileName(self,
+                                                self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
+
+
     def checkSignInDetails(self, dbFolder):
 
         conn = AppFunctions.create_connection(dbFolder)
@@ -47,7 +54,6 @@ class AppFunctions():
                 toCheckPassword.append(i)
 
             encryptedPassword = encrypt(passwordSignIn)
-
             if encryptedPassword == toCheckPassword[0]:
                 self.startHomePage()
             else:
@@ -87,7 +93,7 @@ class AppFunctions():
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
-            msg.setText("Password and confirm password is different. Please try again")
+            msg.setText("Password and confirm password are different. Please try again")
             msg.exec_()
 
     def create_connection(db_file):
@@ -126,7 +132,8 @@ class AppFunctions():
                                     PATIENT_EXERCISE TEXT,
                                     PATIENT_DRUG_USE TEXT,
                                     PATIENT_UPPER_JAW_SCAN TEXT,
-                                    PATIENT_LOWER_JAW_SCAN TEXT
+                                    PATIENT_LOWER_JAW_SCAN TEXT,
+                                    PATIENT_SEXTANT_SCAN TEXT
                                 );
                             """
         create_dentist_table = """ CREATE TABLE IF NOT EXISTS Dentists (
@@ -157,6 +164,17 @@ class AppFunctions():
         except Error as e:
             print(e)
 
+    def getPatientNumber(dbFolder):
+        conn = AppFunctions.create_connection(dbFolder)
+
+        toExecute = "SELECT MAX(PATIENT_ID) FROM Patients"
+        crsr = conn.cursor()
+        crsr.execute(toExecute)
+
+        numberOfPatients = crsr.fetchall()[0]
+
+        return numberOfPatients[0]
+
     def addPatient(self, dbFolder):
         conn = AppFunctions.create_connection(dbFolder)
 
@@ -177,15 +195,17 @@ class AppFunctions():
         drugUse = self.ui3.drugUse.currentText()
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
+        sextantScan = self.sextantFilePath
 
         insert_patient_data_sql = f"""
         INSERT INTO Patients (PATIENT_NAME, PATIENT_AGE, PATIENT_OCCUPATION, PATIENT_MEDICAL_HISTORY, 
         PATIENT_PAIN_COMPLAINT, PATIENT_FINANCIAL_RESOURCES, PATIENT_BRUSHING_METHOD, PATIENT_BRUSHING_FREQUENCY,
         PATIENT_BRUSHING_TIMING, PATIENT_ALCOHOL_INTAKE, PATIENT_STRESS_LEVEL, PATIENT_SLEEP_APNOEA, 
-        PATIENT_SNORING_HABIT, PATIENT_EXERCISE, PATIENT_DRUG_USE, PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN) 
+        PATIENT_SNORING_HABIT, PATIENT_EXERCISE, PATIENT_DRUG_USE, PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN, 
+        PATIENT_SEXTANT_SCAN) 
         VALUES ('{name}', '{age}', '{occupation}', '{medicalHistory}', '{painComplaint}', '{financialResources}', 
         '{brushingMethod}', '{brushingFrequency}', '{brushingTiming}', '{alocholIntake}', '{stressLevel}', 
-        '{sleepApnoea}', '{snoringHabit}', '{exercise}', '{drugUse}', '{upperScan}', '{lowerScan}')
+        '{sleepApnoea}', '{snoringHabit}', '{exercise}', '{drugUse}', '{upperScan}', '{lowerScan}', '{sextantScan}')
         """
 
         if not conn.cursor().execute(insert_patient_data_sql):
@@ -212,21 +232,45 @@ class AppFunctions():
 
     def displayPatients(self, rows):
         for row in rows:
-            row_position = self.ui.tableWidget.rowCount()
+            row_position = self.tableWidget.rowCount()
 
             if row_position + 1 > row[0]:
                 continue
 
             item_count = 0
-            self.ui3.tableWidget.setRowCount(row_position + 1)
+            self.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
-            self.ui3.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
+                self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
                 self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
+
+    def viewImage(self, id, dbFolder, viewer):
+
+        self.pages.setCurrentWidget(self.viewPage)
+        conn = AppFunctions.create_connection(dbFolder)
+
+        patientID = id
+
+        toExecute = "SELECT PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN FROM Patients WHERE PATIENT_ID = :id"
+        crsr = conn.cursor()
+        crsr.execute(toExecute, {"id": patientID})
+
+        upper_path, lower_path = crsr.fetchall()[0]
+
+        viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+
+        self.homeButton.setStyleSheet(
+        "QPushButton {background-color: transparent; border: none}"
+        )
+        self.viewButton.setStyleSheet(
+        "QPushButton {background-color: #1b1b27; font-weight: bold}"
+        )
+
+
