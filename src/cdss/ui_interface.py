@@ -30,27 +30,31 @@ class Ui_HomePage(object):
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
-"	background-color: transparent;\n"
+# "	background-color: #000000;\n"
 "	background: transparent;\n"
 "	padding: 0;\n"
 "	margin: 0;\n"
-"	color: #fff;\n"
+"	color: #000000;\n"
 "}\n"
 "\n"
 "#centralwidget,  #homeButton,  #mainBodyContent,  QLineEdit{\n"
-"	background-color: #1b1b27;\n"
+"	background-color: #FFFFFF;\n"
 "}\n"
 "\n"
-"#header,  #mainBody,  #viewingTools{\n"
-"	background-color: #27263c;\n"
+"#mainBody,  #viewingTools{\n"
+"	background-color: #ECF2FF;\n"
 "}\n"
 "\n"
+"#header{\n"
+"	background-color: #BCCEF8;\n"
+"}\n"
+"\n"                                
 "#pushButton{\n"
 "	text-align: center;\n"
 "}\n"
 "\n"
 "#addPatientButton{\n"
-"	background-color: #cc5bce;\n"
+"	background-color: #BCCEF8;\n"
 "	border-radius: 10px;\n"
 "}\n"
 "\n"
@@ -70,7 +74,7 @@ class Ui_HomePage(object):
 "}\n"
 "\n"
 "#widget_5,  #widget_6 {\n"
-"	background-color: #515064;\n"
+"	background-color: #ECF2FF;\n"
 "}\n"
 "\n"
 "\n"
@@ -125,20 +129,12 @@ class Ui_HomePage(object):
         self.pushButton_2 = QPushButton(self.frame)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setCursor(QCursor(Qt.PointingHandCursor))
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/Icons/search.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_2.setIcon(icon1)
-        self.pushButton_2.setIconSize(QSize(32, 32))
 
         self.horizontalLayout_3.addWidget(self.pushButton_2)
 
         self.pushButton = QPushButton(self.frame)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/Icons/users.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon2)
-        self.pushButton.setIconSize(QSize(32, 32))
 
         self.horizontalLayout_3.addWidget(self.pushButton)
 
@@ -185,9 +181,9 @@ class Ui_HomePage(object):
         self.homeButton = QPushButton(self.frame_3)
         self.homeButton.setObjectName(u"homeButton")
         self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.homeButton.setStyleSheet(u"background-color: #1b1b27;")
+        self.homeButton.setStyleSheet(u"background-color: #FFFFFF;")
         icon3 = QIcon()
-        icon3.addFile(u":/icons/Icons/home.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/icons/Icons/home_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.homeButton.setIcon(icon3)
         self.homeButton.setIconSize(QSize(16, 16))
 
@@ -197,7 +193,7 @@ class Ui_HomePage(object):
         self.viewButton.setObjectName(u"viewButton")
         self.viewButton.setCursor(QCursor(Qt.PointingHandCursor))
         icon4 = QIcon()
-        icon4.addFile(u":/icons/Icons/archive.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon4.addFile(u":/icons/Icons/archive_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.viewButton.setIcon(icon4)
         self.viewButton.setIconSize(QSize(16, 16))
 
@@ -208,7 +204,7 @@ class Ui_HomePage(object):
         self.analysisButton.setObjectName(u"analysisButton")
         self.analysisButton.setCursor(QCursor(Qt.PointingHandCursor))
         icon5 = QIcon()
-        icon5.addFile(u":/icons/Icons/activity.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon5.addFile(u":/icons/Icons/activity_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.analysisButton.setIcon(icon5)
         self.analysisButton.setIconSize(QSize(16, 16))
 
@@ -229,34 +225,6 @@ class Ui_HomePage(object):
         self.verticalLayout_6.setSpacing(10)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.settingButton = QPushButton(self.frame_4)
-        self.settingButton.setObjectName(u"settingButton")
-        self.settingButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon6 = QIcon()
-        icon6.addFile(u":/icons/Icons/settings.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.settingButton.setIcon(icon6)
-        self.settingButton.setIconSize(QSize(16, 16))
-
-        self.verticalLayout_6.addWidget(self.settingButton)
-
-        self.helpButton = QPushButton(self.frame_4)
-        self.helpButton.setObjectName(u"helpButton")
-        self.helpButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon7 = QIcon()
-        icon7.addFile(u":/icons/Icons/help-circle.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.helpButton.setIcon(icon7)
-
-        self.verticalLayout_6.addWidget(self.helpButton)
-
-        self.aboutButton = QPushButton(self.frame_4)
-        self.aboutButton.setObjectName(u"aboutButton")
-        self.aboutButton.setCursor(QCursor(Qt.PointingHandCursor))
-        icon8 = QIcon()
-        icon8.addFile(u":/icons/Icons/info.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.aboutButton.setIcon(icon8)
-
-        self.verticalLayout_6.addWidget(self.aboutButton)
-
 
         self.verticalLayout_4.addWidget(self.frame_4)
 
@@ -308,7 +276,7 @@ class Ui_HomePage(object):
         self.showPatientFormButton.setFont(font2)
         self.showPatientFormButton.setCursor(QCursor(Qt.PointingHandCursor))
         icon9 = QIcon()
-        icon9.addFile(u":/icons/Icons/plus-square.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon9.addFile(u":/icons/Icons/plus-square_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.showPatientFormButton.setIcon(icon9)
         self.showPatientFormButton.setIconSize(QSize(24, 26))
 
@@ -359,6 +327,8 @@ class Ui_HomePage(object):
         __qtablewidgetitem18 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
+
+        self.tableWidget.horizontalHeader().setStyleSheet("QTableWidget {background-color: #000000}")
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
@@ -437,7 +407,7 @@ class Ui_HomePage(object):
         self.pushButton_3.setObjectName(u"pushButton_3")
         self.pushButton_3.setStyleSheet(
         "QCheckBox {\n"
-        "background-color: #453C67; \n"
+        "background-color: #BCCEF8; \n"
         "border-radius: 10px; \n"
         "padding: 10px 20px; \n"
         "}"
@@ -455,7 +425,7 @@ class Ui_HomePage(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setStyleSheet(
         "QCheckBox {\n"
-        "background-color: #453C67; \n"
+        "background-color: #BCCEF8; \n"
         "border-radius: 10px; \n"
         "padding: 10px 20px; \n"
         "}"
@@ -474,13 +444,13 @@ class Ui_HomePage(object):
         self.loadUpperMesh.setCursor(QCursor(Qt.PointingHandCursor))
         self.loadUpperMesh.setStyleSheet(
         "QPushButton {\n"
-        "background-color: #453C67; \n"
+        "background-color: #BCCEF8; \n"
         "border-radius: 5px; \n"
         "padding: 10px 20px; \n"
         "text-align: centre; \n"
         "}"
         "QPushButton::hover {\n"
-        "background-color: #373052; \n"
+        "background-color: #8D9EFF; \n"
         "}"
         )
 
@@ -491,13 +461,13 @@ class Ui_HomePage(object):
         self.loadLowerMesh.setCursor(QCursor(Qt.PointingHandCursor))
         self.loadLowerMesh.setStyleSheet(
         "QPushButton {\n"
-        "background-color: #453C67; \n"
+        "background-color: #BCCEF8; \n"
         "border-radius: 5px; \n"
         "padding: 10px 20px; \n"
         "text-align: centre; \n"
         "}"
         "QPushButton::hover {\n"
-        "background-color: #373052; \n"
+        "background-color: #8D9EFF; \n"
         "}"
         )
 
@@ -508,13 +478,13 @@ class Ui_HomePage(object):
         self.resetViewPoint.setCursor(QCursor(Qt.PointingHandCursor))
         self.resetViewPoint.setStyleSheet(
         "QPushButton {\n"
-        "background-color: #453C67; \n"
+        "background-color: #BCCEF8; \n"
         "border-radius: 5px; \n"
         "padding: 10px 20px; \n"
         "text-align: centre; \n"
         "}"
         "QPushButton::hover {\n"
-        "background-color: #373052; \n"
+        "background-color: #8D9EFF; \n"
         "}"
         )
 
@@ -541,7 +511,7 @@ class Ui_HomePage(object):
         self.label_7 = QLabel(self.widget_5)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setGeometry(QRect(10, 10, 50, 50))
-        self.label_7.setPixmap(QPixmap(u":/icons/Icons/bar-chart.png"))
+        self.label_7.setPixmap(QPixmap(u":/icons/Icons/bar-chart_focus.png"))
         self.label_7.setScaledContents(True)
         self.label_9 = QLabel(self.widget_5)
         self.label_9.setObjectName(u"label_9")
@@ -555,7 +525,7 @@ class Ui_HomePage(object):
         self.label_10 = QLabel(self.widget_6)
         self.label_10.setObjectName(u"label_10")
         self.label_10.setGeometry(QRect(20, 10, 40, 40))
-        self.label_10.setPixmap(QPixmap(u":/icons/Icons/check-square.png"))
+        self.label_10.setPixmap(QPixmap(u":/icons/Icons/check-square_focus.png"))
         self.label_10.setScaledContents(True)
         self.label_11 = QLabel(self.widget_6)
         self.label_11.setObjectName(u"label_11")
@@ -611,9 +581,9 @@ class Ui_HomePage(object):
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.label_2 = QLabel(self.widget_2)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setMinimumSize(QSize(60, 60))
-        self.label_2.setMaximumSize(QSize(60, 60))
-        self.label_2.setPixmap(QPixmap(u":/icons/Icons/edit.png"))
+        self.label_2.setMinimumSize(QSize(50, 50))
+        self.label_2.setMaximumSize(QSize(50, 50))
+        self.label_2.setPixmap(QPixmap(u":/icons/Icons/edit_focus.png"))
         self.label_2.setScaledContents(True)
 
         self.verticalLayout_8.addWidget(self.label_2, 0, Qt.AlignHCenter)
@@ -828,27 +798,30 @@ class Ui_HomePage(object):
         self.upperJawScanButton = QPushButton(self.widget_2)
         self.upperJawScanButton.setObjectName(u"upperJawScanButton")
         icon10 = QIcon()
-        icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.upperJawScanButton.setIcon(icon10)
         self.upperJawScanButton.setIconSize(QSize(24, 24))
+        self.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
 
         self.verticalLayout_9.addWidget(self.upperJawScanButton)
 
         self.lowerJawScanButton = QPushButton(self.widget_2)
         self.lowerJawScanButton.setObjectName(u"lowerJawScanButton")
         icon10 = QIcon()
-        icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.lowerJawScanButton.setIcon(icon10)
         self.lowerJawScanButton.setIconSize(QSize(24, 24))
+        self.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
         self.sextantScanButton = QPushButton(self.widget_2)
         self.sextantScanButton.setObjectName(u"sextantScanButton")
         icon10 = QIcon()
-        icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.sextantScanButton.setIcon(icon10)
         self.sextantScanButton.setIconSize(QSize(24, 24))
+        self.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
 
         self.verticalLayout_9.addWidget(self.sextantScanButton)
 
@@ -891,9 +864,6 @@ class Ui_HomePage(object):
         self.homeButton.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.viewButton.setText(QCoreApplication.translate("MainWindow", u"View", None))
         self.analysisButton.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
-        self.settingButton.setText(QCoreApplication.translate("MainWindow", u"Setting", None))
-        self.helpButton.setText(QCoreApplication.translate("MainWindow", u"Help", None))
-        self.aboutButton.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Home Page", None))
         self.showPatientFormButton.setText(QCoreApplication.translate("MainWindow", u"Add patient details", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
