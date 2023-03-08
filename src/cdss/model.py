@@ -37,35 +37,24 @@ class AppFunctions():
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
 
-    def checkSignInDetails(self, dbFolder):
-
-        conn = AppFunctions.create_connection(dbFolder)
-
+    def checkSignInDetails(self):
         usernameSignIn = self.ui1.username_input.text()
         passwordSignIn = self.ui1.password_input.text()
+        payload = {'username': usernameSignIn, 'password': passwordSignIn}
 
-        toExecute = "SELECT DENTIST_PASSWORD FROM Dentists WHERE DENTIST_USERNAME = :username"
-        crsr = conn.cursor()
-        crsr.execute(toExecute, {"username": usernameSignIn})
+        url = 'http://20.127.200.67:8080/dentist/signin'
+        response = requests.post(url, payload)
+        signin_status = response.json()['result']
 
-        try:
-            passwordTuple = crsr.fetchall()[0]
-
-            toCheckPassword = []
-            for i in passwordTuple:
-                toCheckPassword.append(i)
-
-            encryptedPassword = encrypt(passwordSignIn)
-            if encryptedPassword == toCheckPassword[0]:
-                self.startHomePage()
-            else:
-                msg = QMessageBox()
-                msg.setWindowTitle("Invalid")
-                msg.setIcon(QMessageBox.Warning)
-                msg.setText("Invalid password, please try again")
-                msg.exec_()
-
-        except:
+        if signin_status == 'success':
+            self.startHomePage()
+        elif signin_status == 'fail':
+            msg = QMessageBox()
+            msg.setWindowTitle("Invalid")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Invalid password, please try again")
+            msg.exec_()
+        else:
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
@@ -286,7 +275,7 @@ class AppFunctions():
         sextant = crsr.fetchall()[0][0]   # after changing the database (store binary file in the database)
         return sextant
 
-    def predict(self, id, dbFolder):
+    def predict():
         """ This function is used to send a request to the inference module and get the prediction
 
         Args:
@@ -302,12 +291,17 @@ class AppFunctions():
         """
         # sextant = self.__get_sextant(id, dbFolder)
         # eg.
-        sextant = '../inference_module/JawScan_1.ply'
-        url = 'http://20.127.200.67:8080/predict'
+        sextant = '../back-end/inference_module/JawScan_1.ply'
+        url = 'http://20.127.200.67:8080/inference/predict'
 
         with open(sextant, 'rb') as f:
             files = {'file': (sextant, f)}
             response = requests.post(url, files=files)
 
         return response.json()
+    
+
+if __name__ == "__main__":
+    pred = AppFunctions.predict()
+    print(pred)
 
