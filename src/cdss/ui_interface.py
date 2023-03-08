@@ -10,7 +10,7 @@
 ################################################################################
 import os
 
-from PySide2 import QtGui, QtWidgets
+from PySide2 import QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -31,7 +31,7 @@ class Ui_HomePage(object):
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
-"	background-color: #000000;\n"
+#"	background-color: #000000;\n"
 "	background: transparent;\n"
 "	padding: 0;\n"
 "	margin: 0;\n"
@@ -329,9 +329,24 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
-        # self.tableWidget.horizontalHeaderItem(1).setBackground(QtGui.QColor(100, 100, 150))
-
-        self.tableWidget.horizontalHeader().setStyleSheet("QTableWidgetItem{background: #000000}")
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setStyleSheet(
+                "QHeaderView::section{"
+                "border-top:1px solid #000000;"
+                "border-left:0px solid #000000;"
+                "border-right:1px solid #000000;"
+                "border-bottom: 1px solid #000000;"
+                "background-color:#BCCEF8;"
+                "padding:4px;"
+                "}"
+                "QTableCornerButton::section{"
+                "border-top:0px solid #D8D8D8;"
+                "border-left:0px solid #D8D8D8;"
+                "border-right:1px solid #D8D8D8;"
+                "border-bottom: 1px solid #D8D8D8;"
+                "background-color:#BCCEF8;"
+                "}"
+        )
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
