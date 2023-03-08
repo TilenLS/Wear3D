@@ -10,7 +10,7 @@
 ################################################################################
 import os
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -338,6 +338,9 @@ class Ui_HomePage(object):
         dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
         AppFunctions.main(dbFolder)
         AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
+
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
 
         for i in range(patientNumber):
             self.viewSpecificButton = QPushButton(self.tableWidget)
@@ -879,7 +882,6 @@ class Ui_HomePage(object):
         self.homeButton.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.viewButton.setText(QCoreApplication.translate("MainWindow", u"View", None))
         self.analysisButton.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"Home Page", None))
         self.showPatientFormButton.setText(QCoreApplication.translate("MainWindow", u"Add patient details", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"ID", None));
