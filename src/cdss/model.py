@@ -271,7 +271,7 @@ class AppFunctions():
         "QPushButton {background-color: transparent; border: none}"
         )
         self.viewButton.setStyleSheet(
-        "QPushButton {background-color: #1b1b27; font-weight: bold}"
+        "QPushButton {background-color: #FFFFFF; font-weight: bold}"
         )
 
     def __get_sextant(self, id, dbFolder):

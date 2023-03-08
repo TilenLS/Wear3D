@@ -16,11 +16,11 @@ class Ui_RegisterPage(object):
                                  "	background: transparent;\n"
                                  "	padding: 0;\n"
                                  "	margin: 0;\n"
-                                 "	color: #fff;\n"
+                                 "	color: #000000;\n"
                                  "}\n"
                                  "\n"
-                                 "#centralwidget,  #homeButton,  #mainBodyContent,  QLineEdit{\n"
-                                 "	background-color: #1b1b27;\n"
+                                 "#centralwidget{\n"
+                                 "	background-color: #ECF2FF;\n"
                                  "}\n"
                                  "\n"
                                  "")
@@ -38,9 +38,9 @@ class Ui_RegisterPage(object):
 
         self.widget1 = QtWidgets.QWidget(self.centralwidget)
         self.widget1.setObjectName("widget1")
-        self.widget1.setMinimumSize(QSize(900, 800))
+        self.widget1.setMinimumSize(QSize(800, 800))
         self.widget1.setMaximumSize(16777215, 16777215)
-        self.widget1.setStyleSheet("background-color: #515064")
+        self.widget1.setStyleSheet("background-color: #BCCEF8")
         self.vertical_layout = QGridLayout(self.widget1)
         self.vertical_layout.setContentsMargins(100,50,100,50)
         self.vertical_layout.setSpacing(20)
@@ -58,6 +58,15 @@ class Ui_RegisterPage(object):
         self.register_account_label.setFont(big_bold_font)
         self.vertical_layout.addWidget(self.register_account_label, 0, 0, Qt.AlignHCenter)
 
+        self.reminder_text = QtWidgets.QLabel(self.centralwidget, wordWrap=True)
+        self.reminder_text.setObjectName("reminder_text")
+        text_font = QtGui.QFont()
+        text_font.setPointSize(14)
+        text_font.setFamily("Bahnschrift Light")
+        self.reminder_text.setFont(text_font)
+        self.reminder_text.setAlignment(Qt.AlignCenter)
+        self.vertical_layout.addWidget(self.reminder_text, 1, 0, Qt.AlignHCenter)
+
         self.already_have_an_account_text = QtWidgets.QLabel(self.centralwidget)
         self.already_have_an_account_text.setObjectName("no_account_yet_text")
         text_font = QtGui.QFont()
@@ -73,30 +82,30 @@ class Ui_RegisterPage(object):
         self.sign_in_button.setFont(text_font)
         self.sign_in_button.setStyleSheet("QPushButton {\n"
                                            "    border-radius: 5px;\n"
-                                           "    background:#5D3891;\n"
-                                           "    color: #FFCEFE;\n"
+                                           "    background:#8DCBE6;\n"
+                                           "    color: #111111;\n"
                                            "}\n"
                                            "\n"
                                            "QPushButton::hover {\n"
-                                           "    background:#BFACE2;\n"
-                                           "    color: #181D31;\n"
+                                           "    background:#AEE2FF;\n"
+                                           "    color: #111111;\n"
                                            "}")
 
         label_font = QtGui.QFont()
         label_font.setPointSize(14)
         label_font.setFamily("Bahnschrift Light")
-        self.vertical_layout.addWidget(self.sign_in_button, 5, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.sign_in_button, 7, 0, Qt.AlignHCenter)
 
         self.username_input = QtWidgets.QLineEdit(self.centralwidget)
         self.username_input.setPlaceholderText("Please enter your email...")
         self.username_input.setObjectName("username_input")
         self.username_input.setMinimumWidth(500)
         self.username_input.setStyleSheet("QLineEdit {\n"
-                                          "\tbackground-color: #282732;\n"
+                                          "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.username_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.username_input, 1, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.username_input, 2, 0, Qt.AlignHCenter)
 
         self.password_input = QtWidgets.QLineEdit(self.centralwidget)
         self.password_input.setPlaceholderText("Please enter your password...")
@@ -104,11 +113,11 @@ class Ui_RegisterPage(object):
         self.password_input.setObjectName("password_input")
         self.password_input.setMinimumWidth(500)
         self.password_input.setStyleSheet("QLineEdit {\n"
-                                          "\tbackground-color: #282732;\n"
+                                          "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.password_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.password_input, 2, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.password_input, 3, 0, Qt.AlignHCenter)
 
         self.confirm_password_input = QtWidgets.QLineEdit(self.centralwidget)
         self.confirm_password_input.setPlaceholderText("Please confirm your password...")
@@ -116,29 +125,29 @@ class Ui_RegisterPage(object):
         self.confirm_password_input.setObjectName("password_input")
         self.confirm_password_input.setMinimumWidth(500)
         self.confirm_password_input.setStyleSheet("QLineEdit {\n"
-                                          "\tbackground-color: #282732;\n"
+                                          "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.confirm_password_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.confirm_password_input, 3, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.confirm_password_input, 4, 0, Qt.AlignHCenter)
 
         self.register_button = QtWidgets.QPushButton(self.centralwidget)
         self.register_button.setObjectName("register_button")
         label_font.setBold(True)
-        self.register_button.setFixedWidth(400)
-        self.register_button.setFixedHeight(80)
+        self.register_button.setFixedWidth(300)
+        self.register_button.setFixedHeight(60)
         self.register_button.setFont(label_font)
         self.register_button.setStyleSheet("QPushButton {\n"
                                           "    border-radius: 5px;\n"
-                                          "    background:#C3ACD0;\n"
-                                          "    color: #181D31;\n"
+                                          "    background:#B9F3FC;\n"
+                                          "    color: #000000;\n"
                                           "}\n"
                                           "\n"
                                           "QPushButton::hover {\n"
-                                          "    background:#BFACE2;\n"
-                                          "    color: #674188;\n"
+                                          "    background:#E3F6FF;\n"
+                                          "    color: #000000;\n"
                                           "}")
-        self.vertical_layout.addWidget(self.register_button, 4, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.register_button, 5, 0, Qt.AlignHCenter)
 
 
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -156,6 +165,7 @@ class Ui_RegisterPage(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.register_account_label.setText(_translate("MainWindow", "Register Account"))
+        self.reminder_text.setText(_translate("MainWindow", "Please enter your details to register for an account"))
         self.already_have_an_account_text.setText(_translate("MainWindow", "Already have an account?"))
         self.register_button.setText(_translate("MainWindow", "Register"))
         self.sign_in_button.setText(_translate("MainWindow", "Sign In"))
