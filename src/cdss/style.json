@@ -2,7 +2,7 @@
     "ShowLogs": true,
     "QMainWindow": [
         {
-            "tittle": "Tooth Wear"
+            "tittle": "Tooth Wear Decision Support System"
         }
     ],
     "QSettings": [
@@ -11,12 +11,7 @@
                 {
                     "CustomTheme": [
                         {
-                            "Background-color": "#1b1b27",
-                            "Text-color": "#fff",
-                            "Accent-color": "#1b1b27",
-                            "Theme-name": "Default-Dark",
-                            "Icons-color": "#fff",
-                            "Default-Theme": true
+                            "Default-Theme": false
                         }
                     ]
                 }
@@ -33,14 +28,11 @@
             "Buttons": [
                 "homeButton",
                 "analysisButton",
-                "viewButton",
-                "settingButton",
-                "helpButton",
-                "aboutButton"
+                "viewButton"
             ],
             "Style":[
                 {
-                    "Active": "background-color: #1b1b27; font-weight: bold;",
+                    "Active": "background-color: #FFFFFF; font-weight: bold;",
                     "NotActive": "background-color: transparent; border: none"
                 }
             ]
@@ -110,8 +102,8 @@
                     "buttonName": "showPatientFormButton",
                     "icons": [
                         {
-                            "whenMenuIsCollapsed": ":/icons/Icons/plus-square.png",
-                            "whenMenuIsExpanded": ":/icons/Icons/window_close.png"
+                            "whenMenuIsCollapsed": ":/icons/Icons/plus-square_focus.png",
+                            "whenMenuIsExpanded": ":/icons/Icons/window_close_focus.png"
                         }
                     ]
                 }
@@ -152,10 +144,7 @@
 						{
 							"homeButton": "homePage",
 							"viewButton": "viewPage",
-                            "analysisButton": "analysisPage",
-                            "aboutButton": "aboutPage",
-                            "helpButton": "helpPage",
-                            "settingButton": "settingPage"
+                            "analysisButton": "analysisPage"
 						}
 					]
 				}

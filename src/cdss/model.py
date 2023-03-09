@@ -160,7 +160,7 @@ class AppFunctions():
             self.ui3.exercise.setCurrentIndex(0)
             self.ui3.drugUse.setCurrentIndex(0)
 
-            AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
+            AppFunctions.displayPatientsAfterAdd(self, AppFunctions.getAllPatients(dbFolder))
 
     def deletePatient(self):
         id = self.ui4.id.text()
@@ -192,7 +192,28 @@ class AppFunctions():
                 item_count += 1
             row_position += 1
 
-    def viewImage(self, id, viewer):
+    def displayPatientsAfterAdd(self, rows):
+        for row in rows:
+            row_position = self.ui3.tableWidget.rowCount()
+
+            if row_position + 1 > row[0]:
+                continue
+
+            item_count = 0
+            self.ui3.tableWidget.setRowCount(row_position + 1)
+            qtableWidgetItem = QTableWidgetItem()
+            self.ui3.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+
+            for item in row:
+                self.qtableWidgetItem = QTableWidgetItem()
+                self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
+                self.qtableWidgetItem.setText(str(item))
+
+                item_count += 1
+            row_position += 1
+
+    def viewImage(self, id, dbFolder, viewer):
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
@@ -208,7 +229,7 @@ class AppFunctions():
         "QPushButton {background-color: transparent; border: none}"
         )
         self.viewButton.setStyleSheet(
-        "QPushButton {background-color: #1b1b27; font-weight: bold}"
+        "QPushButton {background-color: #FFFFFF; font-weight: bold}"
         )
 
     def __get_sextant(self, id, dbFolder):
