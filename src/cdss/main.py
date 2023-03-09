@@ -32,27 +32,27 @@ class MainWindow(QMainWindow, Ui_SignInPage):
 
     def startSignInPage(self):
         self.ui1.setupUi(self)
-        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
-        AppFunctions.main(dbFolder)
-        self.ui1.sign_in_button.clicked.connect(lambda: AppFunctions.checkSignInDetails(self, dbFolder))
+        # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        # AppFunctions.main(dbFolder)
+        self.ui1.sign_in_button.clicked.connect(lambda: AppFunctions.checkSignInDetails(self))
         self.ui1.register_button.clicked.connect(self.startRegisterPage)
 
     def startRegisterPage(self):
         self.ui2.setupUi(self)
-        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
-        AppFunctions.main(dbFolder)
-        self.ui2.register_button.clicked.connect(lambda: AppFunctions.addDentist(self, dbFolder))
+        # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        # AppFunctions.main(dbFolder)
+        self.ui2.register_button.clicked.connect(lambda: AppFunctions.addDentist(self))
         self.ui2.sign_in_button.clicked.connect(self.startSignInPage)
 
     def startHomePage(self):
-        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
-        num_of_patient = AppFunctions.getPatientNumber(dbFolder)
+        # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        num_of_patient = AppFunctions.getPatientNumber()
         self.ui3.setupUi(self, num_of_patient, self.imageViewer)
         loadJsonStyle(self, self.ui3)
         self.show()
         self.imageViewer.initialise_viewer(self.ui3)
-        AppFunctions.main(dbFolder)
-        self.ui3.addPatientButton.clicked.connect(lambda: AppFunctions.addPatient(self, dbFolder))
+        # AppFunctions.main(dbFolder)
+        self.ui3.addPatientButton.clicked.connect(lambda: AppFunctions.addPatient(self))
         self.ui3.upperJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, False, True))
         self.ui3.lowerJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, True, False))
         self.ui3.sextantScanButton.clicked.connect(lambda: AppFunctions.chooseSextantFile(self))
