@@ -362,9 +362,9 @@ class Ui_HomePage(object):
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
-        dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
-        AppFunctions.main(dbFolder)
-        AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
+        # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
+        # AppFunctions.main(dbFolder)
+        AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
 
         for i in range(patientNumber):
             self.viewSpecificButton = QPushButton(self.tableWidget)
@@ -372,7 +372,7 @@ class Ui_HomePage(object):
             self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
             self.viewSpecificButton.setText(str(i+1))
             self.viewSpecificButton.clicked.connect(
-                        lambda *args, i=i + 1, f=dbFolder, v=imageViewer: AppFunctions.viewImage(self, i, f, v))
+                        lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImage(self, i, v))
 
 
         self.vboxLayout.addWidget(self.widget_4)

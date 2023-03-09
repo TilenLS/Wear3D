@@ -43,7 +43,8 @@ class AppFunctions():
         payload = {'username': usernameSignIn, 'password': passwordSignIn}
 
         url = 'http://20.127.200.67:8080/dentist/signin'
-        response = requests.post(url, payload)
+        # url = 'http://127.0.0.1:5000/dentist/signin'
+        response = requests.post(url, json=payload)
         signin_status = response.json()['result']
 
         if signin_status == 'success':
@@ -61,114 +62,46 @@ class AppFunctions():
             msg.setText("Username does not exist")
             msg.exec_()
 
-    def addDentist(self, dbFolder):
-        conn = AppFunctions.create_connection(dbFolder)
-
+    def addDentist(self):
         username = self.ui2.username_input.text()
         password1 = self.ui2.password_input.text()
         password2 = self.ui2.confirm_password_input.text()
         encrypted = encrypt(password1)
+        payload = {'username': username, 
+                   'password': password1,
+                   'confirm_password': password2,
+                   'encrypted': encrypted}
 
-        if password1 == password2:
+        url = 'http://20.127.200.67:8080/dentist/signup'
+        # url = 'http://127.0.0.1:5000/dentist/signup'
+        response = requests.post(url, json=payload)
+        signup_status = response.json()['result']
 
-            if not conn.cursor().execute("INSERT INTO Dentists (DENTIST_USERNAME, DENTIST_PASSWORD) VALUES (?,?)", \
-                                          (username, encrypted)):
-                print("Could not insert dentist data")
-            else:
-                conn.commit()
-                crsr = conn.cursor()
-                crsr.execute("SELECT * FROM Dentists")
-                print("dentist data: ", crsr.fetchall())  # to show every dentist user in the database
-                self.startSignInPage()
-        else:
+        if signup_status == 'success':
+            self.startSignInPage()
+        elif signup_status == 'fail':
+            print("Could not insert dentist data")             
+        elif signup_status == 'invalid':
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
             msg.setText("Password and confirm password are different. Please try again")
             msg.exec_()
 
-    def create_connection(db_file):
-        conn = None
+    def getAllPatients():
+        url = 'http://20.127.200.67:8080/patient/all'
+        # url = 'http://127.0.0.1:5000/patient/all'
+        patients = requests.get(url)
+        return patients
 
-        try:
-            conn = sqlite3.connect(db_file)
-        except Error as e:
-            print(e)
+    def getPatientNumber():
+        url = 'http://20.127.200.67:8080/patient/number'
+        # url = 'http://127.0.0.1:5000/patient/number'
+        response = requests.get(url)
+        patient_number = response.json()['num']
+        return patient_number
 
-        return conn
-
-    def create_table(conn, create_table_sql):
-        try:
-            c = conn.cursor()
-            c.execute(create_table_sql)
-        except Error as e:
-            print(e)
-
-    def main(dbFolder):
-        create_patient_table = """ CREATE TABLE IF NOT EXISTS Patients (
-                                    PATIENT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    PATIENT_NAME TEXT,
-                                    PATIENT_AGE TEXT,
-                                    PATIENT_OCCUPATION TEXT,
-                                    PATIENT_MEDICAL_HISTORY TEXT,
-                                    PATIENT_PAIN_COMPLAINT TEXT,
-                                    PATIENT_FINANCIAL_RESOURCES TEXT,
-                                    PATIENT_BRUSHING_METHOD TEXT,
-                                    PATIENT_BRUSHING_FREQUENCY TEXT,
-                                    PATIENT_BRUSHING_TIMING TEXT,
-                                    PATIENT_ALCOHOL_INTAKE TEXT,
-                                    PATIENT_STRESS_LEVEL TEXT,
-                                    PATIENT_SLEEP_APNOEA TEXT,
-                                    PATIENT_SNORING_HABIT TEXT,
-                                    PATIENT_EXERCISE TEXT,
-                                    PATIENT_DRUG_USE TEXT,
-                                    PATIENT_UPPER_JAW_SCAN TEXT,
-                                    PATIENT_LOWER_JAW_SCAN TEXT,
-                                    PATIENT_SEXTANT_SCAN TEXT
-                                );
-                            """
-        create_dentist_table = """ CREATE TABLE IF NOT EXISTS Dentists (
-                                    DENTIST_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    DENTIST_USERNAME TEXT,
-                                    DENTIST_PASSWORD TEXT
-                                );
-                            """
-        conn = AppFunctions.create_connection(dbFolder)
-
-        if conn is not None:
-            AppFunctions.create_table(conn, create_patient_table)
-            AppFunctions.create_table(conn, create_dentist_table)
-        else:
-            print("Error! Cannot create a patient database connection")
-
-    def getAllPatients(dbFolder):
-        conn = AppFunctions.create_connection(dbFolder)
-
-        get_all_patients = """
-                            SELECT * FROM Patients;                         
-                           """
-
-        try:
-            c = conn.cursor()
-            c.execute(get_all_patients)
-            return c
-        except Error as e:
-            print(e)
-
-    def getPatientNumber(dbFolder):
-        conn = AppFunctions.create_connection(dbFolder)
-
-        toExecute = "SELECT MAX(PATIENT_ID) FROM Patients"
-        crsr = conn.cursor()
-        crsr.execute(toExecute)
-
-        numberOfPatients = crsr.fetchall()[0]
-
-        return numberOfPatients[0]
-
-    def addPatient(self, dbFolder):
-        conn = AppFunctions.create_connection(dbFolder)
-
+    def addPatient(self):
         name = self.ui3.name.text()
         age = self.ui3.age.text()
         occupation = self.ui3.occupation.text()
@@ -187,22 +120,33 @@ class AppFunctions():
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
         sextantScan = self.sextantFilePath
+        payload = {'name': name,
+                    'age': age,
+                    'occupation': occupation,
+                    'medicalHistory': medicalHistory,
+                    'painComplaint': painComplaint,
+                    'financialResources': financialResources,
+                    'brushingMethod': brushingMethod,
+                    'brushingFrequency': brushingFrequency,
+                    'brushingTiming': brushingTiming,
+                    'alcoholIntake': alocholIntake,
+                    'stressLevel': stressLevel,
+                    'sleepApnoea': sleepApnoea,
+                    'snoringHabit': snoringHabit,
+                    'exercise': exercise,
+                    'drugUse': drugUse,
+                    'upperScan': upperScan,
+                    'lowerScan': lowerScan,
+                    'sextantScan': sextantScan}
+        
+        url = 'http://20.127.200.67:8080/patient/add'
+        # url = 'http://127.0.0.1:5000/patient/add'
+        response = requests.post(url, json=payload)
+        add_status = response.json()['result']
 
-        insert_patient_data_sql = f"""
-        INSERT INTO Patients (PATIENT_NAME, PATIENT_AGE, PATIENT_OCCUPATION, PATIENT_MEDICAL_HISTORY, 
-        PATIENT_PAIN_COMPLAINT, PATIENT_FINANCIAL_RESOURCES, PATIENT_BRUSHING_METHOD, PATIENT_BRUSHING_FREQUENCY,
-        PATIENT_BRUSHING_TIMING, PATIENT_ALCOHOL_INTAKE, PATIENT_STRESS_LEVEL, PATIENT_SLEEP_APNOEA, 
-        PATIENT_SNORING_HABIT, PATIENT_EXERCISE, PATIENT_DRUG_USE, PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN, 
-        PATIENT_SEXTANT_SCAN) 
-        VALUES ('{name}', '{age}', '{occupation}', '{medicalHistory}', '{painComplaint}', '{financialResources}', 
-        '{brushingMethod}', '{brushingFrequency}', '{brushingTiming}', '{alocholIntake}', '{stressLevel}', 
-        '{sleepApnoea}', '{snoringHabit}', '{exercise}', '{drugUse}', '{upperScan}', '{lowerScan}', '{sextantScan}')
-        """
-
-        if not conn.cursor().execute(insert_patient_data_sql):
+        if add_status == 'fail':
             print("Could not insert patient data")
         else:
-            conn.commit()
             self.ui3.name.setText("")
             self.ui3.age.setText("")
             self.ui3.occupation.setText("")
@@ -219,9 +163,10 @@ class AppFunctions():
             self.ui3.exercise.setCurrentIndex(0)
             self.ui3.drugUse.setCurrentIndex(0)
 
-            AppFunctions.displayPatients(self, AppFunctions.getAllPatients(dbFolder))
+            AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
 
     def displayPatients(self, rows):
+        rows = rows.json()['data']
         for row in rows:
             row_position = self.tableWidget.rowCount()
 
@@ -242,17 +187,15 @@ class AppFunctions():
                 item_count += 1
             row_position += 1
 
-    def viewImage(self, id, dbFolder, viewer):
+    def viewImage(self, id, viewer):
         self.pages.setCurrentWidget(self.viewPage)
-        conn = AppFunctions.create_connection(dbFolder)
 
-        patientID = id
-
-        toExecute = "SELECT PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN FROM Patients WHERE PATIENT_ID = :id"
-        crsr = conn.cursor()
-        crsr.execute(toExecute, {"id": patientID})
-
-        upper_path, lower_path = crsr.fetchall()[0]
+        payload = {'id': id}
+        url = 'http://20.127.200.67:8080/patient/view'
+        # url = 'http://127.0.0.1:5000/patient/view'
+        response = requests.post(url, json=payload)
+        upper_path = response.json()['upper']
+        lower_path = response.json()['lower']
 
         viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
 
