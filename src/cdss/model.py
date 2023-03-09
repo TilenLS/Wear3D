@@ -1,11 +1,8 @@
 import base64
 import os
 import sys
-import sqlite3
-from sqlite3 import Error
 import requests
 from requests.exceptions import ConnectionError
-
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
 from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox, QPushButton, QMainWindow
@@ -164,6 +161,14 @@ class AppFunctions():
             self.ui3.drugUse.setCurrentIndex(0)
 
             AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
+
+    def deletePatient(self):
+        id = self.ui4.id.text()
+        payload = {'id': id}
+
+        url = 'http://20.127.200.67:8080/patient/delete'
+        # url = 'http://127.0.0.1:5000/patient/delete'
+        response = requests.post(url, json=payload)
 
     def displayPatients(self, rows):
         rows = rows.json()['data']
