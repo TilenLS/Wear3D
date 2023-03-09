@@ -177,7 +177,7 @@ class AppFunctions():
 
         return numberOfPatients[0]
 
-    def addPatient(self, dbFolder):
+    def addPatient(self, dbFolder, imageViewer):
         conn = AppFunctions.create_connection(dbFolder)
 
         name = self.ui3.name.text()
@@ -231,6 +231,15 @@ class AppFunctions():
             self.ui3.drugUse.setCurrentIndex(0)
 
             AppFunctions.displayPatientsAfterAdd(self, AppFunctions.getAllPatients(dbFolder))
+            patientNumber = AppFunctions.getPatientNumber(dbFolder)
+            for i in range(patientNumber):
+                self.ui3.viewSpecificButton = QPushButton(self.ui3.tableWidget)
+                self.ui3.viewSpecificButton.setObjectName(u"viewSpecificButton")
+                self.ui3.tableWidget.setCellWidget(i, 0, self.ui3.viewSpecificButton)
+                self.ui3.viewSpecificButton.setText(str(i + 1))
+                self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
+                self.ui3.viewSpecificButton.clicked.connect(
+                    lambda *args, i=i + 1, f=dbFolder, v=imageViewer: AppFunctions.viewImageAfterAdd(self, i, f, v))
 
     def displayPatients(self, rows):
         for row in rows:
@@ -295,6 +304,27 @@ class AppFunctions():
         "QPushButton {background-color: #FFFFFF; font-weight: bold}"
         )
 
+    def viewImageAfterAdd(self, id, dbFolder, viewer):
+        self.ui3.pages.setCurrentWidget(self.ui3.viewPage)
+        conn = AppFunctions.create_connection(dbFolder)
+
+        patientID = id
+
+        toExecute = "SELECT PATIENT_UPPER_JAW_SCAN, PATIENT_LOWER_JAW_SCAN FROM Patients WHERE PATIENT_ID = :id"
+        crsr = conn.cursor()
+        crsr.execute(toExecute, {"id": patientID})
+
+        upper_path, lower_path = crsr.fetchall()[0]
+
+        viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+
+        self.ui3.homeButton.setStyleSheet(
+        "QPushButton {background-color: transparent; border: none}"
+        )
+        self.ui3.viewButton.setStyleSheet(
+        "QPushButton {background-color: #FFFFFF; font-weight: bold}"
+        )
+
     def __get_sextant(self, id, dbFolder):
         conn = AppFunctions.create_connection(dbFolder)
 
@@ -331,4 +361,9 @@ class AppFunctions():
             response = requests.post(url, files=files)
 
         return response.json()
+
+
+
+
+
 

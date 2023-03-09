@@ -52,7 +52,7 @@ class MainWindow(QMainWindow, Ui_SignInPage):
         self.show()
         self.imageViewer.initialise_viewer(self.ui3)
         AppFunctions.main(dbFolder)
-        self.ui3.addPatientButton.clicked.connect(lambda: AppFunctions.addPatient(self, dbFolder))
+        self.ui3.addPatientButton.clicked.connect(lambda: AppFunctions.addPatient(self, dbFolder, self.imageViewer))
         self.ui3.upperJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, False, True))
         self.ui3.lowerJawScanButton.clicked.connect(lambda: AppFunctions.choose_file(self, True, False))
         self.ui3.sextantScanButton.clicked.connect(lambda: AppFunctions.chooseSextantFile(self))
