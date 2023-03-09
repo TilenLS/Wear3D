@@ -10,7 +10,7 @@
 ################################################################################
 import os
 
-from PySide2 import QtGui, QtWidgets
+from PySide2 import QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -31,7 +31,6 @@ class Ui_HomePage(object):
         MainWindow.setMinimumSize(QSize(800, 500))
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
-"	background-color: #000000;\n"
 "	background: transparent;\n"
 "	padding: 0;\n"
 "	margin: 0;\n"
@@ -198,6 +197,7 @@ class Ui_HomePage(object):
         self.viewButton.setIcon(icon4)
         self.viewButton.setIconSize(QSize(16, 16))
 
+
         self.verticalLayout_5.addWidget(self.viewButton)
 
 
@@ -259,15 +259,12 @@ class Ui_HomePage(object):
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.label_8 = QLabel(self.frame_6)
-        self.label_8.setObjectName(u"label_8")
+
         font1 = QFont()
         font1.setPointSize(20)
         font1.setBold(True)
         font1.setWeight(75)
-        self.label_8.setFont(font1)
 
-        self.horizontalLayout_5.addWidget(self.label_8)
 
         self.showPatientFormButton = QPushButton(self.frame_6)
         self.showPatientFormButton.setObjectName(u"showPatientFormButton")
@@ -329,9 +326,24 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
-        # self.tableWidget.horizontalHeaderItem(1).setBackground(QtGui.QColor(100, 100, 150))
-
-        self.tableWidget.horizontalHeader().setStyleSheet("QTableWidgetItem{background: #000000}")
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setStyleSheet(
+                "QHeaderView::section{"
+                "border-top:1px solid #000000;"
+                "border-left:0px solid #000000;"
+                "border-right:1px solid #000000;"
+                "border-bottom: 1px solid #000000;"
+                "background-color:#BCCEF8;"
+                "padding:4px;"
+                "}"
+                "QTableCornerButton::section{"
+                "border-top:0px solid #D8D8D8;"
+                "border-left:0px solid #D8D8D8;"
+                "border-right:1px solid #D8D8D8;"
+                "border-bottom: 1px solid #D8D8D8;"
+                "background-color:#BCCEF8;"
+                "}"
+        )
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
@@ -347,6 +359,7 @@ class Ui_HomePage(object):
             self.viewSpecificButton.setObjectName(u"viewSpecificButton")
             self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
             self.viewSpecificButton.setText(str(i+1))
+            self.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
             self.viewSpecificButton.clicked.connect(
                         lambda *args, i=i + 1, f=dbFolder, v=imageViewer: AppFunctions.viewImage(self, i, f, v))
 
@@ -544,29 +557,6 @@ class Ui_HomePage(object):
         self.verticalLayout_11.addWidget(self.widget_7)
 
         self.pages.addWidget(self.analysisPage)
-        self.settingPage = QWidget()
-        self.settingPage.setObjectName(u"settingPage")
-        self.label_6 = QLabel(self.settingPage)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(150, 150, 91, 51))
-        font3 = QFont()
-        font3.setPointSize(20)
-        self.label_6.setFont(font3)
-        self.pages.addWidget(self.settingPage)
-        self.helpPage = QWidget()
-        self.helpPage.setObjectName(u"helpPage")
-        self.label_5 = QLabel(self.helpPage)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(140, 160, 81, 41))
-        self.label_5.setFont(font3)
-        self.pages.addWidget(self.helpPage)
-        self.aboutPage = QWidget()
-        self.aboutPage.setObjectName(u"aboutPage")
-        self.label_4 = QLabel(self.aboutPage)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(130, 160, 91, 41))
-        self.label_4.setFont(font1)
-        self.pages.addWidget(self.aboutPage)
 
         self.verticalLayout_2.addWidget(self.pages)
 
@@ -933,10 +923,6 @@ class Ui_HomePage(object):
         self.resetViewPoint.setText(QCoreApplication.translate("MainWindow", u"Reset camera", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
-
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"setting", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Help", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.label_2.setText("")
         self.name.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Name", None))
         self.age.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Age", None))
