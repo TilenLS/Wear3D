@@ -531,11 +531,19 @@ class Ui_HomePage(object):
         self.label_7.setObjectName(u"label_7")
         self.label_7.setGeometry(QRect(10, 10, 50, 50))
         self.label_7.setPixmap(QPixmap(u":/icons/Icons/bar-chart_focus.png"))
-        self.label_7.setScaledContents(True)
         self.label_9 = QLabel(self.widget_5)
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(60, 20, 550, 32))
         self.label_9.setFont(font)
+        self.run_analysis_button = QPushButton(self.widget_5)
+        self.run_analysis_button.setObjectName(u"run_analysis")
+        self.run_analysis_button.setCursor(QCursor(Qt.PointingHandCursor))
+        self.run_analysis_button.setStyleSheet("QPushButton {background-color: #BCCEF8}")
+        self.run_analysis_button.setGeometry(QRect(190, 170, 100, 30))
+        self.prediction_label = QLabel(self.widget_5)
+        self.prediction_label.setObjectName(u"prediction_label")
+        self.prediction_label.setGeometry(QRect(120, 90, 200, 50))
+        self.label_7.setScaledContents(True)
 
         self.verticalLayout_12.addWidget(self.widget_5)
 
@@ -915,6 +923,7 @@ class Ui_HomePage(object):
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Patient Tooth Wear Grade", None))
+        self.run_analysis_button.setText(QCoreApplication.translate("MainWindow", u"Run Analysis", None))
         self.label_10.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Treatment Plans", None))
 
