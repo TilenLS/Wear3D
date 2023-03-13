@@ -1,5 +1,5 @@
 import open3d as o3d
-# import win32gui
+import win32gui
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
@@ -29,8 +29,8 @@ class ImageViewer(QMainWindow):
         if self.meshUpper:
             self.vis.add_geometry(self.meshUpper)
             self.upperPresent = True
-        # hwnd = win32gui.FindWindowEx(0, 0, None, "Open3D")
-        window = QWindow()
+        hwnd = win32gui.FindWindowEx(0, 0, None, "Open3D")
+        window = QWindow().fromWinId(hwnd)
         windowcontainer = self.createWindowContainer(window, self.widget)
         self.layout.addWidget(windowcontainer, 0)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -57,57 +57,45 @@ class ImageViewer(QMainWindow):
             self.vis.remove_geometry(self.meshLower, False)
             self.lowerPresent = False
 
-    def load_mesh(self, lowerFile=False, upperFile=False):
-        if lowerFile == True:
-            # lowerFile = QFileDialog.getOpenFileName(self,
-            #                                     self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
+    def load_mesh(self, lowerFilePath=False, upperFilePath=False):
+        if lowerFilePath == True:
+            lowerFilePath = QFileDialog.getOpenFileName(self,
+                                                self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
             if self.meshLower:
                 self.vis.remove_geometry(self.meshLower, False)
-                # self.meshLower = o3d.io.read_point_cloud(lowerFile)
-                # self.vis.add_geometry(self.meshLower, False)
-                self.vis.add_geometry(lowerFile, False)
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower, False)
             else:
-                # self.meshLower = o3d.io.read_point_cloud(lowerFile)
-                # self.vis.add_geometry(self.meshLower)
-                self.vis.add_geometry(lowerFile)
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower)
                 self.lowerPresent = True
-        if upperFile == True:
-            # upperFilePath = QFileDialog.getOpenFileName(self,
-            #                                     self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
+        if upperFilePath == True:
+            upperFilePath = QFileDialog.getOpenFileName(self,
+                                                self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
             if self.meshUpper:
                 self.vis.remove_geometry(self.meshUpper, False)
-                # self.meshUpper = o3d.io.read_point_cloud(upperFile)
-                # self.vis.add_geometry(self.meshUpper, False)
-                self.vis.add_geometry(upperFile, False)
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper, False)
             else:
-                # self.meshUpper = o3d.io.read_point_cloud(upperFile)
-                # self.vis.add_geometry(self.meshUpper)
-                self.vis.add_geometry(upperFile)
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper)
                 self.upperPresent = True
         else:
             if self.meshLower:
-                print("load lower mesh")
                 self.vis.remove_geometry(self.meshLower, False)
-                # self.meshLower = o3d.io.read_point_cloud(lowerFile)
-                # self.vis.add_geometry(self.meshLower, False)
-                self.vis.add_geometry(lowerFile, False)
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower, False)
             if not self.meshLower:
-                # self.meshLower = o3d.io.read_point_cloud(lowerFile)
-                # self.vis.add_geometry(self.meshLower)
-                print("load lower mesh, not")
-                self.vis.add_geometry(lowerFile)
+                self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
+                self.vis.add_geometry(self.meshLower)
                 self.lowerPresent = True
             if self.meshUpper:
-                print("load upper mesh")
                 self.vis.remove_geometry(self.meshUpper, False)
-                # self.meshUpper = o3d.io.read_point_cloud(upperFile)
-                # self.vis.add_geometry(self.meshUpper, False)
-                self.vis.add_geometry(upperFile, False)
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper, False)
             if not self.meshUpper:
-                # self.meshUpper = o3d.io.read_point_cloud(upperFile)
-                # self.vis.add_geometry(self.meshUpper)
-                print("load upper mesh, not")
-                self.vis.add_geometry(upperFile)
+                self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                self.vis.add_geometry(self.meshUpper)
                 self.upperPresent = True
 
 

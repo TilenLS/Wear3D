@@ -290,7 +290,12 @@ class AppFunctions():
         lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
         lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
 
-        viewer.load_mesh(lowerFile=lower_pcd, upperFile=upper_pcd)
+        lowerFilePath = "lower.ply"
+        upperFilePath = "upper.ply"
+        o3d.io.write_point_cloud(lowerFilePath, lower_pcd, write_ascii=False)
+        o3d.io.write_point_cloud(upperFilePath, upper_pcd, write_ascii=False)
+
+        viewer.load_mesh(lowerFilePath=lowerFilePath, upperFilePath=upperFilePath)
 
         self.ui3.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
