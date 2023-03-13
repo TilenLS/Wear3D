@@ -277,10 +277,20 @@ class AppFunctions():
         # url = 'http://20.127.200.67:8080/patient/view'
         url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
-        upper_path = response.json()['upper']
-        lower_path = response.json()['lower']
+        upper_file = response.json()['upper']
+        upper_points = np.array(upper_file['points'])
+        upper_colors = np.array(upper_file['colors'])
+        upper_pcd = o3d.geometry.PointCloud()
+        upper_pcd.points = o3d.utility.Vector3dVector(upper_points)
+        upper_pcd.colors = o3d.utility.Vector3dVector(upper_colors)
+        lower_file = response.json()['lower']
+        lower_points = np.array(lower_file['points'])
+        lower_colors = np.array(lower_file['colors'])
+        lower_pcd = o3d.geometry.PointCloud()
+        lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
+        lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
 
-        viewer.load_mesh(lowerFilePath=lower_path, upperFilePath=upper_path)
+        viewer.load_mesh(lowerFile=lower_pcd, upperFile=upper_pcd)
 
         self.ui3.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
@@ -336,9 +346,4 @@ class AppFunctions():
 if __name__ == "__main__":
     pred = AppFunctions.predict()
     print(pred)
-
-
-
-
-
 

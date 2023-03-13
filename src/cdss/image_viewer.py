@@ -86,6 +86,7 @@ class ImageViewer(QMainWindow):
                 self.upperPresent = True
         else:
             if self.meshLower:
+                print("load lower mesh")
                 self.vis.remove_geometry(self.meshLower, False)
                 # self.meshLower = o3d.io.read_point_cloud(lowerFile)
                 # self.vis.add_geometry(self.meshLower, False)
@@ -93,9 +94,11 @@ class ImageViewer(QMainWindow):
             if not self.meshLower:
                 # self.meshLower = o3d.io.read_point_cloud(lowerFile)
                 # self.vis.add_geometry(self.meshLower)
+                print("load lower mesh, not")
                 self.vis.add_geometry(lowerFile)
                 self.lowerPresent = True
             if self.meshUpper:
+                print("load upper mesh")
                 self.vis.remove_geometry(self.meshUpper, False)
                 # self.meshUpper = o3d.io.read_point_cloud(upperFile)
                 # self.vis.add_geometry(self.meshUpper, False)
@@ -103,6 +106,7 @@ class ImageViewer(QMainWindow):
             if not self.meshUpper:
                 # self.meshUpper = o3d.io.read_point_cloud(upperFile)
                 # self.vis.add_geometry(self.meshUpper)
+                print("load upper mesh, not")
                 self.vis.add_geometry(upperFile)
                 self.upperPresent = True
 
