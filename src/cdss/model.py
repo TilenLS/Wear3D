@@ -123,9 +123,9 @@ class AppFunctions():
         snoringHabit = self.ui3.snoringHabit.currentText()
         exercise = self.ui3.exercise.currentText()
         drugUse = self.ui3.drugUse.currentText()
-        upperScan = AppFunctions.conver2binary(self.upperFilePath)
-        lowerScan = AppFunctions.conver2binary(self.lowerFilePath)
-        sextantScan = AppFunctions.conver2binary(self.sextantFilePath)
+        upperScan = self.upperFilePath
+        lowerScan = self.lowerFilePath
+        sextantScan = self.sextantFilePath
         payload = {'name': name,
                     'age': age,
                     'occupation': occupation,
@@ -140,14 +140,23 @@ class AppFunctions():
                     'sleepApnoea': sleepApnoea,
                     'snoringHabit': snoringHabit,
                     'exercise': exercise,
-                    'drugUse': drugUse,
-                    'upperScan': upperScan,
-                    'lowerScan': lowerScan,
-                    'sextantScan': sextantScan}
+                    'drugUse': drugUse}
+        json_data = json.dumps(payload)
+        with open(upperScan, 'rb') as f:
+            upper = f.read()
+        with open(lowerScan, 'rb') as f:
+            lower = f.read()
+        with open(sextantScan, 'rb') as f:
+            sextant = f.read()
+
+        files = {'upperScan': upper,
+                 'lowerScan': lower,
+                 'sextantScan': sextant}
+        # print(files)
         
         url = 'http://20.127.200.67:8080/patient/add'
         # url = 'http://127.0.0.1:5000/patient/add'
-        response = requests.post(url, json=payload)
+        response = requests.post(url, data={'json': json_data}, files=files)
         add_status = response.json()['result']
 
         if add_status == 'fail':
@@ -236,13 +245,16 @@ class AppFunctions():
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
+        print(id)
         url = 'http://20.127.200.67:8080/patient/view'
         # url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
+        upper_file = base64.b64decode(upper_file)
         with open('upperScan.ply', 'wb') as f:
             f.write(upper_file)
         lower_file = response.json()['lower']
+        lower_file = base64.b64decode(lower_file)
         with open('lowerScan.ply', 'wb') as f:
             f.write(lower_file)
         
