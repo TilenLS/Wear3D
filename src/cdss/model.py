@@ -243,10 +243,10 @@ class AppFunctions():
         with open('upperScan.ply', 'wb') as f:
             f.write(upper_file)
         lower_file = response.json()['lower']
-        with open('upperScan.ply', 'wb') as f:
+        with open('lowerScan.ply', 'wb') as f:
             f.write(lower_file)
         
-        viewer.load_mesh(lowerFile='lowerScan.ply', upperFile='upperScan.ply')
+        viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
 
         self.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
@@ -263,24 +263,13 @@ class AppFunctions():
         # url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
-        upper_points = np.array(upper_file['points'])
-        upper_colors = np.array(upper_file['colors'])
-        upper_pcd = o3d.geometry.PointCloud()
-        upper_pcd.points = o3d.utility.Vector3dVector(upper_points)
-        upper_pcd.colors = o3d.utility.Vector3dVector(upper_colors)
+        with open('upperScan.ply', 'wb') as f:
+            f.write(upper_file)
         lower_file = response.json()['lower']
-        lower_points = np.array(lower_file['points'])
-        lower_colors = np.array(lower_file['colors'])
-        lower_pcd = o3d.geometry.PointCloud()
-        lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
-        lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
+        with open('lowerScan.ply', 'wb') as f:
+            f.write(lower_file)
 
-        lowerFilePath = "lower.ply"
-        upperFilePath = "upper.ply"
-        o3d.io.write_point_cloud(lowerFilePath, lower_pcd, write_ascii=False)
-        o3d.io.write_point_cloud(upperFilePath, upper_pcd, write_ascii=False)
-
-        viewer.load_mesh(lowerFilePath=lowerFilePath, upperFilePath=upperFilePath)
+        viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
 
         self.ui3.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
