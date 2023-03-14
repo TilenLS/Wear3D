@@ -24,19 +24,11 @@ class AppFunctions():
     def tr(self, text):
         return QObject.tr(self, text)
     
-    def convertToO3dDict(filename):
+    def conver2binary(filename):
         # # Convert digital data to binary format
-        # with open(filename, 'rb') as file:
-        #     blobData = file.read()
-        #     blobData = base64.b64encode(blobData).decode("utf-8")
-        # return blobData
-        pcd = o3d.io.read_point_cloud(filename)
-        points = np.asarray(pcd.points)
-        colors = np.asarray(pcd.colors)
-        points_list = points.tolist()
-        colors_list = colors.tolist()
-        data = {'points': points_list, 'colors': colors_list}
-        return data
+        with open(filename, 'rb') as f:
+            files = {'file': f.read()}
+        return files
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
@@ -131,9 +123,9 @@ class AppFunctions():
         snoringHabit = self.ui3.snoringHabit.currentText()
         exercise = self.ui3.exercise.currentText()
         drugUse = self.ui3.drugUse.currentText()
-        upperScan = AppFunctions.convertToO3dDict(self.upperFilePath)
-        lowerScan = AppFunctions.convertToO3dDict(self.lowerFilePath)
-        sextantScan = AppFunctions.convertToO3dDict(self.sextantFilePath)
+        upperScan = AppFunctions.conver2binary(self.upperFilePath)
+        lowerScan = AppFunctions.conver2binary(self.lowerFilePath)
+        sextantScan = AppFunctions.conver2binary(self.sextantFilePath)
         payload = {'name': name,
                     'age': age,
                     'occupation': occupation,
@@ -248,20 +240,13 @@ class AppFunctions():
         # url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
-        upper_points = np.array(upper_file['points'])
-        upper_colors = np.array(upper_file['colors'])
-        upper_pcd = o3d.geometry.PointCloud()
-        upper_pcd.points = o3d.utility.Vector3dVector(upper_points)
-        upper_pcd.colors = o3d.utility.Vector3dVector(upper_colors)
+        with open('upperScan.ply', 'wb') as f:
+            f.write(upper_file)
         lower_file = response.json()['lower']
-        lower_points = np.array(lower_file['points'])
-        lower_colors = np.array(lower_file['colors'])
-        lower_pcd = o3d.geometry.PointCloud()
-        lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
-        lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
+        with open('upperScan.ply', 'wb') as f:
+            f.write(lower_file)
         
-
-        viewer.load_mesh(lowerFile=lower_pcd, upperFile=upper_pcd)
+        viewer.load_mesh(lowerFile='lowerScan.ply', upperFile='upperScan.ply')
 
         self.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
