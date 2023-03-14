@@ -10,8 +10,8 @@ import open3d as o3d
 import numpy as np
 import json
 
-# domain = "20.127.200.67:8080"
-domain = "127.0.0.1:5000"
+domain = "20.127.200.67:8080"
+# domain = "127.0.0.1:5000"
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -183,13 +183,23 @@ class AppFunctions():
                 self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
                 self.ui3.viewSpecificButton.clicked.connect(
                     lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImageAfterAdd(self, i, v))
+                self.ui3.deletePatientButton = QPushButton(self.ui3.tableWidget)
+                self.ui3.deletePatientButton.setObjectName(u"deletePatientButton")
+                self.ui3.tableWidget.setCellWidget(i, 16, self.ui3.deletePatientButton)
+                self.ui3.deletePatientButton.setText("Delete")
+                self.ui3.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
+                                                       "text-align: center;}")
+                self.ui3.deletePatientButton.clicked.connect(
+                    lambda *args, i=i + 1: AppFunctions.deletePatient(self, i))
 
-    def deletePatient(self):
-        id = self.ui4.id.text()
+    def deletePatient(self, patientID):
+        id = patientID
         payload = {'id': id}
 
         url = 'http://{}/patient/delete'.format(domain)
         response = requests.post(url, json=payload)
+
+        # AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
 
     def displayPatients(self, rows):
         rows = rows.json()['data']

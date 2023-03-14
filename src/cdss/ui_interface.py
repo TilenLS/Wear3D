@@ -284,8 +284,8 @@ class Ui_HomePage(object):
         self.verticalLayout_14.addWidget(self.frame_6)
 
         self.tableWidget = QTableWidget(self.widget_4)
-        if (self.tableWidget.columnCount() < 19):
-            self.tableWidget.setColumnCount(19)
+        if (self.tableWidget.columnCount() < 17):
+            self.tableWidget.setColumnCount(17)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -320,10 +320,6 @@ class Ui_HomePage(object):
         self.tableWidget.setHorizontalHeaderItem(15, __qtablewidgetitem15)
         __qtablewidgetitem16 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(16, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(17, __qtablewidgetitem17)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(18, __qtablewidgetitem18)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.tableWidget.verticalHeader().setVisible(False)
@@ -362,6 +358,16 @@ class Ui_HomePage(object):
             self.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
             self.viewSpecificButton.clicked.connect(
                         lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImage(self, i, v))
+            self.deletePatientButton = QPushButton(self.tableWidget)
+            self.deletePatientButton.setObjectName(u"deletePatientButton")
+            self.tableWidget.setCellWidget(i, 16, self.deletePatientButton)
+            self.deletePatientButton.setText("Delete")
+            self.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
+                                                   "text-align: center;}")
+            self.deletePatientButton.clicked.connect(
+                       lambda *args, i=i + 1: AppFunctions.deletePatient(self, i))
+            print(i)
+
 
 
         self.vboxLayout.addWidget(self.widget_4)
@@ -554,6 +560,10 @@ class Ui_HomePage(object):
         self.prediction_label.setObjectName(u"prediction_label")
         self.prediction_label.setGeometry(QRect(120, 90, 200, 50))
         self.label_7.setScaledContents(True)
+
+        self.treatment_plan_label = QLabel(self.widget_5)
+        self.treatment_plan_label.setObjectName(u"treatment_plan_label")
+        self.treatment_plan_label.setGeometry(QRect(120, 90, 200, 350))
 
         self.verticalLayout_12.addWidget(self.widget_5)
 
@@ -924,11 +934,8 @@ class Ui_HomePage(object):
         ___qtablewidgetitem15 = self.tableWidget.horizontalHeaderItem(15)
         ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Drug use", None));
         ___qtablewidgetitem16 = self.tableWidget.horizontalHeaderItem(16)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Upper jaw scan", None));
-        ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(17)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Lower jaw scan", None));
-        ___qtablewidgetitem18 = self.tableWidget.horizontalHeaderItem(18)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Sextant scan", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Delete Patient", None));
+
 
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Hide upper", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Hide lower", None))
