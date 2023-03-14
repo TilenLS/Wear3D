@@ -56,8 +56,8 @@ class AppFunctions():
         passwordSignIn = self.ui1.password_input.text()
         payload = {'username': usernameSignIn, 'password': passwordSignIn}
 
-        # url = 'http://20.127.200.67:8080/dentist/signin'
-        url = 'http://127.0.0.1:5000/dentist/signin'
+        url = 'http://20.127.200.67:8080/dentist/signin'
+        # url = 'http://127.0.0.1:5000/dentist/signin'
         response = requests.post(url, json=payload)
         signin_status = response.json()['result']
 
@@ -86,8 +86,8 @@ class AppFunctions():
                    'confirm_password': password2,
                    'encrypted': encrypted.decode("utf-8")}
 
-        # url = 'http://20.127.200.67:8080/dentist/signup'
-        url = 'http://127.0.0.1:5000/dentist/signup'
+        url = 'http://20.127.200.67:8080/dentist/signup'
+        # url = 'http://127.0.0.1:5000/dentist/signup'
         response = requests.post(url, json=payload)
         signup_status = response.json()['result']
 
@@ -103,14 +103,14 @@ class AppFunctions():
             msg.exec_()
 
     def getAllPatients():
-        # url = 'http://20.127.200.67:8080/patient/all'
-        url = 'http://127.0.0.1:5000/patient/all'
+        url = 'http://20.127.200.67:8080/patient/all'
+        # url = 'http://127.0.0.1:5000/patient/all'
         patients = requests.get(url)
         return patients
 
     def getPatientNumber():
-        # url = 'http://20.127.200.67:8080/patient/number'
-        url = 'http://127.0.0.1:5000/patient/number'
+        url = 'http://20.127.200.67:8080/patient/number'
+        # url = 'http://127.0.0.1:5000/patient/number'
         response = requests.get(url)
         patient_number = response.json()['num']
         return patient_number
@@ -153,8 +153,8 @@ class AppFunctions():
                     'lowerScan': lowerScan,
                     'sextantScan': sextantScan}
         
-        # url = 'http://20.127.200.67:8080/patient/add'
-        url = 'http://127.0.0.1:5000/patient/add'
+        url = 'http://20.127.200.67:8080/patient/add'
+        # url = 'http://127.0.0.1:5000/patient/add'
         response = requests.post(url, json=payload)
         add_status = response.json()['result']
 
@@ -192,8 +192,8 @@ class AppFunctions():
         id = self.ui4.id.text()
         payload = {'id': id}
 
-        # url = 'http://20.127.200.67:8080/patient/delete'
-        url = 'http://127.0.0.1:5000/patient/delete'
+        url = 'http://20.127.200.67:8080/patient/delete'
+        # url = 'http://127.0.0.1:5000/patient/delete'
         response = requests.post(url, json=payload)
 
     def displayPatients(self, rows):
@@ -244,8 +244,8 @@ class AppFunctions():
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
-        # url = 'http://20.127.200.67:8080/patient/view'
-        url = 'http://127.0.0.1:5000/patient/view'
+        url = 'http://20.127.200.67:8080/patient/view'
+        # url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
         upper_points = np.array(upper_file['points'])
@@ -274,8 +274,8 @@ class AppFunctions():
         self.ui3.pages.setCurrentWidget(self.ui3.viewPage)
 
         payload = {'id': id}
-        # url = 'http://20.127.200.67:8080/patient/view'
-        url = 'http://127.0.0.1:5000/patient/view'
+        url = 'http://20.127.200.67:8080/patient/view'
+        # url = 'http://127.0.0.1:5000/patient/view'
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
         upper_points = np.array(upper_file['points'])
@@ -334,8 +334,8 @@ class AppFunctions():
         # eg.
         # sextant = '../back-end/inference_module/JawScan_1.ply'
         sextant = '../inference_module/JawScan_1.ply'
-        # url = 'http://20.127.200.67:8080/inference/predict'
-        url = 'http://127.0.0.1:5000/inference/predict'
+        url = 'http://20.127.200.67:8080/inference/predict'
+        # url = 'http://127.0.0.1:5000/inference/predict'
         payload = {'id': id}
 
         with open(sextant, 'rb') as f:

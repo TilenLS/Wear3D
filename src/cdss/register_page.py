@@ -12,15 +12,14 @@ class Ui_RegisterPage(object):
         MainWindow.resize(1200, 850)
         MainWindow.setStyleSheet(u"*{\n"
                                  "	border: none;\n"
-                                 "	background-color: transparent;\n"
-                                 "	background: transparent;\n"
+                                 "	background-color: #BCCEF8;\n"
                                  "	padding: 0;\n"
                                  "	margin: 0;\n"
                                  "	color: #000000;\n"
                                  "}\n"
                                  "\n"
                                  "#centralwidget{\n"
-                                 "	background-color: #ECF2FF;\n"
+                                 "	background-color: #BCCEF8;\n"
                                  "}\n"
                                  "\n"
                                  "")
@@ -38,9 +37,14 @@ class Ui_RegisterPage(object):
 
         self.widget1 = QtWidgets.QWidget(self.centralwidget)
         self.widget1.setObjectName("widget1")
-        self.widget1.setMinimumSize(QSize(800, 800))
-        self.widget1.setMaximumSize(16777215, 16777215)
-        self.widget1.setStyleSheet("background-color: #BCCEF8")
+        self.widget1.setMinimumSize(QSize(600, 700))
+        self.widget1.setMaximumSize(QSize(600, 700))
+        radius = 30
+        self.widget1.setStyleSheet("background-color: #ECF2FF;\n"
+                                   "border-top-left-radius:{0}px\n;"
+                                   "border-bottom-left-radius:{0}px\n;"
+                                   "border-top-right-radius:{0}px\n;"
+                                   "border-bottom-right-radius:{0}px;\n".format(radius))
         self.vertical_layout = QGridLayout(self.widget1)
         self.vertical_layout.setContentsMargins(100,50,100,50)
         self.vertical_layout.setSpacing(20)
@@ -48,7 +52,7 @@ class Ui_RegisterPage(object):
 
         self.register_account_label = QtWidgets.QLabel(self.centralwidget)
         self.register_account_label.setObjectName("register_account_label")
-        self.register_account_label.setMinimumWidth(600)
+        self.register_account_label.setMinimumWidth(400)
         big_bold_font = QtGui.QFont()
         big_bold_font.setPointSize(30)
         big_bold_font.setBold(True)
@@ -73,7 +77,7 @@ class Ui_RegisterPage(object):
         text_font.setPointSize(12)
         text_font.setFamily("Bahnschrift Light")
         self.already_have_an_account_text.setFont(text_font)
-        self.vertical_layout.addWidget(self.already_have_an_account_text, 6, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.already_have_an_account_text, 6, 0, Qt.AlignCenter | Qt.AlignBottom)
 
         self.sign_in_button = QtWidgets.QPushButton(self.centralwidget)
         self.sign_in_button.setObjectName("sign_in_button")
@@ -99,37 +103,40 @@ class Ui_RegisterPage(object):
         self.username_input = QtWidgets.QLineEdit(self.centralwidget)
         self.username_input.setPlaceholderText("Please enter your email...")
         self.username_input.setObjectName("username_input")
-        self.username_input.setMinimumWidth(500)
+        self.username_input.setMinimumWidth(410)
         self.username_input.setStyleSheet("QLineEdit {\n"
+                                          "\tborder: 1px solid grey;\n"
                                           "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.username_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.username_input, 2, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.username_input, 2, 0, Qt.AlignLeft)
 
         self.password_input = QtWidgets.QLineEdit(self.centralwidget)
         self.password_input.setPlaceholderText("Please enter your password...")
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.setObjectName("password_input")
-        self.password_input.setMinimumWidth(500)
+        self.password_input.setMinimumWidth(410)
         self.password_input.setStyleSheet("QLineEdit {\n"
+                                          "\tborder: 1px solid grey;\n"
                                           "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.password_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.password_input, 3, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.password_input, 3, 0, Qt.AlignLeft)
 
         self.confirm_password_input = QtWidgets.QLineEdit(self.centralwidget)
         self.confirm_password_input.setPlaceholderText("Please confirm your password...")
         self.confirm_password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.confirm_password_input.setObjectName("password_input")
-        self.confirm_password_input.setMinimumWidth(500)
+        self.confirm_password_input.setMinimumWidth(410)
         self.confirm_password_input.setStyleSheet("QLineEdit {\n"
+                                          "\tborder: 1px solid grey;\n"
                                           "\tbackground-color: #ECF2FF;\n"
                                           "}"
                                           )
         self.confirm_password_input.setFont(label_font)
-        self.vertical_layout.addWidget(self.confirm_password_input, 4, 0, Qt.AlignHCenter)
+        self.vertical_layout.addWidget(self.confirm_password_input, 4, 0, Qt.AlignLeft)
 
         self.register_button = QtWidgets.QPushButton(self.centralwidget)
         self.register_button.setObjectName("register_button")
@@ -139,12 +146,12 @@ class Ui_RegisterPage(object):
         self.register_button.setFont(label_font)
         self.register_button.setStyleSheet("QPushButton {\n"
                                           "    border-radius: 5px;\n"
-                                          "    background:#B9F3FC;\n"
+                                          "    background:#97DEFF;\n"
                                           "    color: #000000;\n"
                                           "}\n"
                                           "\n"
                                           "QPushButton::hover {\n"
-                                          "    background:#E3F6FF;\n"
+                                          "    background:#62CDFF;\n"
                                           "    color: #000000;\n"
                                           "}")
         self.vertical_layout.addWidget(self.register_button, 5, 0, Qt.AlignHCenter)
@@ -164,7 +171,7 @@ class Ui_RegisterPage(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.register_account_label.setText(_translate("MainWindow", "Register Account"))
+        self.register_account_label.setText(_translate("MainWindow", "Register"))
         self.reminder_text.setText(_translate("MainWindow", "Please enter your details to register for an account"))
         self.already_have_an_account_text.setText(_translate("MainWindow", "Already have an account?"))
         self.register_button.setText(_translate("MainWindow", "Register"))
