@@ -316,7 +316,7 @@ class AppFunctions():
         sextant = crsr.fetchall()[0][0]   # after changing the database (store binary file in the database)
         return sextant
 
-    def predict():
+    def predict(id):
         """ This function is used to send a request to the inference module and get the prediction
 
         Args:
@@ -336,15 +336,17 @@ class AppFunctions():
         sextant = '../inference_module/JawScan_1.ply'
         # url = 'http://20.127.200.67:8080/inference/predict'
         url = 'http://127.0.0.1:5000/inference/predict'
+        payload = {'id': id}
 
         with open(sextant, 'rb') as f:
             files = {'file': (sextant, f)}
-            response = requests.post(url, files=files)
+            response = requests.post(url, json=payload)
 
         return response.json()['result']
     
     def show_prediction(self):
-        prediction = AppFunctions.predict()
+        id = self.ui3.patientID.text()
+        prediction = AppFunctions.predict(id)
         self.ui3.prediction_label.setText(prediction)
     
 

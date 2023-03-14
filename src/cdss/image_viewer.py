@@ -3,6 +3,7 @@ import win32gui
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
+import numpy as np
 
 
 class ImageViewer(QMainWindow):
@@ -92,9 +93,15 @@ class ImageViewer(QMainWindow):
             if self.meshUpper:
                 self.vis.remove_geometry(self.meshUpper, False)
                 self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                meshUpper_points = np.asarray(self.meshUpper.points)
+                meshUpper_points[:, 1] += 25
+                self.meshUpper.points = o3d.utility.Vector3dVector(meshUpper_points)
                 self.vis.add_geometry(self.meshUpper, False)
             if not self.meshUpper:
                 self.meshUpper = o3d.io.read_point_cloud(upperFilePath)
+                meshUpper_points = np.asarray(self.meshUpper.points)
+                meshUpper_points[:, 1] += 25
+                self.meshUpper.points = o3d.utility.Vector3dVector(meshUpper_points)
                 self.vis.add_geometry(self.meshUpper)
                 self.upperPresent = True
 
