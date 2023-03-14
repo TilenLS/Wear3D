@@ -267,9 +267,11 @@ class AppFunctions():
         url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
+        upper_file = base64.b64decode(upper_file)
         with open('upperScan.ply', 'wb') as f:
             f.write(upper_file)
         lower_file = response.json()['lower']
+        lower_file = base64.b64decode(lower_file)
         with open('lowerScan.ply', 'wb') as f:
             f.write(lower_file)
 

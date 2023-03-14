@@ -1,5 +1,5 @@
 import open3d as o3d
-# import win32gui
+import win32gui
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtGui import *
@@ -30,9 +30,9 @@ class ImageViewer(QMainWindow):
         if self.meshUpper:
             self.vis.add_geometry(self.meshUpper)
             self.upperPresent = True
-        # hwnd = win32gui.FindWindowEx(0, 0, None, "Open3D")
-        # window = QWindow().fromWinId(hwnd)
-        window = QWindow()
+        hwnd = win32gui.FindWindowEx(0, 0, None, "Open3D")
+        window = QWindow().fromWinId(hwnd)
+        # window = QWindow()
         windowcontainer = self.createWindowContainer(window, self.widget)
         self.layout.addWidget(windowcontainer, 0)
         self.layout.setContentsMargins(0, 0, 0, 0)
