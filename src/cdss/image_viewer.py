@@ -32,6 +32,7 @@ class ImageViewer(QMainWindow):
             self.upperPresent = True
         hwnd = win32gui.FindWindowEx(0, 0, None, "Open3D")
         window = QWindow().fromWinId(hwnd)
+        # window = QWindow()
         windowcontainer = self.createWindowContainer(window, self.widget)
         self.layout.addWidget(windowcontainer, 0)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -104,6 +105,7 @@ class ImageViewer(QMainWindow):
                 self.meshUpper.points = o3d.utility.Vector3dVector(meshUpper_points)
                 self.vis.add_geometry(self.meshUpper)
                 self.upperPresent = True
+            # o3d.visualization.draw_geometries([self.meshLower, self.meshUpper])
 
 
     def reset_view(self):

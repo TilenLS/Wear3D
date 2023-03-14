@@ -10,6 +10,8 @@ import open3d as o3d
 import numpy as np
 import json
 
+# domain = "20.127.200.67:8080"
+domain = "127.0.0.1:5000"
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -24,19 +26,11 @@ class AppFunctions():
     def tr(self, text):
         return QObject.tr(self, text)
     
-    def convertToO3dDict(filename):
+    def conver2binary(filename):
         # # Convert digital data to binary format
-        # with open(filename, 'rb') as file:
-        #     blobData = file.read()
-        #     blobData = base64.b64encode(blobData).decode("utf-8")
-        # return blobData
-        pcd = o3d.io.read_point_cloud(filename)
-        points = np.asarray(pcd.points)
-        colors = np.asarray(pcd.colors)
-        points_list = points.tolist()
-        colors_list = colors.tolist()
-        data = {'points': points_list, 'colors': colors_list}
-        return data
+        with open(filename, 'rb') as f:
+            files = {'file': f.read()}
+        return files
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
@@ -56,8 +50,7 @@ class AppFunctions():
         passwordSignIn = self.ui1.password_input.text()
         payload = {'username': usernameSignIn, 'password': passwordSignIn}
 
-        url = 'http://20.127.200.67:8080/dentist/signin'
-        # url = 'http://127.0.0.1:5000/dentist/signin'
+        url = 'http://{}/dentist/signin'.format(domain)
         response = requests.post(url, json=payload)
         signin_status = response.json()['result']
 
@@ -86,8 +79,7 @@ class AppFunctions():
                    'confirm_password': password2,
                    'encrypted': encrypted.decode("utf-8")}
 
-        url = 'http://20.127.200.67:8080/dentist/signup'
-        # url = 'http://127.0.0.1:5000/dentist/signup'
+        url = 'http://{}/dentist/signup'.format(domain)
         response = requests.post(url, json=payload)
         signup_status = response.json()['result']
 
@@ -103,14 +95,12 @@ class AppFunctions():
             msg.exec_()
 
     def getAllPatients():
-        url = 'http://20.127.200.67:8080/patient/all'
-        # url = 'http://127.0.0.1:5000/patient/all'
+        url = 'http://{}/patient/all'.format(domain)
         patients = requests.get(url)
         return patients
 
     def getPatientNumber():
-        url = 'http://20.127.200.67:8080/patient/number'
-        # url = 'http://127.0.0.1:5000/patient/number'
+        url = 'http://{}/patient/number'.format(domain)
         response = requests.get(url)
         patient_number = response.json()['num']
         return patient_number
@@ -131,9 +121,15 @@ class AppFunctions():
         snoringHabit = self.ui3.snoringHabit.currentText()
         exercise = self.ui3.exercise.currentText()
         drugUse = self.ui3.drugUse.currentText()
-        upperScan = AppFunctions.convertToO3dDict(self.upperFilePath)
-        lowerScan = AppFunctions.convertToO3dDict(self.lowerFilePath)
-        sextantScan = AppFunctions.convertToO3dDict(self.sextantFilePath)
+        upperScan = self.upperFilePath
+        lowerScan = self.lowerFilePath
+        sextantScan = self.sextantFilePath
+        with open(upperScan, 'rb') as f:
+            upper = f.read()
+        with open(lowerScan, 'rb') as f:
+            lower = f.read()
+        with open(sextantScan, 'rb') as f:
+            sextant = f.read()
         payload = {'name': name,
                     'age': age,
                     'occupation': occupation,
@@ -149,13 +145,13 @@ class AppFunctions():
                     'snoringHabit': snoringHabit,
                     'exercise': exercise,
                     'drugUse': drugUse,
-                    'upperScan': upperScan,
-                    'lowerScan': lowerScan,
-                    'sextantScan': sextantScan}
+                    'upperScan': base64.b64encode(upper).decode('utf-8'),
+                    'lowerScan': base64.b64encode(lower).decode('utf-8'),
+                    'sextantScan': base64.b64encode(sextant).decode('utf-8')}
+        json_data = json.dumps(payload)
         
-        url = 'http://20.127.200.67:8080/patient/add'
-        # url = 'http://127.0.0.1:5000/patient/add'
-        response = requests.post(url, json=payload)
+        url = 'http://{}/patient/add'.format(domain)
+        response = requests.post(url, data={'json': json_data})
         add_status = response.json()['result']
 
         if add_status == 'fail':
@@ -192,8 +188,7 @@ class AppFunctions():
         id = self.ui4.id.text()
         payload = {'id': id}
 
-        url = 'http://20.127.200.67:8080/patient/delete'
-        # url = 'http://127.0.0.1:5000/patient/delete'
+        url = 'http://{}/patient/delete'.format(domain)
         response = requests.post(url, json=payload)
 
     def displayPatients(self, rows):
@@ -244,24 +239,19 @@ class AppFunctions():
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
-        url = 'http://20.127.200.67:8080/patient/view'
-        # url = 'http://127.0.0.1:5000/patient/view'
+        print(id)
+        url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
-        upper_points = np.array(upper_file['points'])
-        upper_colors = np.array(upper_file['colors'])
-        upper_pcd = o3d.geometry.PointCloud()
-        upper_pcd.points = o3d.utility.Vector3dVector(upper_points)
-        upper_pcd.colors = o3d.utility.Vector3dVector(upper_colors)
+        upper_file = base64.b64decode(upper_file)
+        with open('upperScan.ply', 'wb') as f:
+            f.write(upper_file)
         lower_file = response.json()['lower']
-        lower_points = np.array(lower_file['points'])
-        lower_colors = np.array(lower_file['colors'])
-        lower_pcd = o3d.geometry.PointCloud()
-        lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
-        lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
+        lower_file = base64.b64decode(lower_file)
+        with open('lowerScan.ply', 'wb') as f:
+            f.write(lower_file)
         
-
-        viewer.load_mesh(lowerFile=lower_pcd, upperFile=upper_pcd)
+        viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
 
         self.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
@@ -274,28 +264,18 @@ class AppFunctions():
         self.ui3.pages.setCurrentWidget(self.ui3.viewPage)
 
         payload = {'id': id}
-        url = 'http://20.127.200.67:8080/patient/view'
-        # url = 'http://127.0.0.1:5000/patient/view'
+        url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
-        upper_points = np.array(upper_file['points'])
-        upper_colors = np.array(upper_file['colors'])
-        upper_pcd = o3d.geometry.PointCloud()
-        upper_pcd.points = o3d.utility.Vector3dVector(upper_points)
-        upper_pcd.colors = o3d.utility.Vector3dVector(upper_colors)
+        upper_file = base64.b64decode(upper_file)
+        with open('upperScan.ply', 'wb') as f:
+            f.write(upper_file)
         lower_file = response.json()['lower']
-        lower_points = np.array(lower_file['points'])
-        lower_colors = np.array(lower_file['colors'])
-        lower_pcd = o3d.geometry.PointCloud()
-        lower_pcd.points = o3d.utility.Vector3dVector(lower_points)
-        lower_pcd.colors = o3d.utility.Vector3dVector(lower_colors)
+        lower_file = base64.b64decode(lower_file)
+        with open('lowerScan.ply', 'wb') as f:
+            f.write(lower_file)
 
-        lowerFilePath = "lower.ply"
-        upperFilePath = "upper.ply"
-        o3d.io.write_point_cloud(lowerFilePath, lower_pcd, write_ascii=False)
-        o3d.io.write_point_cloud(upperFilePath, upper_pcd, write_ascii=False)
-
-        viewer.load_mesh(lowerFilePath=lowerFilePath, upperFilePath=upperFilePath)
+        viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
 
         self.ui3.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
@@ -334,8 +314,7 @@ class AppFunctions():
         # eg.
         # sextant = '../back-end/inference_module/JawScan_1.ply'
         sextant = '../inference_module/JawScan_1.ply'
-        url = 'http://20.127.200.67:8080/inference/predict'
-        # url = 'http://127.0.0.1:5000/inference/predict'
+        url = 'http://{}/inference/predict'.format(domain)
         payload = {'id': id}
 
         with open(sextant, 'rb') as f:
