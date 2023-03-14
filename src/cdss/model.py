@@ -10,6 +10,8 @@ import open3d as o3d
 import numpy as np
 import json
 
+# domain = "20.127.200.67:8080"
+domain = "127.0.0.1:5000"
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -48,8 +50,7 @@ class AppFunctions():
         passwordSignIn = self.ui1.password_input.text()
         payload = {'username': usernameSignIn, 'password': passwordSignIn}
 
-        url = 'http://20.127.200.67:8080/dentist/signin'
-        # url = 'http://127.0.0.1:5000/dentist/signin'
+        url = 'http://{}/dentist/signin'.format(domain)
         response = requests.post(url, json=payload)
         signin_status = response.json()['result']
 
@@ -78,8 +79,7 @@ class AppFunctions():
                    'confirm_password': password2,
                    'encrypted': encrypted.decode("utf-8")}
 
-        url = 'http://20.127.200.67:8080/dentist/signup'
-        # url = 'http://127.0.0.1:5000/dentist/signup'
+        url = 'http://{}/dentist/signup'.format(domain)
         response = requests.post(url, json=payload)
         signup_status = response.json()['result']
 
@@ -95,14 +95,12 @@ class AppFunctions():
             msg.exec_()
 
     def getAllPatients():
-        url = 'http://20.127.200.67:8080/patient/all'
-        # url = 'http://127.0.0.1:5000/patient/all'
+        url = 'http://{}/patient/all'.format(domain)
         patients = requests.get(url)
         return patients
 
     def getPatientNumber():
-        url = 'http://20.127.200.67:8080/patient/number'
-        # url = 'http://127.0.0.1:5000/patient/number'
+        url = 'http://{}/patient/number'.format(domain)
         response = requests.get(url)
         patient_number = response.json()['num']
         return patient_number
@@ -126,6 +124,12 @@ class AppFunctions():
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
         sextantScan = self.sextantFilePath
+        with open(upperScan, 'rb') as f:
+            upper = f.read()
+        with open(lowerScan, 'rb') as f:
+            lower = f.read()
+        with open(sextantScan, 'rb') as f:
+            sextant = f.read()
         payload = {'name': name,
                     'age': age,
                     'occupation': occupation,
@@ -140,23 +144,14 @@ class AppFunctions():
                     'sleepApnoea': sleepApnoea,
                     'snoringHabit': snoringHabit,
                     'exercise': exercise,
-                    'drugUse': drugUse}
+                    'drugUse': drugUse,
+                    'upperScan': base64.b64encode(upper).decode('utf-8'),
+                    'lowerScan': base64.b64encode(lower).decode('utf-8'),
+                    'sextantScan': base64.b64encode(sextant).decode('utf-8')}
         json_data = json.dumps(payload)
-        with open(upperScan, 'rb') as f:
-            upper = f.read()
-        with open(lowerScan, 'rb') as f:
-            lower = f.read()
-        with open(sextantScan, 'rb') as f:
-            sextant = f.read()
-
-        files = {'upperScan': upper,
-                 'lowerScan': lower,
-                 'sextantScan': sextant}
-        # print(files)
         
-        url = 'http://20.127.200.67:8080/patient/add'
-        # url = 'http://127.0.0.1:5000/patient/add'
-        response = requests.post(url, data={'json': json_data}, files=files)
+        url = 'http://{}/patient/add'.format(domain)
+        response = requests.post(url, data={'json': json_data})
         add_status = response.json()['result']
 
         if add_status == 'fail':
@@ -193,8 +188,7 @@ class AppFunctions():
         id = self.ui4.id.text()
         payload = {'id': id}
 
-        url = 'http://20.127.200.67:8080/patient/delete'
-        # url = 'http://127.0.0.1:5000/patient/delete'
+        url = 'http://{}/patient/delete'.format(domain)
         response = requests.post(url, json=payload)
 
     def displayPatients(self, rows):
@@ -246,8 +240,7 @@ class AppFunctions():
 
         payload = {'id': id}
         print(id)
-        url = 'http://20.127.200.67:8080/patient/view'
-        # url = 'http://127.0.0.1:5000/patient/view'
+        url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
         upper_file = base64.b64decode(upper_file)
@@ -271,8 +264,7 @@ class AppFunctions():
         self.ui3.pages.setCurrentWidget(self.ui3.viewPage)
 
         payload = {'id': id}
-        url = 'http://20.127.200.67:8080/patient/view'
-        # url = 'http://127.0.0.1:5000/patient/view'
+        url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
         with open('upperScan.ply', 'wb') as f:
@@ -320,8 +312,7 @@ class AppFunctions():
         # eg.
         # sextant = '../back-end/inference_module/JawScan_1.ply'
         sextant = '../inference_module/JawScan_1.ply'
-        url = 'http://20.127.200.67:8080/inference/predict'
-        # url = 'http://127.0.0.1:5000/inference/predict'
+        url = 'http://{}/inference/predict'.format(domain)
         payload = {'id': id}
 
         with open(sextant, 'rb') as f:
