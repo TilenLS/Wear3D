@@ -345,7 +345,7 @@ class AppFunctions():
         return response.json()['result']
     
     def show_prediction(self):
-        id = self.ui3.patientID.text()
+        id = self.ui3.patientIDInput.text()
         prediction = AppFunctions.predict(id)
         self.ui3.prediction_label.setText(prediction)
     

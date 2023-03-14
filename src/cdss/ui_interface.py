@@ -535,11 +535,21 @@ class Ui_HomePage(object):
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(60, 20, 550, 32))
         self.label_9.setFont(font)
+
         self.run_analysis_button = QPushButton(self.widget_5)
         self.run_analysis_button.setObjectName(u"run_analysis")
         self.run_analysis_button.setCursor(QCursor(Qt.PointingHandCursor))
         self.run_analysis_button.setStyleSheet("QPushButton {background-color: #BCCEF8}")
-        self.run_analysis_button.setGeometry(QRect(190, 170, 100, 30))
+        icon20 = QIcon()
+        icon20.addFile(u":/icons/Icons/loader_focus.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.run_analysis_button.setIcon(icon20)
+        self.run_analysis_button.setIconSize(QSize(24, 26))
+        self.run_analysis_button.setGeometry(QRect(400, 270, 140, 40))
+
+        self.patientIDInput = QLineEdit(self.widget_5)
+        self.patientIDInput.setObjectName(u"occupation")
+        self.patientIDInput.setGeometry(QRect(50, 270, 300, 40))
+
         self.prediction_label = QLabel(self.widget_5)
         self.prediction_label.setObjectName(u"prediction_label")
         self.prediction_label.setGeometry(QRect(120, 90, 200, 50))
@@ -940,6 +950,7 @@ class Ui_HomePage(object):
         self.lowerJawScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose lower jaw scan", None))
         self.sextantScanButton.setText(QCoreApplication.translate("MainWindow", u"Choose sextant file", None))
         self.addPatientButton.setText(QCoreApplication.translate("MainWindow", u"Add Patient", None))
+        self.patientIDInput.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Please enter patient id", None))
 
     # retranslateUi
 
