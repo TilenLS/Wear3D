@@ -345,7 +345,12 @@ class Ui_HomePage(object):
 
         # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
         # AppFunctions.main(dbFolder)
-        AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
+        patients = AppFunctions.getAllPatients()
+        patient_list = patients.json()['data']
+        id = []
+        for patient in patient_list:
+            id.append(patient[0])
+        AppFunctions.displayPatients(self, patients)
 
         header = self.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
@@ -357,7 +362,7 @@ class Ui_HomePage(object):
             self.viewSpecificButton.setText(str(i+1))
             self.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
             self.viewSpecificButton.clicked.connect(
-                        lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImage(self, i, v))
+                        lambda *args, v=imageViewer: AppFunctions.viewImage(self, id[i], v))
             self.deletePatientButton = QPushButton(self.tableWidget)
             self.deletePatientButton.setObjectName(u"deletePatientButton")
             self.tableWidget.setCellWidget(i, 16, self.deletePatientButton)
@@ -365,8 +370,7 @@ class Ui_HomePage(object):
             self.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
                                                    "text-align: center;}")
             self.deletePatientButton.clicked.connect(
-                       lambda *args, i=i + 1: AppFunctions.deletePatient(self, i))
-            print(i)
+                       lambda *args: AppFunctions.deletePatient(self, id[i]))
 
 
 
