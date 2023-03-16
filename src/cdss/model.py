@@ -286,11 +286,20 @@ class AppFunctions():
             row_position += 1
 
     def displayPatientsAfterAdd(self, rows):
+        patients = AppFunctions.getAllPatients()
+        patient_list = patients.json()['data']
+        id = []
+        for patient in patient_list:
+            id.append(patient[0])
+
+        largestPatientID = id[len(id) - 1]
+
         rows = rows.json()['data']
+
         for row in rows:
             row_position = self.ui3.tableWidget.rowCount()
 
-            if row_position + 1 > row[0]:
+            if largestPatientID != row[0]:
                 continue
 
             item_count = 0
