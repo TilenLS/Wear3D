@@ -2,6 +2,7 @@ import base64
 import os
 import sys
 import requests
+from PySide2 import QtCore
 from requests.exceptions import ConnectionError
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
@@ -173,16 +174,22 @@ class AppFunctions():
             self.ui3.exercise.setCurrentIndex(0)
             self.ui3.drugUse.setCurrentIndex(0)
 
-            AppFunctions.displayPatientsAfterAdd(self, AppFunctions.getAllPatients())
+            patients = AppFunctions.getAllPatients()
+            patient_list = patients.json()['data']
+            id = []
+            for patient in patient_list:
+                id.append(patient[0])
+            AppFunctions.displayPatientsAfterAdd(self, patients)
+
             patientNumber = AppFunctions.getPatientNumber()
             for i in range(patientNumber):
                 self.ui3.viewSpecificButton = QPushButton(self.ui3.tableWidget)
                 self.ui3.viewSpecificButton.setObjectName(u"viewSpecificButton")
                 self.ui3.tableWidget.setCellWidget(i, 0, self.ui3.viewSpecificButton)
-                self.ui3.viewSpecificButton.setText(str(i + 1))
+                self.ui3.viewSpecificButton.setText(str(id[i]))
                 self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
                 self.ui3.viewSpecificButton.clicked.connect(
-                    lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImageAfterAdd(self, i, v))
+                    lambda *args, i=i, v=imageViewer: AppFunctions.viewImageAfterAdd(self, id[i], v))
                 self.ui3.deletePatientButton = QPushButton(self.ui3.tableWidget)
                 self.ui3.deletePatientButton.setObjectName(u"deletePatientButton")
                 self.ui3.tableWidget.setCellWidget(i, 16, self.ui3.deletePatientButton)
@@ -190,16 +197,65 @@ class AppFunctions():
                 self.ui3.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
                                                        "text-align: center;}")
                 self.ui3.deletePatientButton.clicked.connect(
-                    lambda *args, i=i + 1: AppFunctions.deletePatient(self, i))
+                    lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
 
     def deletePatient(self, patientID):
+        patientsOld = AppFunctions.getAllPatients()
+        patientListOld = patientsOld.json()['data']
+        idListOld = []
+        for patient in patientListOld:
+            idListOld.append(patient[0])
+
         id = patientID
         payload = {'id': id}
 
         url = 'http://{}/patient/delete'.format(domain)
         response = requests.post(url, json=payload)
 
-        # AppFunctions.displayPatients(self, AppFunctions.getAllPatients())
+        patientsNew = AppFunctions.getAllPatients()
+        patientListNew = patientsNew.json()['data']
+        idListNew = []
+        for patient in patientListNew:
+            idListNew.append(patient[0])
+
+        isLast = True
+        for n in range(len(idListNew)):
+            if idListOld[n] != idListNew[n]:
+                isLast = False
+                self.tableWidget.removeRow(n)
+                break
+
+        if isLast:
+            self.tableWidget.removeRow(len(idListNew))
+
+    def deletePatientAfterAdd(self, patientID):
+        patientsOld = AppFunctions.getAllPatients()
+        patientListOld = patientsOld.json()['data']
+        idListOld = []
+        for patient in patientListOld:
+            idListOld.append(patient[0])
+
+        id = patientID
+        payload = {'id': id}
+
+        url = 'http://{}/patient/delete'.format(domain)
+        response = requests.post(url, json=payload)
+
+        patientsNew = AppFunctions.getAllPatients()
+        patientListNew = patientsNew.json()['data']
+        idListNew = []
+        for patient in patientListNew:
+            idListNew.append(patient[0])
+
+        isLast = True
+        for n in range(len(idListNew)):
+            if idListOld[n] != idListNew[n]:
+                isLast = False
+                self.ui3.tableWidget.removeRow(n)
+                break
+
+        if isLast:
+            self.ui3.tableWidget.removeRow(len(idListNew))
 
     def displayPatients(self, rows):
         rows = rows.json()['data']

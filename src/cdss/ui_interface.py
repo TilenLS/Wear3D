@@ -25,6 +25,7 @@ import QSS_Resources_rc
 
 class Ui_HomePage(object):
     def setupUi(self, MainWindow, patientNumber, imageViewer):
+        self.MainWindow = MainWindow
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1200, 800)
@@ -359,10 +360,10 @@ class Ui_HomePage(object):
             self.viewSpecificButton = QPushButton(self.tableWidget)
             self.viewSpecificButton.setObjectName(u"viewSpecificButton")
             self.tableWidget.setCellWidget(i, 0, self.viewSpecificButton)
-            self.viewSpecificButton.setText(str(i+1))
+            self.viewSpecificButton.setText(str(id[i]))
             self.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
             self.viewSpecificButton.clicked.connect(
-                        lambda *args, v=imageViewer: AppFunctions.viewImage(self, id[i], v))
+                        lambda *args, i=i, v=imageViewer: AppFunctions.viewImage(self, id[i], v))
             self.deletePatientButton = QPushButton(self.tableWidget)
             self.deletePatientButton.setObjectName(u"deletePatientButton")
             self.tableWidget.setCellWidget(i, 16, self.deletePatientButton)
@@ -370,7 +371,7 @@ class Ui_HomePage(object):
             self.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
                                                    "text-align: center;}")
             self.deletePatientButton.clicked.connect(
-                       lambda *args: AppFunctions.deletePatient(self, id[i]))
+                       lambda *args, i=i: AppFunctions.deletePatient(self, id[i]))
 
 
 
