@@ -54,11 +54,6 @@ class Ui_HomePage(object):
 "	text-align: center;\n"
 "}\n"
 "\n"
-"#addPatientButton{\n"
-"	background-color: #BCCEF8;\n"
-"	border-radius: 10px;\n"
-"}\n"
-"\n"
 "QPushButton{\n"
 "	text-align: left;\n"
 "	padding: 5px 5px;\n"
@@ -842,7 +837,8 @@ class Ui_HomePage(object):
         icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.upperJawScanButton.setIcon(icon10)
         self.upperJawScanButton.setIconSize(QSize(24, 24))
-        self.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+        self.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
+                                              "QPushButton::pressed {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.upperJawScanButton)
 
@@ -852,7 +848,8 @@ class Ui_HomePage(object):
         icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.lowerJawScanButton.setIcon(icon10)
         self.lowerJawScanButton.setIconSize(QSize(24, 24))
-        self.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+        self.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
+                                              "QPushButton::pressed {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
@@ -862,7 +859,8 @@ class Ui_HomePage(object):
         icon10.addFile(u":/icons/Icons/file-plus_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.sextantScanButton.setIcon(icon10)
         self.sextantScanButton.setIconSize(QSize(24, 24))
-        self.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+        self.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
+                                             "QPushButton::pressed {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.sextantScanButton)
 
@@ -874,6 +872,8 @@ class Ui_HomePage(object):
         icon10.addFile(u":/icons/Icons/file-plus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.addPatientButton.setIcon(icon10)
         self.addPatientButton.setIconSize(QSize(24, 24))
+        self.addPatientButton.setStyleSheet("QPushButton{background-color: #BCCEF8; border-radius: 10px; border : 1px solid grey}"
+                                            "QPushButton::pressed{background-color: #7286D3}")
 
         self.verticalLayout_8.addWidget(self.addPatientButton, 0, Qt.AlignHCenter)
 

@@ -35,13 +35,16 @@ class AppFunctions():
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
+            self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #8EA7E9}")
             self.lowerFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
         if upper:
+            self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #8EA7E9}")
             self.upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
     def chooseSextantFile(self):
+        self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #8EA7E9}")
         self.sextantFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
@@ -158,6 +161,9 @@ class AppFunctions():
         if add_status == 'fail':
             print("Could not insert patient data")
         else:
+            self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+            self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+            self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
             self.ui3.name.setText("")
             self.ui3.age.setText("")
             self.ui3.occupation.setText("")
