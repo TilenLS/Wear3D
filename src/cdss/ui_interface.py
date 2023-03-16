@@ -422,7 +422,7 @@ class Ui_HomePage(object):
         self.viewingTools = QWidget(self.viewPage)
         self.viewingTools.setObjectName(u"viewingTools")
         self.viewingTools.setMinimumSize(QSize(270, 500))
-        self.viewingTools.setMaximumSize(QSize(400, 16777215))
+        self.viewingTools.setMaximumSize(QSize(270, 16777215))
         self.verticalLayout_10 = QGridLayout(self.viewingTools)
         self.verticalLayout_10.setSpacing(0)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
