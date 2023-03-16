@@ -838,7 +838,8 @@ class Ui_HomePage(object):
         self.upperJawScanButton.setIcon(icon10)
         self.upperJawScanButton.setIconSize(QSize(24, 24))
         self.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                              "QPushButton::pressed {background-color: #8EA7E9}")
+                                              "QPushButton::pressed {background-color: #8EA7E9}"
+                                              "QPushButton::hover {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.upperJawScanButton)
 
@@ -849,7 +850,8 @@ class Ui_HomePage(object):
         self.lowerJawScanButton.setIcon(icon10)
         self.lowerJawScanButton.setIconSize(QSize(24, 24))
         self.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                              "QPushButton::pressed {background-color: #8EA7E9}")
+                                              "QPushButton::pressed {background-color: #8EA7E9}"
+                                              "QPushButton::hover {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
@@ -860,7 +862,8 @@ class Ui_HomePage(object):
         self.sextantScanButton.setIcon(icon10)
         self.sextantScanButton.setIconSize(QSize(24, 24))
         self.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                             "QPushButton::pressed {background-color: #8EA7E9}")
+                                             "QPushButton::pressed {background-color: #8EA7E9}"
+                                             "QPushButton::hover {background-color: #8EA7E9}")
 
         self.verticalLayout_9.addWidget(self.sextantScanButton)
 
@@ -873,7 +876,8 @@ class Ui_HomePage(object):
         self.addPatientButton.setIcon(icon10)
         self.addPatientButton.setIconSize(QSize(24, 24))
         self.addPatientButton.setStyleSheet("QPushButton{background-color: #BCCEF8; border-radius: 10px; border : 1px solid grey}"
-                                            "QPushButton::pressed{background-color: #7286D3}")
+                                            "QPushButton::pressed{background-color: #7286D3}"
+                                            "QPushButton::hover{background-color: #7286D3}")
 
         self.verticalLayout_8.addWidget(self.addPatientButton, 0, Qt.AlignHCenter)
 
