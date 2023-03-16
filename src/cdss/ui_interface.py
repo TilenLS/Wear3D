@@ -25,11 +25,12 @@ import QSS_Resources_rc
 
 class Ui_HomePage(object):
     def setupUi(self, MainWindow, patientNumber, imageViewer):
-        self.MainWindow = MainWindow
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 800)
-        MainWindow.setMinimumSize(QSize(800, 500))
+        MainWindow.resize(1200, 850)
+        MainWindow.setMinimumSize(QSize(1200, 850))
+
+
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
 "	background: transparent;\n"
@@ -106,7 +107,7 @@ class Ui_HomePage(object):
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
         font = QFont()
-        font.setPointSize(18)
+        font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
         self.label.setFont(font)
@@ -147,7 +148,7 @@ class Ui_HomePage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mainBody.sizePolicy().hasHeightForWidth())
         self.mainBody.setSizePolicy(sizePolicy)
-        self.mainBody.setMinimumSize(QSize(784, 379))
+        self.mainBody.setMinimumSize(QSize(784, 500))
         self.horizontalLayout_2 = QHBoxLayout(self.mainBody)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -161,7 +162,7 @@ class Ui_HomePage(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 20)
         self.widget = QWidget(self.leftMenu)
         self.widget.setObjectName(u"widget")
-        self.widget.setMinimumSize(QSize(200, 350))
+        self.widget.setMinimumSize(QSize(200, 500))
         self.verticalLayout_4 = QVBoxLayout(self.widget)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -325,7 +326,7 @@ class Ui_HomePage(object):
                 "border-left:0px solid #000000;"
                 "border-right:1px solid #000000;"
                 "border-bottom: 1px solid #000000;"
-                "background-color:#BCCEF8;"
+                "background-color:#D2DAFF;"
                 "padding:4px;"
                 "}"
                 "QTableCornerButton::section{"
@@ -333,7 +334,7 @@ class Ui_HomePage(object):
                 "border-left:0px solid #D8D8D8;"
                 "border-right:1px solid #D8D8D8;"
                 "border-bottom: 1px solid #D8D8D8;"
-                "background-color:#BCCEF8;"
+                "background-color:#D2DAFF;"
                 "}"
         )
 
@@ -838,8 +839,9 @@ class Ui_HomePage(object):
         self.upperJawScanButton.setIcon(icon10)
         self.upperJawScanButton.setIconSize(QSize(24, 24))
         self.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                              "QPushButton::pressed {background-color: #8EA7E9}"
-                                              "QPushButton::hover {background-color: #8EA7E9}")
+                                              "QPushButton::pressed {background-color: #D2DAFF}"
+                                              "QPushButton::hover {background-color: #D2DAFF}")
+        self.upperJawScanButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_9.addWidget(self.upperJawScanButton)
 
@@ -850,8 +852,9 @@ class Ui_HomePage(object):
         self.lowerJawScanButton.setIcon(icon10)
         self.lowerJawScanButton.setIconSize(QSize(24, 24))
         self.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                              "QPushButton::pressed {background-color: #8EA7E9}"
-                                              "QPushButton::hover {background-color: #8EA7E9}")
+                                              "QPushButton::pressed {background-color: #D2DAFF}"
+                                              "QPushButton::hover {background-color: #D2DAFF}")
+        self.lowerJawScanButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_9.addWidget(self.lowerJawScanButton)
 
@@ -862,8 +865,9 @@ class Ui_HomePage(object):
         self.sextantScanButton.setIcon(icon10)
         self.sextantScanButton.setIconSize(QSize(24, 24))
         self.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}"
-                                             "QPushButton::pressed {background-color: #8EA7E9}"
-                                             "QPushButton::hover {background-color: #8EA7E9}")
+                                             "QPushButton::pressed {background-color: #D2DAFF}"
+                                             "QPushButton::hover {background-color: #D2DAFF}")
+        self.sextantScanButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_9.addWidget(self.sextantScanButton)
 
@@ -878,6 +882,7 @@ class Ui_HomePage(object):
         self.addPatientButton.setStyleSheet("QPushButton{background-color: #BCCEF8; border-radius: 10px; border : 1px solid grey}"
                                             "QPushButton::pressed{background-color: #7286D3}"
                                             "QPushButton::hover{background-color: #7286D3}")
+        self.addPatientButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_8.addWidget(self.addPatientButton, 0, Qt.AlignHCenter)
 
