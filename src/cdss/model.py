@@ -383,7 +383,6 @@ class AppFunctions():
         payload = {'id': id}
 
         response = requests.post(url, json=payload)
-
         return response.json()['result']
     
     def show_prediction(self):
