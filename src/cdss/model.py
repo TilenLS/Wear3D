@@ -2,6 +2,7 @@ import base64
 import os
 import sys
 import requests
+from PySide2 import QtCore
 from requests.exceptions import ConnectionError
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
@@ -10,8 +11,8 @@ import open3d as o3d
 import numpy as np
 import json
 
-# domain = "20.127.200.67:8080"
-domain = "127.0.0.1:5000"
+domain = "20.127.200.67:8080"
+# domain = "127.0.0.1:5000"
 
 def encrypt(originalPassword):
     encrypted = base64.b64encode(originalPassword.encode("utf-8"))
@@ -34,13 +35,16 @@ class AppFunctions():
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
+            self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #D2DAFF}")
             self.lowerFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
         if upper:
+            self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #D2DAFF}")
             self.upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
     def chooseSextantFile(self):
+        self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #D2DAFF}")
         self.sextantFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
 
@@ -157,6 +161,9 @@ class AppFunctions():
         if add_status == 'fail':
             print("Could not insert patient data")
         else:
+            self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+            self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+            self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
             self.ui3.name.setText("")
             self.ui3.age.setText("")
             self.ui3.occupation.setText("")
@@ -173,23 +180,88 @@ class AppFunctions():
             self.ui3.exercise.setCurrentIndex(0)
             self.ui3.drugUse.setCurrentIndex(0)
 
-            AppFunctions.displayPatientsAfterAdd(self, AppFunctions.getAllPatients())
+            patients = AppFunctions.getAllPatients()
+            patient_list = patients.json()['data']
+            id = []
+            for patient in patient_list:
+                id.append(patient[0])
+            AppFunctions.displayPatientsAfterAdd(self, patients)
+
             patientNumber = AppFunctions.getPatientNumber()
             for i in range(patientNumber):
                 self.ui3.viewSpecificButton = QPushButton(self.ui3.tableWidget)
                 self.ui3.viewSpecificButton.setObjectName(u"viewSpecificButton")
                 self.ui3.tableWidget.setCellWidget(i, 0, self.ui3.viewSpecificButton)
-                self.ui3.viewSpecificButton.setText(str(i + 1))
+                self.ui3.viewSpecificButton.setText(str(id[i]))
                 self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
                 self.ui3.viewSpecificButton.clicked.connect(
-                    lambda *args, i=i + 1, v=imageViewer: AppFunctions.viewImageAfterAdd(self, i, v))
+                    lambda *args, i=i, v=imageViewer: AppFunctions.viewImageAfterAdd(self, id[i], v))
+                self.ui3.deletePatientButton = QPushButton(self.ui3.tableWidget)
+                self.ui3.deletePatientButton.setObjectName(u"deletePatientButton")
+                self.ui3.tableWidget.setCellWidget(i, 16, self.ui3.deletePatientButton)
+                self.ui3.deletePatientButton.setText("Delete")
+                self.ui3.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
+                                                       "text-align: center;}")
+                self.ui3.deletePatientButton.clicked.connect(
+                    lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
 
-    def deletePatient(self):
-        id = self.ui4.id.text()
+    def deletePatient(self, patientID):
+        patientsOld = AppFunctions.getAllPatients()
+        patientListOld = patientsOld.json()['data']
+        idListOld = []
+        for patient in patientListOld:
+            idListOld.append(patient[0])
+
+        id = patientID
         payload = {'id': id}
 
         url = 'http://{}/patient/delete'.format(domain)
         response = requests.post(url, json=payload)
+
+        patientsNew = AppFunctions.getAllPatients()
+        patientListNew = patientsNew.json()['data']
+        idListNew = []
+        for patient in patientListNew:
+            idListNew.append(patient[0])
+
+        isLast = True
+        for n in range(len(idListNew)):
+            if idListOld[n] != idListNew[n]:
+                isLast = False
+                self.tableWidget.removeRow(n)
+                break
+
+        if isLast:
+            self.tableWidget.removeRow(len(idListNew))
+
+    def deletePatientAfterAdd(self, patientID):
+        patientsOld = AppFunctions.getAllPatients()
+        patientListOld = patientsOld.json()['data']
+        idListOld = []
+        for patient in patientListOld:
+            idListOld.append(patient[0])
+
+        id = patientID
+        payload = {'id': id}
+
+        url = 'http://{}/patient/delete'.format(domain)
+        response = requests.post(url, json=payload)
+
+        patientsNew = AppFunctions.getAllPatients()
+        patientListNew = patientsNew.json()['data']
+        idListNew = []
+        for patient in patientListNew:
+            idListNew.append(patient[0])
+
+        isLast = True
+        for n in range(len(idListNew)):
+            if idListOld[n] != idListNew[n]:
+                isLast = False
+                self.ui3.tableWidget.removeRow(n)
+                break
+
+        if isLast:
+            self.ui3.tableWidget.removeRow(len(idListNew))
 
     def displayPatients(self, rows):
         rows = rows.json()['data']
@@ -214,11 +286,20 @@ class AppFunctions():
             row_position += 1
 
     def displayPatientsAfterAdd(self, rows):
+        patients = AppFunctions.getAllPatients()
+        patient_list = patients.json()['data']
+        id = []
+        for patient in patient_list:
+            id.append(patient[0])
+
+        largestPatientID = id[len(id) - 1]
+
         rows = rows.json()['data']
+
         for row in rows:
             row_position = self.ui3.tableWidget.rowCount()
 
-            if row_position + 1 > row[0]:
+            if largestPatientID != row[0]:
                 continue
 
             item_count = 0
