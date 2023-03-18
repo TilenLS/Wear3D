@@ -357,8 +357,6 @@ class Ui_HomePage(object):
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
-        # dbFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Database/ToothWear.db'))
-        # AppFunctions.main(dbFolder)
         patients = AppFunctions.getAllPatients()
         patient_list = patients.json()['data']
         id = []
@@ -894,6 +892,9 @@ class Ui_HomePage(object):
         self.verticalLayout_9.addWidget(self.sextantScanButton)
 
         self.verticalLayout_8.addWidget(self.frame_5, 0, Qt.AlignTop)
+
+        self.testingLabel = QLabel(self.mainBody)
+        self.testingLabel.setGeometry(100, 100, 0, 750)
 
         self.addPatientButton = QPushButton(self.widget_2)
         self.addPatientButton.setObjectName(u"addPatientButton")

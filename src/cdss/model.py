@@ -352,7 +352,6 @@ class AppFunctions():
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
-        print(id)
         url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
@@ -423,9 +422,6 @@ class AppFunctions():
 
         The function should find the .ply file and send it to the sever in a POST request
         """
-        # sextant = self.__get_sextant(id, dbFolder)
-        # eg.
-        # sextant = '../back-end/inference_module/JawScan_1.ply'
         sextant = '../inference_module/JawScan_1.ply'
         url = 'http://{}/inference/predict'.format(domain)
         payload = {'id': id}
