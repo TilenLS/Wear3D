@@ -206,62 +206,93 @@ class AppFunctions():
                     lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
 
     def deletePatient(self, patientID):
-        patientsOld = AppFunctions.getAllPatients()
-        patientListOld = patientsOld.json()['data']
-        idListOld = []
-        for patient in patientListOld:
-            idListOld.append(patient[0])
+        msg = QMessageBox()
+        msg.setWindowTitle("Delete Patient")
+        messageBoxText = "Are you sure you want to delete details of patient " + str(patientID) + " ?"
+        msg.setText(messageBoxText)
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Cancel)
+        msg.exec_()
+        button = msg.clickedButton()
+        sb = msg.standardButton(button)
 
-        id = patientID
-        payload = {'id': id}
+        if sb == QMessageBox.Ok:
+            patientsOld = AppFunctions.getAllPatients()
+            patientListOld = patientsOld.json()['data']
+            idListOld = []
+            for patient in patientListOld:
+                idListOld.append(patient[0])
 
-        url = 'http://{}/patient/delete'.format(domain)
-        response = requests.post(url, json=payload)
+            id = patientID
+            payload = {'id': id}
 
-        patientsNew = AppFunctions.getAllPatients()
-        patientListNew = patientsNew.json()['data']
-        idListNew = []
-        for patient in patientListNew:
-            idListNew.append(patient[0])
+            url = 'http://{}/patient/delete'.format(domain)
+            response = requests.post(url, json=payload)
 
-        isLast = True
-        for n in range(len(idListNew)):
-            if idListOld[n] != idListNew[n]:
-                isLast = False
-                self.tableWidget.removeRow(n)
-                break
+            patientsNew = AppFunctions.getAllPatients()
+            patientListNew = patientsNew.json()['data']
+            idListNew = []
+            for patient in patientListNew:
+                idListNew.append(patient[0])
 
-        if isLast:
-            self.tableWidget.removeRow(len(idListNew))
+            isLast = True
+            for n in range(len(idListNew)):
+                if idListOld[n] != idListNew[n]:
+                    isLast = False
+                    self.tableWidget.removeRow(n)
+                    break
+
+            if isLast:
+                self.tableWidget.removeRow(len(idListNew))
+
+        if sb == QMessageBox.Cancel:
+            pass
+
 
     def deletePatientAfterAdd(self, patientID):
-        patientsOld = AppFunctions.getAllPatients()
-        patientListOld = patientsOld.json()['data']
-        idListOld = []
-        for patient in patientListOld:
-            idListOld.append(patient[0])
+        msg = QMessageBox()
+        msg.setWindowTitle("Delete Patient")
+        messageBoxText = "Are you sure you want to delete details of patient " + str(patientID) + " ?"
+        msg.setText(messageBoxText)
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Cancel)
+        msg.exec_()
+        button = msg.clickedButton()
+        sb = msg.standardButton(button)
 
-        id = patientID
-        payload = {'id': id}
+        if sb == QMessageBox.Ok:
+            patientsOld = AppFunctions.getAllPatients()
+            patientListOld = patientsOld.json()['data']
+            idListOld = []
+            for patient in patientListOld:
+                idListOld.append(patient[0])
 
-        url = 'http://{}/patient/delete'.format(domain)
-        response = requests.post(url, json=payload)
+            id = patientID
+            payload = {'id': id}
 
-        patientsNew = AppFunctions.getAllPatients()
-        patientListNew = patientsNew.json()['data']
-        idListNew = []
-        for patient in patientListNew:
-            idListNew.append(patient[0])
+            url = 'http://{}/patient/delete'.format(domain)
+            response = requests.post(url, json=payload)
 
-        isLast = True
-        for n in range(len(idListNew)):
-            if idListOld[n] != idListNew[n]:
-                isLast = False
-                self.ui3.tableWidget.removeRow(n)
-                break
+            patientsNew = AppFunctions.getAllPatients()
+            patientListNew = patientsNew.json()['data']
+            idListNew = []
+            for patient in patientListNew:
+                idListNew.append(patient[0])
 
-        if isLast:
-            self.ui3.tableWidget.removeRow(len(idListNew))
+            isLast = True
+            for n in range(len(idListNew)):
+                if idListOld[n] != idListNew[n]:
+                    isLast = False
+                    self.ui3.tableWidget.removeRow(n)
+                    break
+
+            if isLast:
+                self.ui3.tableWidget.removeRow(len(idListNew))
+
+        if sb == QMessageBox.Cancel:
+            pass
 
     def displayPatients(self, rows):
         rows = rows.json()['data']
