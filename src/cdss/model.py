@@ -3,6 +3,7 @@ import os
 import sys
 import requests
 from PySide2 import QtCore
+from PySide2.QtGui import Qt
 from requests.exceptions import ConnectionError
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
@@ -439,6 +440,19 @@ class AppFunctions():
         id = self.ui3.patientIDInput.text()
         prediction = AppFunctions.predict(id)
         self.ui3.prediction_label.setText(prediction)
+
+    def searchForMatchingItem(self, s):
+        self.tableWidget.setCurrentItem(None)
+
+        if not s:
+            # Empty string, don't search.
+            return
+
+        matching_items = self.tableWidget.findItems(s, Qt.MatchContains)
+        if matching_items:
+            # we have found something
+            item = matching_items[0]  # take the first
+            self.tableWidget.setCurrentItem(item)
     
 
 if __name__ == "__main__":

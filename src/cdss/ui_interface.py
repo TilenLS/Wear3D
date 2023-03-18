@@ -280,6 +280,17 @@ class Ui_HomePage(object):
 
         self.verticalLayout_14.addWidget(self.frame_6)
 
+        self.query = QLineEdit(self.homePage)
+        self.query.setGeometry(10, 5, 300, 35)
+        self.query.setPlaceholderText("Search...")
+        self.query.setStyleSheet("QLineEdit{background-color: #ECF2FF}")
+        self.query.textChanged.connect(lambda: AppFunctions.searchForMatchingItem(self, self.query.text()))
+        self.label_query = QLabel(self.query)
+        self.label_query.setObjectName(u"label_query")
+        self.label_query.setGeometry(QRect(260, 5, 30, 30))
+        self.label_query.setPixmap(QPixmap(u":/icons/Icons/search_focus.png"))
+        self.label_query.setScaledContents(True)
+
         self.tableWidget = QTableWidget(self.widget_4)
         if (self.tableWidget.columnCount() < 17):
             self.tableWidget.setColumnCount(17)
@@ -335,6 +346,11 @@ class Ui_HomePage(object):
                 "border-right:1px solid #D8D8D8;"
                 "border-bottom: 1px solid #D8D8D8;"
                 "background-color:#D2DAFF;"
+                "}"
+                "QTableView::item:selected"
+                "{"
+                "background-color : #d9fffb;"
+                "selection-color : #000000;"
                 "}"
         )
         self.tableWidget.setSortingEnabled(True)
@@ -560,12 +576,13 @@ class Ui_HomePage(object):
 
         self.prediction_label = QLabel(self.widget_5)
         self.prediction_label.setObjectName(u"prediction_label")
-        self.prediction_label.setGeometry(QRect(120, 90, 200, 50))
+        self.prediction_label.setGeometry(QRect(200, 140, 600, 50))
+        fontForLabel = QFont()
+        fontForLabel.setPointSize(15)
+        fontForLabel.setBold(True)
+        fontForLabel.setWeight(75)
+        self.prediction_label.setFont(fontForLabel)
         self.label_7.setScaledContents(True)
-
-        self.treatment_plan_label = QLabel(self.widget_5)
-        self.treatment_plan_label.setObjectName(u"treatment_plan_label")
-        self.treatment_plan_label.setGeometry(QRect(120, 90, 200, 350))
 
         self.verticalLayout_12.addWidget(self.widget_5)
 
@@ -580,6 +597,10 @@ class Ui_HomePage(object):
         self.label_11.setObjectName(u"label_11")
         self.label_11.setGeometry(QRect(67, 15, 300, 32))
         self.label_11.setFont(font)
+
+        self.treatment_plan_label = QLabel(self.widget_6)
+        self.treatment_plan_label.setObjectName(u"treatment_plan_label")
+        self.treatment_plan_label.setGeometry(QRect(200, 140, 600, 50))
 
         self.verticalLayout_12.addWidget(self.widget_6)
 
