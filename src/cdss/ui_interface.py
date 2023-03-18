@@ -337,6 +337,7 @@ class Ui_HomePage(object):
                 "background-color:#D2DAFF;"
                 "}"
         )
+        self.tableWidget.setSortingEnabled(True)
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
