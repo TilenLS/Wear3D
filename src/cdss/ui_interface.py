@@ -353,7 +353,7 @@ class Ui_HomePage(object):
                 "selection-color : #000000;"
                 "}"
         )
-        self.tableWidget.setSortingEnabled(True)
+        self.tableWidget.setSortingEnabled(False)
 
         self.verticalLayout_14.addWidget(self.tableWidget)
 
@@ -384,7 +384,7 @@ class Ui_HomePage(object):
             self.deletePatientButton.clicked.connect(
                        lambda *args, i=i: AppFunctions.deletePatient(self, id[i]))
 
-
+        self.tableWidget.setSortingEnabled(True)
 
         self.vboxLayout.addWidget(self.widget_4)
 
