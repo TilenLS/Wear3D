@@ -27,12 +27,6 @@ class AppFunctions():
 
     def tr(self, text):
         return QObject.tr(self, text)
-    
-    def conver2binary(filename):
-        # # Convert digital data to binary format
-        with open(filename, 'rb') as f:
-            files = {'file': f.read()}
-        return files
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
