@@ -1,13 +1,4 @@
-# -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'interfaceTIzdfT.ui'
-## Form generated from reading UI file 'interfaceYDckni.ui'
-##
-## Created by: Qt User Interface Compiler version 5.15.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
 import os
 
 from PySide2 import QtWidgets

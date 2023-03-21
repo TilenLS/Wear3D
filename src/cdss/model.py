@@ -368,18 +368,6 @@ class AppFunctions():
         "QPushButton {background-color: #FFFFFF; font-weight: bold}"
         )
 
-    def __get_sextant(self, id, dbFolder):
-        conn = AppFunctions.create_connection(dbFolder)
-
-        patientID = id
-
-        toExecute = "SELECT PATIENT_SEXTANT_SCAN FROM Patients WHERE PATIENT_ID = :id"
-        crsr = conn.cursor()
-        crsr.execute(toExecute, {"id": patientID})
-
-        sextant = crsr.fetchall()[0][0]   # after changing the database (store binary file in the database)
-        return sextant
-
     def predict(id):
         """ This function is used to send a request to the inference module and get the prediction
 
@@ -394,14 +382,10 @@ class AppFunctions():
 
         The function should find the .ply file and send it to the sever in a POST request
         """
-        sextant = '../inference_module/JawScan_1.ply'
         url = 'http://{}/inference/predict'.format(domain)
         payload = {'id': id}
 
-        with open(sextant, 'rb') as f:
-            files = {'file': (sextant, f)}
-            response = requests.post(url, json=payload)
-
+        response = requests.post(url, json=payload)
         return response.json()['result']
     
     def show_prediction(self):
@@ -422,8 +406,4 @@ class AppFunctions():
             item = matching_items[0]  # take the first
             self.tableWidget.setCurrentItem(item)
     
-
-if __name__ == "__main__":
-    pred = AppFunctions.predict()
-    print(pred)
 
