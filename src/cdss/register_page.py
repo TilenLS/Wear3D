@@ -66,7 +66,7 @@ class Ui_RegisterPage(object):
         self.iconLabel.setObjectName("iconLabel")
         self.iconLabel.setMinimumWidth(130)
         self.iconLabel.setMinimumHeight(130)
-        self.iconLabel.setPixmap(QPixmap(u":/icons/Icons/user_focus.png"))
+        self.iconLabel.setPixmap(QPixmap(u":/icons/Icons/user-plus_focus.png"))
         self.iconLabel.setScaledContents(True)
         self.iconLabel.setAlignment(Qt.AlignCenter)
         self.vertical_layout.addWidget(self.iconLabel, 0, 0, Qt.AlignHCenter)
