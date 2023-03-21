@@ -552,7 +552,9 @@ class Ui_HomePage(object):
         self.run_analysis_button = QPushButton(self.widget_5)
         self.run_analysis_button.setObjectName(u"run_analysis")
         self.run_analysis_button.setCursor(QCursor(Qt.PointingHandCursor))
-        self.run_analysis_button.setStyleSheet("QPushButton {background-color: #BCCEF8}")
+        self.run_analysis_button.setStyleSheet("QPushButton {background-color: #BCCEF8}"
+                                               "QPushButton::pressed{background-color: #7286D3}"
+                                               "QPushButton::hover{background-color: #7286D3}")
         icon20 = QIcon()
         icon20.addFile(u":/icons/Icons/loader_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.run_analysis_button.setIcon(icon20)
