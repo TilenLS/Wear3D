@@ -273,12 +273,17 @@ class AppFunctions():
             self.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
             self.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.numberItem = QTableWidgetItem()
+            self.numberItem.setData(QtCore.Qt.DisplayRole, row[0])
+            self.tableWidget.setItem(row_position, 0, self.numberItem)
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
-                self.qtableWidgetItem.setText(str(item))
+
+                if type(item) != int:
+                    self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                    self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
+                    self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
@@ -303,12 +308,17 @@ class AppFunctions():
             self.ui3.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
             self.ui3.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.numberItem = QTableWidgetItem()
+            self.numberItem.setData(QtCore.Qt.DisplayRole, row[0])
+            self.ui3.tableWidget.setItem(row_position, 0, self.numberItem)
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
-                self.qtableWidgetItem.setText(str(item))
+
+                if type(item) != int:
+                    self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                    self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
+                    self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
