@@ -3,6 +3,7 @@ import os
 import sys
 import requests
 from PySide2 import QtCore
+from PySide2.QtGui import Qt
 from requests.exceptions import ConnectionError
 from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
@@ -26,12 +27,6 @@ class AppFunctions():
 
     def tr(self, text):
         return QObject.tr(self, text)
-    
-    def conver2binary(filename):
-        # # Convert digital data to binary format
-        with open(filename, 'rb') as f:
-            files = {'file': f.read()}
-        return files
 
     def choose_file(self, lower: bool = False, upper: bool = False):
         if lower:
@@ -180,6 +175,7 @@ class AppFunctions():
             self.ui3.exercise.setCurrentIndex(0)
             self.ui3.drugUse.setCurrentIndex(0)
 
+            self.ui3.tableWidget.setSortingEnabled(False)
             patients = AppFunctions.getAllPatients()
             patient_list = patients.json()['data']
             id = []
@@ -205,63 +201,65 @@ class AppFunctions():
                 self.ui3.deletePatientButton.clicked.connect(
                     lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
 
+            self.ui3.tableWidget.setSortingEnabled(True)
+
+
     def deletePatient(self, patientID):
-        patientsOld = AppFunctions.getAllPatients()
-        patientListOld = patientsOld.json()['data']
-        idListOld = []
-        for patient in patientListOld:
-            idListOld.append(patient[0])
+        msg = QMessageBox()
+        msg.setWindowTitle("Delete Patient")
+        messageBoxText = "Are you sure you want to delete details of patient " + str(patientID) + " ?"
+        msg.setText(messageBoxText)
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Cancel)
+        msg.exec_()
+        button = msg.clickedButton()
+        sb = msg.standardButton(button)
 
-        id = patientID
-        payload = {'id': id}
+        if sb == QMessageBox.Ok:
+            items = self.tableWidget.findItems(str(patientID), QtCore.Qt.MatchExactly)
+            if items:
+                rowToBeDeleted = items[0].row()
 
-        url = 'http://{}/patient/delete'.format(domain)
-        response = requests.post(url, json=payload)
+            id = patientID
+            payload = {'id': id}
 
-        patientsNew = AppFunctions.getAllPatients()
-        patientListNew = patientsNew.json()['data']
-        idListNew = []
-        for patient in patientListNew:
-            idListNew.append(patient[0])
+            url = 'http://{}/patient/delete'.format(domain)
+            response = requests.post(url, json=payload)
 
-        isLast = True
-        for n in range(len(idListNew)):
-            if idListOld[n] != idListNew[n]:
-                isLast = False
-                self.tableWidget.removeRow(n)
-                break
+            self.tableWidget.removeRow(rowToBeDeleted)
 
-        if isLast:
-            self.tableWidget.removeRow(len(idListNew))
+        if sb == QMessageBox.Cancel:
+            pass
+
 
     def deletePatientAfterAdd(self, patientID):
-        patientsOld = AppFunctions.getAllPatients()
-        patientListOld = patientsOld.json()['data']
-        idListOld = []
-        for patient in patientListOld:
-            idListOld.append(patient[0])
+        msg = QMessageBox()
+        msg.setWindowTitle("Delete Patient")
+        messageBoxText = "Are you sure you want to delete details of patient " + str(patientID) + " ?"
+        msg.setText(messageBoxText)
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Cancel)
+        msg.exec_()
+        button = msg.clickedButton()
+        sb = msg.standardButton(button)
 
-        id = patientID
-        payload = {'id': id}
+        if sb == QMessageBox.Ok:
+            items = self.ui3.tableWidget.findItems(str(patientID), QtCore.Qt.MatchExactly)
+            if items:
+                rowToBeDeleted = items[0].row()
 
-        url = 'http://{}/patient/delete'.format(domain)
-        response = requests.post(url, json=payload)
+            id = patientID
+            payload = {'id': id}
 
-        patientsNew = AppFunctions.getAllPatients()
-        patientListNew = patientsNew.json()['data']
-        idListNew = []
-        for patient in patientListNew:
-            idListNew.append(patient[0])
+            url = 'http://{}/patient/delete'.format(domain)
+            response = requests.post(url, json=payload)
 
-        isLast = True
-        for n in range(len(idListNew)):
-            if idListOld[n] != idListNew[n]:
-                isLast = False
-                self.ui3.tableWidget.removeRow(n)
-                break
+            self.ui3.tableWidget.removeRow(rowToBeDeleted)
 
-        if isLast:
-            self.ui3.tableWidget.removeRow(len(idListNew))
+        if sb == QMessageBox.Cancel:
+            pass
 
     def displayPatients(self, rows):
         rows = rows.json()['data']
@@ -275,52 +273,61 @@ class AppFunctions():
             self.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
             self.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.numberItem = QTableWidgetItem()
+            self.numberItem.setData(QtCore.Qt.DisplayRole, row[0])
+            self.tableWidget.setItem(row_position, 0, self.numberItem)
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
-                self.qtableWidgetItem.setText(str(item))
+
+                if type(item) != int:
+                    self.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                    self.qtableWidgetItem = self.tableWidget.item(row_position, item_count)
+                    self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
 
     def displayPatientsAfterAdd(self, rows):
-        patients = AppFunctions.getAllPatients()
-        patient_list = patients.json()['data']
-        id = []
-        for patient in patient_list:
-            id.append(patient[0])
-
-        largestPatientID = id[len(id) - 1]
-
+        self.ui3.tableWidget.clear()
+        self.ui3.tableWidget.setRowCount(0)
+        if (self.ui3.tableWidget.columnCount() < 17):
+            self.ui3.tableWidget.setColumnCount(17)
+        headerLabels = ["ID", "Name", "Age", "Occupation", "Medical history", "Pain complaint", "Financial resources",
+                        "Brushing method", "Brushing frequency", "Brushing timing", "Alcohol intake", "Stress level",
+                        "Sleep apnoea", "Snoring habit", "Exercise", "Drug use", "Delete patient"]
+        self.ui3.tableWidget.setHorizontalHeaderLabels(headerLabels)
         rows = rows.json()['data']
-
         for row in rows:
             row_position = self.ui3.tableWidget.rowCount()
 
-            if largestPatientID != row[0]:
+            if row_position + 1 > row[0]:
                 continue
 
             item_count = 0
             self.ui3.tableWidget.setRowCount(row_position + 1)
             qtableWidgetItem = QTableWidgetItem()
             self.ui3.tableWidget.setVerticalHeaderItem(row_position, qtableWidgetItem)
+            self.numberItem = QTableWidgetItem()
+            self.numberItem.setData(QtCore.Qt.DisplayRole, row[0])
+            self.ui3.tableWidget.setItem(row_position, 0, self.numberItem)
 
             for item in row:
                 self.qtableWidgetItem = QTableWidgetItem()
-                self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
-                self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
-                self.qtableWidgetItem.setText(str(item))
+
+                if type(item) != int:
+                    self.ui3.tableWidget.setItem(row_position, item_count, self.qtableWidgetItem)
+                    self.qtableWidgetItem = self.ui3.tableWidget.item(row_position, item_count)
+                    self.qtableWidgetItem.setText(str(item))
 
                 item_count += 1
             row_position += 1
+
 
     def viewImage(self, id, viewer):
         self.pages.setCurrentWidget(self.viewPage)
 
         payload = {'id': id}
-        print(id)
         url = 'http://{}/patient/view'.format(domain)
         response = requests.post(url, json=payload)
         upper_file = response.json()['upper']
@@ -333,6 +340,8 @@ class AppFunctions():
             f.write(lower_file)
         
         viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
+        os.remove('upperScan.ply')
+        os.remove('lowerScan.ply')
 
         self.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
@@ -389,9 +398,18 @@ class AppFunctions():
         id = self.ui3.patientIDInput.text()
         prediction = AppFunctions.predict(id)
         self.ui3.prediction_label.setText(prediction)
-    
 
-if __name__ == "__main__":
-    pred = AppFunctions.predict()
-    print(pred)
+    def searchForMatchingItem(self, s):
+        self.tableWidget.setCurrentItem(None)
+
+        if not s:
+            # Empty string, don't search.
+            return
+
+        matching_items = self.tableWidget.findItems(s, Qt.MatchContains)
+        if matching_items:
+            # we have found something
+            item = matching_items[0]  # take the first
+            self.tableWidget.setCurrentItem(item)
+    
 

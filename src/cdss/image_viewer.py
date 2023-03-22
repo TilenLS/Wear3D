@@ -71,7 +71,7 @@ class ImageViewer(QMainWindow):
                 self.meshLower = o3d.io.read_point_cloud(lowerFilePath)
                 self.vis.add_geometry(self.meshLower)
                 self.lowerPresent = True
-        if upperFilePath == True:
+        elif upperFilePath == True:
             upperFilePath = QFileDialog.getOpenFileName(self,
                                                 self.tr("Open File"), self.tr("~/Desktop/"), self.tr("3D Files (*.ply *.stl)"))[0]
             if self.meshUpper:
