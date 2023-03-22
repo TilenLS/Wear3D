@@ -330,6 +330,8 @@ class AppFunctions():
             f.write(lower_file)
         
         viewer.load_mesh(lowerFilePath='lowerScan.ply', upperFilePath='upperScan.ply')
+        os.remove('upperScan.ply')
+        os.remove('lowerScan.ply')
 
         self.homeButton.setStyleSheet(
         "QPushButton {background-color: transparent; border: none}"
