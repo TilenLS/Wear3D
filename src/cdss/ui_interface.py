@@ -540,6 +540,8 @@ class Ui_HomePage(object):
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.widget_5 = QWidget(self.widget_7)
         self.widget_5.setObjectName(u"widget_5")
+        self.widget_5.setMinimumSize(QSize(1000, 300))
+        self.widget_5.setMaximumSize(QSize(1000, 300))
         self.label_7 = QLabel(self.widget_5)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setGeometry(QRect(10, 10, 50, 50))
@@ -559,15 +561,15 @@ class Ui_HomePage(object):
         icon20.addFile(u":/icons/Icons/loader_focus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.run_analysis_button.setIcon(icon20)
         self.run_analysis_button.setIconSize(QSize(24, 26))
-        self.run_analysis_button.setGeometry(QRect(400, 270, 140, 40))
+        self.run_analysis_button.setGeometry(QRect(400, 240, 140, 40))
 
         self.patientIDInput = QLineEdit(self.widget_5)
-        self.patientIDInput.setObjectName(u"occupation")
-        self.patientIDInput.setGeometry(QRect(50, 270, 300, 40))
+        self.patientIDInput.setObjectName(u"patientIDInput")
+        self.patientIDInput.setGeometry(QRect(50, 240, 300, 40))
 
         self.prediction_label = QLabel(self.widget_5)
         self.prediction_label.setObjectName(u"prediction_label")
-        self.prediction_label.setGeometry(QRect(200, 140, 600, 50))
+        self.prediction_label.setGeometry(QRect(200, 120, 600, 50))
         fontForLabel = QFont()
         fontForLabel.setPointSize(15)
         fontForLabel.setBold(True)
@@ -591,7 +593,12 @@ class Ui_HomePage(object):
 
         self.treatment_plan_label = QLabel(self.widget_6)
         self.treatment_plan_label.setObjectName(u"treatment_plan_label")
-        self.treatment_plan_label.setGeometry(QRect(200, 140, 600, 50))
+        self.treatment_plan_label.setGeometry(QRect(80, 60, 900, 250))
+        fontForLabel = QFont()
+        fontForLabel.setPointSize(12)
+        fontForLabel.setBold(True)
+        fontForLabel.setWeight(75)
+        self.treatment_plan_label.setFont(fontForLabel)
 
         self.verticalLayout_12.addWidget(self.widget_6)
 
