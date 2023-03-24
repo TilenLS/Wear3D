@@ -123,12 +123,33 @@ class AppFunctions():
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
         sextantScan = self.sextantFilePath
-        with open(upperScan, 'rb') as f:
-            upper = f.read()
-        with open(lowerScan, 'rb') as f:
-            lower = f.read()
-        with open(sextantScan, 'rb') as f:
-            sextant = f.read()
+        if upperScan is None:
+            msg = QMessageBox()
+            msg.setWindowTitle("Invalid")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Please choose an upper scan file.")
+            msg.exec_()
+        else:
+            with open(upperScan, 'rb') as f:
+                upper = f.read()
+        if lowerScan is None:
+            msg = QMessageBox()
+            msg.setWindowTitle("Invalid")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Please choose a lower scan file.")
+            msg.exec_()
+        else:
+            with open(lowerScan, 'rb') as f:
+                lower = f.read()
+        if sextantScan is None:
+            msg = QMessageBox()
+            msg.setWindowTitle("Invalid")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Please choose a sextant scan file.")
+            msg.exec_()
+        else:
+            with open(sextantScan, 'rb') as f:
+                sextant = f.read()
         payload = {'name': name,
                     'age': age,
                     'occupation': occupation,
