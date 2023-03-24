@@ -123,106 +123,96 @@ class AppFunctions():
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
         sextantScan = self.sextantFilePath
-        if upperScan is None:
+        print(upperScan, lowerScan, sextantScan)
+        if upperScan is None or lowerScan is None or sextantScan is None or upperScan == '' or lowerScan == '' or sextantScan == '':
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
-            msg.setText("Please choose an upper scan file.")
+            msg.setText("Please select files for all three scans.")
             msg.exec_()
         else:
             with open(upperScan, 'rb') as f:
                 upper = f.read()
-        if lowerScan is None:
-            msg = QMessageBox()
-            msg.setWindowTitle("Invalid")
-            msg.setIcon(QMessageBox.Warning)
-            msg.setText("Please choose a lower scan file.")
-            msg.exec_()
-        else:
             with open(lowerScan, 'rb') as f:
                 lower = f.read()
-        if sextantScan is None:
-            msg = QMessageBox()
-            msg.setWindowTitle("Invalid")
-            msg.setIcon(QMessageBox.Warning)
-            msg.setText("Please choose a sextant scan file.")
-            msg.exec_()
-        else:
             with open(sextantScan, 'rb') as f:
                 sextant = f.read()
-        payload = {'name': name,
-                    'age': age,
-                    'occupation': occupation,
-                    'medicalHistory': medicalHistory,
-                    'painComplaint': painComplaint,
-                    'financialResources': financialResources,
-                    'brushingMethod': brushingMethod,
-                    'brushingFrequency': brushingFrequency,
-                    'brushingTiming': brushingTiming,
-                    'alcoholIntake': alocholIntake,
-                    'stressLevel': stressLevel,
-                    'sleepApnoea': sleepApnoea,
-                    'snoringHabit': snoringHabit,
-                    'exercise': exercise,
-                    'drugUse': drugUse,
-                    'upperScan': base64.b64encode(upper).decode('utf-8'),
-                    'lowerScan': base64.b64encode(lower).decode('utf-8'),
-                    'sextantScan': base64.b64encode(sextant).decode('utf-8')}
-        json_data = json.dumps(payload)
-        
-        url = 'http://{}/patient/add'.format(domain)
-        response = requests.post(url, data={'json': json_data})
-        add_status = response.json()['result']
+            payload = {'name': name,
+                        'age': age,
+                        'occupation': occupation,
+                        'medicalHistory': medicalHistory,
+                        'painComplaint': painComplaint,
+                        'financialResources': financialResources,
+                        'brushingMethod': brushingMethod,
+                        'brushingFrequency': brushingFrequency,
+                        'brushingTiming': brushingTiming,
+                        'alcoholIntake': alocholIntake,
+                        'stressLevel': stressLevel,
+                        'sleepApnoea': sleepApnoea,
+                        'snoringHabit': snoringHabit,
+                        'exercise': exercise,
+                        'drugUse': drugUse,
+                        'upperScan': base64.b64encode(upper).decode('utf-8'),
+                        'lowerScan': base64.b64encode(lower).decode('utf-8'),
+                        'sextantScan': base64.b64encode(sextant).decode('utf-8')}
+            json_data = json.dumps(payload)
 
-        if add_status == 'fail':
-            print("Could not insert patient data")
-        else:
-            self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
-            self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
-            self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
-            self.ui3.name.setText("")
-            self.ui3.age.setText("")
-            self.ui3.occupation.setText("")
-            self.ui3.medicalHistory.setCurrentIndex(0)
-            self.ui3.painComplaint.setCurrentIndex(0)
-            self.ui3.financialResources.setCurrentIndex(0)
-            self.ui3.brushingMethod.setCurrentIndex(0)
-            self.ui3.brushingFrequency.setCurrentIndex(0)
-            self.ui3.brushingTiming.setCurrentIndex(0)
-            self.ui3.alcoholIntake.setCurrentIndex(0)
-            self.ui3.stressLevel.setCurrentIndex(0)
-            self.ui3.sleepApnoea.setCurrentIndex(0)
-            self.ui3.snoringHabit.setCurrentIndex(0)
-            self.ui3.exercise.setCurrentIndex(0)
-            self.ui3.drugUse.setCurrentIndex(0)
+            url = 'http://{}/patient/add'.format(domain)
+            response = requests.post(url, data={'json': json_data})
+            add_status = response.json()['result']
 
-            self.ui3.tableWidget.setSortingEnabled(False)
-            patients = AppFunctions.getAllPatients()
-            patient_list = patients.json()['data']
-            id = []
-            for patient in patient_list:
-                id.append(patient[0])
-            AppFunctions.displayPatientsAfterAdd(self, patients)
+            if add_status == 'fail':
+                print("Could not insert patient data")
+            else:
+                self.ui3.lowerJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+                self.ui3.upperJawScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+                self.ui3.sextantScanButton.setStyleSheet("QPushButton {background-color: #EAFDFC}")
+                self.ui3.name.setText("")
+                self.ui3.age.setText("")
+                self.ui3.occupation.setText("")
+                self.ui3.medicalHistory.setCurrentIndex(0)
+                self.ui3.painComplaint.setCurrentIndex(0)
+                self.ui3.financialResources.setCurrentIndex(0)
+                self.ui3.brushingMethod.setCurrentIndex(0)
+                self.ui3.brushingFrequency.setCurrentIndex(0)
+                self.ui3.brushingTiming.setCurrentIndex(0)
+                self.ui3.alcoholIntake.setCurrentIndex(0)
+                self.ui3.stressLevel.setCurrentIndex(0)
+                self.ui3.sleepApnoea.setCurrentIndex(0)
+                self.ui3.snoringHabit.setCurrentIndex(0)
+                self.ui3.exercise.setCurrentIndex(0)
+                self.ui3.drugUse.setCurrentIndex(0)
+                self.upperFilePath = None
+                self.lowerFilePath = None
+                self.sextantFilePath = None
 
-            patientNumber = AppFunctions.getPatientNumber()
-            for i in range(patientNumber):
-                self.ui3.viewSpecificButton = QPushButton(self.ui3.tableWidget)
-                self.ui3.viewSpecificButton.setObjectName(u"viewSpecificButton")
-                self.ui3.tableWidget.setCellWidget(i, 0, self.ui3.viewSpecificButton)
-                self.ui3.viewSpecificButton.setText(str(id[i]))
-                self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
-                self.ui3.viewSpecificButton.clicked.connect(
-                    lambda *args, i=i, v=imageViewer: AppFunctions.viewImageAfterAdd(self, id[i], v))
-                self.ui3.deletePatientButton = QPushButton(self.ui3.tableWidget)
-                self.ui3.deletePatientButton.setObjectName(u"deletePatientButton")
-                self.ui3.tableWidget.setCellWidget(i, 16, self.ui3.deletePatientButton)
-                self.ui3.deletePatientButton.setText("Delete")
-                self.ui3.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
-                                                       "text-align: center;}")
-                self.ui3.deletePatientButton.clicked.connect(
-                    lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
+                self.ui3.tableWidget.setSortingEnabled(False)
+                patients = AppFunctions.getAllPatients()
+                patient_list = patients.json()['data']
+                id = []
+                for patient in patient_list:
+                    id.append(patient[0])
+                AppFunctions.displayPatientsAfterAdd(self, patients)
 
-            self.ui3.tableWidget.setSortingEnabled(True)
+                patientNumber = AppFunctions.getPatientNumber()
+                for i in range(patientNumber):
+                    self.ui3.viewSpecificButton = QPushButton(self.ui3.tableWidget)
+                    self.ui3.viewSpecificButton.setObjectName(u"viewSpecificButton")
+                    self.ui3.tableWidget.setCellWidget(i, 0, self.ui3.viewSpecificButton)
+                    self.ui3.viewSpecificButton.setText(str(id[i]))
+                    self.ui3.viewSpecificButton.setStyleSheet("QPushButton {background-color: #ECF2FF}")
+                    self.ui3.viewSpecificButton.clicked.connect(
+                        lambda *args, i=i, v=imageViewer: AppFunctions.viewImageAfterAdd(self, id[i], v))
+                    self.ui3.deletePatientButton = QPushButton(self.ui3.tableWidget)
+                    self.ui3.deletePatientButton.setObjectName(u"deletePatientButton")
+                    self.ui3.tableWidget.setCellWidget(i, 16, self.ui3.deletePatientButton)
+                    self.ui3.deletePatientButton.setText("Delete")
+                    self.ui3.deletePatientButton.setStyleSheet("QPushButton {background-color: #ECF2FF;"
+                                                           "text-align: center;}")
+                    self.ui3.deletePatientButton.clicked.connect(
+                        lambda *args, i=i: AppFunctions.deletePatientAfterAdd(self, id[i]))
+
+                self.ui3.tableWidget.setSortingEnabled(True)
 
 
     def deletePatient(self, patientID):
@@ -425,41 +415,51 @@ class AppFunctions():
         idList = []
         for patient in patient_list:
             idList.append(patient[0])
-        if id not in idList:
+        try:
+            id = int(id)
+            if id not in idList:
+                msg = QMessageBox()
+                msg.setWindowTitle("Invalid")
+                msg.setIcon(QMessageBox.Warning)
+                msg.setText("Patient ID does not exist, please try again")
+                msg.exec_()
+
+            else:
+                prediction = AppFunctions.predict(id)
+                grade0Treatment = "No treatment needed."
+                grade1Treatment = "Counselling/Monitoring/Taking preventive measurements"
+                grade2Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                                  "AND/OR\n" \
+                                  "2. Restorative treatment:\n" \
+                                  "\ta) Composite resin restorations"
+                grade3Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                                  "AND/OR\n" \
+                                  "2. Restorative treatment:\n" \
+                                  "  a) Composite build ups\n" \
+                                  "  b) Indirect adhesive restorations: composite or ceramic"
+                grade4Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                                  "AND/OR\n" \
+                                  "2. Restorative treatment:\n" \
+                                  "  a) Indirect adhesive restorations: composite or ceramic"
+                if prediction == "Your tooth wear grade is: 0":
+                    self.ui3.treatment_plan_label.setText(grade0Treatment)
+                if prediction == "Your tooth wear grade is: 1":
+                    self.ui3.treatment_plan_label.setText(grade1Treatment)
+                if prediction == "Your tooth wear grade is: 2":
+                    self.ui3.treatment_plan_label.setText(grade2Treatment)
+                if prediction == "Your tooth wear grade is: 3":
+                    self.ui3.treatment_plan_label.setText(grade3Treatment)
+                if prediction == "Your tooth wear grade is: 4":
+                    self.ui3.treatment_plan_label.setText(grade4Treatment)
+                self.ui3.prediction_label.setText(prediction)
+        except:
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")
             msg.setIcon(QMessageBox.Warning)
-            msg.setText("Patient ID does not exist, please try again")
+            msg.setText("Invalid patient ID, please try again")
             msg.exec_()
 
-        else:
-            prediction = AppFunctions.predict(id)
-            grade0Treatment = "No treatment needed."
-            grade1Treatment = "Counselling/Monitoring/Taking preventive measurements"
-            grade2Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                              "AND/OR\n" \
-                              "2. Restorative treatment:\n" \
-                              "\ta) Composite resin restorations"
-            grade3Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                              "AND/OR\n" \
-                              "2. Restorative treatment:\n" \
-                              "  a) Composite build ups\n" \
-                              "  b) Indirect adhesive restorations: composite or ceramic"
-            grade4Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                              "AND/OR\n" \
-                              "2. Restorative treatment:\n" \
-                              "  a) Indirect adhesive restorations: composite or ceramic"
-            if prediction == "Your tooth wear grade is: 0":
-                self.ui3.treatment_plan_label.setText(grade0Treatment)
-            if prediction == "Your tooth wear grade is: 1":
-                self.ui3.treatment_plan_label.setText(grade1Treatment)
-            if prediction == "Your tooth wear grade is: 2":
-                self.ui3.treatment_plan_label.setText(grade2Treatment)
-            if prediction == "Your tooth wear grade is: 3":
-                self.ui3.treatment_plan_label.setText(grade3Treatment)
-            if prediction == "Your tooth wear grade is: 4":
-                self.ui3.treatment_plan_label.setText(grade4Treatment)
-            self.ui3.prediction_label.setText(prediction)
+
 
     def searchForMatchingItem(self, s):
         self.tableWidget.setCurrentItem(None)
