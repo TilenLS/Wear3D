@@ -396,33 +396,47 @@ class AppFunctions():
     
     def show_prediction(self):
         id = self.ui3.patientIDInput.text()
-        prediction = AppFunctions.predict(id)
-        grade0Treatment = "No treatment needed."
-        grade1Treatment = "Counselling/Monitoring/Taking preventive measurements"
-        grade2Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                          "AND/OR\n" \
-                          "2. Restorative treatment:\n" \
-                          "\ta) Composite resin restorations"
-        grade3Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                          "AND/OR\n" \
-                          "2. Restorative treatment:\n" \
-                          "  a) Composite build ups\n" \
-                          "  b) Indirect adhesive restorations: composite or ceramic"
-        grade4Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
-                          "AND/OR\n" \
-                          "2. Restorative treatment:\n" \
-                          "  a) Indirect adhesive restorations: composite or ceramic"
-        if prediction == "Your tooth wear grade is: 0":
-            self.ui3.treatment_plan_label.setText(grade0Treatment)
-        if prediction == "Your tooth wear grade is: 1":
-            self.ui3.treatment_plan_label.setText(grade1Treatment)
-        if prediction == "Your tooth wear grade is: 2":
-            self.ui3.treatment_plan_label.setText(grade2Treatment)
-        if prediction == "Your tooth wear grade is: 3":
-            self.ui3.treatment_plan_label.setText(grade3Treatment)
-        if prediction == "Your tooth wear grade is: 4":
-            self.ui3.treatment_plan_label.setText(grade4Treatment)
-        self.ui3.prediction_label.setText(prediction)
+
+        patients = AppFunctions.getAllPatients()
+        patient_list = patients.json()['data']
+        idList = []
+        for patient in patient_list:
+            idList.append(patient[0])
+        if id not in idList:
+            msg = QMessageBox()
+            msg.setWindowTitle("Invalid")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Patient ID does not exist, please try again")
+            msg.exec_()
+
+        else:
+            prediction = AppFunctions.predict(id)
+            grade0Treatment = "No treatment needed."
+            grade1Treatment = "Counselling/Monitoring/Taking preventive measurements"
+            grade2Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                              "AND/OR\n" \
+                              "2. Restorative treatment:\n" \
+                              "\ta) Composite resin restorations"
+            grade3Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                              "AND/OR\n" \
+                              "2. Restorative treatment:\n" \
+                              "  a) Composite build ups\n" \
+                              "  b) Indirect adhesive restorations: composite or ceramic"
+            grade4Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
+                              "AND/OR\n" \
+                              "2. Restorative treatment:\n" \
+                              "  a) Indirect adhesive restorations: composite or ceramic"
+            if prediction == "Your tooth wear grade is: 0":
+                self.ui3.treatment_plan_label.setText(grade0Treatment)
+            if prediction == "Your tooth wear grade is: 1":
+                self.ui3.treatment_plan_label.setText(grade1Treatment)
+            if prediction == "Your tooth wear grade is: 2":
+                self.ui3.treatment_plan_label.setText(grade2Treatment)
+            if prediction == "Your tooth wear grade is: 3":
+                self.ui3.treatment_plan_label.setText(grade3Treatment)
+            if prediction == "Your tooth wear grade is: 4":
+                self.ui3.treatment_plan_label.setText(grade4Treatment)
+            self.ui3.prediction_label.setText(prediction)
 
     def searchForMatchingItem(self, s):
         self.tableWidget.setCurrentItem(None)
