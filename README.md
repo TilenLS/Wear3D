@@ -41,21 +41,20 @@ Wear3D is a project under the COMP0016 module at UCL as a part of the Industry E
 ### Cloud Azure
 This will only work on windows as we use the Win32GUI library. Either use a Windows device or virtual machine (VM). Moreover, since we host our database on an Azure VM you need to connect to our server before being able to use the application properly.
 
-1. **Step 1:** Open command prompt or terminal on your local computer.
-2. **Step 2:** Use SSH to connect to the cloud server. The password for the VM is: Team10Toothwear!<br />
+**Step 1:** Open command prompt or terminal on your local computer. <br />
+**Step 2:** Use SSH to connect to the cloud server. The password for the VM is: Team10Toothwear!<br />
   ``` ssh team10@20.127.200.67 ```<br />
-  Enter the password when you are prompted
-3. **Step 3:** Once connected to the remote VM you will need to navigate to the directory where the "app.py" file is located. This can be done with the following command:<br />
+  Enter the password when you are prompted<br />
+**Step 3:** Once connected to the remote VM you will need to navigate to the directory where the "app.py" file is located. This can be done with the following command:<br />
   ```cd tooth-wear-dl/back-end/app/```<br />
-4. **Step 4:** Run the back-end code with this command:<br />
+**Step 4:** Run the back-end code with this command:<br />
   ```python app.py```<br />
-  Now the back-end preperation is done. You can now open Wear3D (after downloading it following the instructions below).
+Now the back-end preperation is done. You can now open Wear3D (after downloading it following the instructions below).
  
 ### Download and run Wear3D
-Note: This must be done on Windows.
-1. **Step 1:** Click on the most recent Wear3D release on our Github page.
-2. **Step 2:** Click on the "executable.zip" file under Assets to download.
-3. **Step 3:** When the downloading is complete, extract the zip file.
-4. **Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.
- 
- Note: If your local device generates a "Windows protected your PC" warning when attempting to run the app, click on 'More info' and then 'Run anyway'.
+Note: This must be done on Windows.<br />
+**Step 1:** Click on the most recent Wear3D release on our Github page.<br />
+**Step 2:** Click on the "executable.zip" file under Assets to download.<br />
+**Step 3:** When the downloading is complete, extract the zip file.<br />
+**Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.<br />
+Note: If your local device generates a "Windows protected your PC" warning when attempting to run the app, click on 'More info' and then 'Run anyway'.
