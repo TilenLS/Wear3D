@@ -1,7 +1,7 @@
 # Wear3D
 ## Description
 
-Wear3D is a project under the COMP0016 module at UCL as a part of the Industry Exchange Network (IXN) program in partnership with the Eastman Dental Institute. It is an early stage Clinical Decision Support System (CDSS) app that aims to provide treaatment plan suggestions for patients with tooth wear, to ultimately save dentists time, resources, and help provide more accurate prognosis. For an expansive overview of the project visit our website at: http://students.cs.ucl.ac.uk/2022/group10/
+Wear3D is a project under the COMP0016 module at UCL as a part of the Industry Exchange Network (IXN) program in partnership with the Eastman Dental Institute. It is an early stage Clinical Decision Support System (CDSS) app that aims to provide treatment plan suggestions for patients with tooth wear, to ultimately save dentists time, resources, and help provide more accurate prognosis. For an expansive overview of the project visit our website at: http://students.cs.ucl.ac.uk/2022/group10/
 
 ## Features
 
@@ -42,19 +42,31 @@ Wear3D is a project under the COMP0016 module at UCL as a part of the Industry E
 This will only work on windows as we use the Win32GUI library. Either use a Windows device or virtual machine (VM). Moreover, since we host our database on an Azure VM you need to connect to our server before being able to use the application properly.
 
 **Step 1:** Open command prompt or terminal on your local computer. <br />
+
 **Step 2:** Use SSH to connect to the cloud server. The password for the VM is: Team10Toothwear!<br />
-  ``` ssh team10@20.127.200.67 ```<br />
+
+    ssh team10@20.127.200.67
   Enter the password when you are prompted<br />
+  
 **Step 3:** Once connected to the remote VM you will need to navigate to the directory where the "app.py" file is located. This can be done with the following command:<br />
-  ```cd tooth-wear-dl/back-end/app/```<br />
+
+    cd tooth-wear-dl/back-end/app/
+    
 **Step 4:** Run the back-end code with this command:<br />
-  ```python app.py```<br />
+
+    python app.py
+  
 Now the back-end preperation is done. You can now open Wear3D (after downloading it following the instructions below).
  
 ### Download and run Wear3D
 Note: This must be done on Windows.<br />
-**Step 1:** Click on the most recent Wear3D release on our Github page.<br />
-**Step 2:** Click on the "executable.zip" file under Assets to download.<br />
-**Step 3:** When the downloading is complete, extract the zip file.<br />
-**Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.<br />
+
+   **Step 1:** Click on the most recent Wear3D release on our Github page.<br />
+
+   **Step 2:** Click on the "executable.zip" file under Assets to download.<br />
+
+   **Step 3:** When the downloading is complete, extract the zip file.<br />
+
+   **Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.<br />
+
 Note: If your local device generates a "Windows protected your PC" warning when attempting to run the app, click on 'More info' and then 'Run anyway'.
