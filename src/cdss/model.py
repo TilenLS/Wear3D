@@ -412,8 +412,10 @@ class AppFunctions():
         patients = AppFunctions.getAllPatients()
         patient_list = patients.json()['data']
         idList = []
+        nameList = []
         for patient in patient_list:
             idList.append(patient[0])
+            nameList.append(patient[1])
         try:
             id = int(id)
             if id not in idList:
@@ -425,6 +427,12 @@ class AppFunctions():
 
             else:
                 prediction = AppFunctions.predict(id)
+                index = idList.index(id)
+                grade0Prediction = "Tooth wear grade of " + nameList[index] + " : 0"
+                grade1Prediction = "Tooth wear grade of " + nameList[index] + " : 1"
+                grade2Prediction = "Tooth wear grade of " + nameList[index] + " : 2"
+                grade3Prediction = "Tooth wear grade of " + nameList[index] + " : 3"
+                grade4Prediction = "Tooth wear grade of " + nameList[index] + " : 4"
                 grade0Treatment = "No treatment needed."
                 grade1Treatment = "Counselling/Monitoring/Taking preventive measurements"
                 grade2Treatment = "1. Counselling/Monitoring/Taking preventive measurements\n" \
@@ -441,16 +449,24 @@ class AppFunctions():
                                   "2. Restorative treatment:\n" \
                                   "  a) Indirect adhesive restorations: composite or ceramic"
                 if prediction == "Your tooth wear grade is: 0":
+                    self.ui3.prediction_label.setText(grade0Prediction)
                     self.ui3.treatment_plan_label.setText(grade0Treatment)
                 if prediction == "Your tooth wear grade is: 1":
+                    self.ui3.prediction_label.setText(grade1Prediction)
                     self.ui3.treatment_plan_label.setText(grade1Treatment)
                 if prediction == "Your tooth wear grade is: 2":
+                    self.ui3.prediction_label.setText(grade2Prediction)
                     self.ui3.treatment_plan_label.setText(grade2Treatment)
                 if prediction == "Your tooth wear grade is: 3":
+                    self.ui3.prediction_label.setText(grade3Prediction)
                     self.ui3.treatment_plan_label.setText(grade3Treatment)
                 if prediction == "Your tooth wear grade is: 4":
+                    self.ui3.prediction_label.setText(grade4Prediction)
                     self.ui3.treatment_plan_label.setText(grade4Treatment)
-                self.ui3.prediction_label.setText(prediction)
+
+                self.ui3.prediction_label.adjustSize()
+                self.ui3.patientIDInput.setText("")
+
         except:
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")

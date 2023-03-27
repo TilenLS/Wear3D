@@ -570,7 +570,7 @@ class Ui_HomePage(object):
 
         self.prediction_label = QLabel(self.widget_5)
         self.prediction_label.setObjectName(u"prediction_label")
-        self.prediction_label.setGeometry(QRect(200, 120, 600, 50))
+        self.prediction_label.setGeometry(QRect(50, 120, 800, 50))
         fontForLabel = QFont()
         fontForLabel.setPointSize(15)
         fontForLabel.setBold(True)
