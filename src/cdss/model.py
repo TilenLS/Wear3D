@@ -123,7 +123,6 @@ class AppFunctions():
         upperScan = self.upperFilePath
         lowerScan = self.lowerFilePath
         sextantScan = self.sextantFilePath
-        print(upperScan, lowerScan, sextantScan)
         if upperScan is None or lowerScan is None or sextantScan is None or upperScan == '' or lowerScan == '' or sextantScan == '':
             msg = QMessageBox()
             msg.setWindowTitle("Invalid")

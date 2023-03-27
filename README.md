@@ -26,7 +26,6 @@ Wear3D is a project under the COMP0016 module at UCL as a part of the Industry E
 * Torch==1.13.1
 * Torchsummary==1.5.1
 * Tqdm==4.64.1
-* Werkzeug==2.2.
 * PySide2==5.15.2.1
 * Open3D==0.16.0
 * Win32GUI==221.6

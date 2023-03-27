@@ -376,6 +376,7 @@ class Ui_HomePage(object):
                        lambda *args, i=i: AppFunctions.deletePatient(self, id[i]))
 
         self.tableWidget.setSortingEnabled(True)
+        self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
 
         self.vboxLayout.addWidget(self.widget_4)
 
