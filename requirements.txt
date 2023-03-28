@@ -1,0 +1,7 @@
+iconify==0.0.103
+numpy==1.24.1
+open3d==0.16.1
+PyQt5==5.15.9
+PySide2==5.15.2.1
+requests==2.23.0
+win32gui==221.6
