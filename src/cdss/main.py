@@ -7,13 +7,11 @@ from Custom_Widgets.Widgets import *
 from ui_interface import *
 from Custom_Widgets.Widgets import *
 from image_viewer import ImageViewer
+from model import AppFunctions
 
 os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 settings = QSettings()
-
-from model import AppFunctions
-
 
 class MainWindow(QMainWindow, Ui_SignInPage):
     def __init__(self):
@@ -59,7 +57,6 @@ class MainWindow(QMainWindow, Ui_SignInPage):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())

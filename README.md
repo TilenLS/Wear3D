@@ -19,53 +19,58 @@ Wear3D is a project under the COMP0016 module at UCL as a part of the Industry E
 
 
 ### Python Libraries
-* NumPy==1.24.1
+* numPy==1.24.1
 * Flask==2.2.2
-* Plyfile==0.7.4
-* Requests==2.23.0
-* Torch==1.13.1
-* Torchsummary==1.5.1
-* Tqdm==4.64.1
+* plyfile==0.7.4
+* requests==2.23.0
+* torch==1.13.1
+* torchsummary==1.5.1
+* tqdm==4.64.1
 * PySide2==5.15.2.1
-* Open3D==0.16.0
+* open3D==0.16.0
 * Win32GUI==221.6
 * Custom_Widgets==0.6.4
-* Iconify==0.0.103
-* Pytorch3d==0.7.2
-* Matplotlib==3.6.2
-* SQLite==3.41.2
+* iconify==0.0.103
+* pytorch3d==0.7.2
+* matplotlib==3.6.2
+* sqlite==3.41.2
 
-## Running project locally
+## Running project 
+This will only work on windows as we use the Win32GUI library. Either use a Windows device or a Windows virtual machine (VM). Moreover, since we host our database on an Azure VM you could connect to our server before being able to use the application properly.
 
 ### Cloud Azure
-This will only work on windows as we use the Win32GUI library. Either use a Windows device or virtual machine (VM). Moreover, since we host our database on an Azure VM you need to connect to our server before being able to use the application properly.
 
-**Step 1:** Open command prompt or terminal on your local computer. <br />
+**Step 1:** Open command prompt or terminal on your local computer. 
 
-**Step 2:** Use SSH to connect to the cloud server. The password for the VM is: Team10Toothwear!<br />
+**Step 2:** Use SSH to connect to the cloud server. The password for the VM is: Team10Toothwear!
 
-    ssh team10@20.127.200.67
-  Enter the password when you are prompted<br />
+``` 
+ssh team10@20.127.200.67 
+```
+Enter the password when you are prompted
   
-**Step 3:** Once connected to the remote VM you will need to navigate to the directory where the "app.py" file is located. This can be done with the following command:<br />
+**Step 3:** Once connected to the remote VM you will need to navigate to the directory where the "app.py" file is located. This can be done with the following command:
 
-    cd tooth-wear-dl/back-end/app/
+```
+cd tooth-wear-dl/back-end/app/
+```
     
-**Step 4:** Run the back-end code with this command:<br />
-
-    python app.py
+**Step 4:** Run the back-end code with this command:
+```
+python app.py
+```
   
 Now the back-end preperation is done. You can now open Wear3D (after downloading it following the instructions below).
  
 ### Download and run Wear3D
-Note: This must be done on Windows.<br />
+Note: This must be done on Windows.
 
-   **Step 1:** Click on the most recent Wear3D release on our Github page.<br />
+**Step 1:** Click on the most recent Wear3D release on our Github page.
 
-   **Step 2:** Click on the "executable.zip" file under Assets to download.<br />
+**Step 2:** Click on the "executable.zip" file under Assets to download.
 
-   **Step 3:** When the downloading is complete, extract the zip file.<br />
+**Step 3:** When the downloading is complete, extract the zip file.
 
-   **Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.<br />
+**Step 4:** Navigate into the app folder from the extracted zip file and open "main.exe" to run Wear3D.
 
 Note: If your local device generates a "Windows protected your PC" warning when attempting to run the app, click on 'More info' and then 'Run anyway'.

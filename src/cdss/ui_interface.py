@@ -1,12 +1,8 @@
-
-import os
-
 from PySide2 import QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from typing import Any
-
 from model import AppFunctions
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
@@ -18,10 +14,9 @@ class Ui_HomePage(object):
     def setupUi(self, MainWindow, patientNumber, imageViewer):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
+
         MainWindow.resize(1200, 850)
         MainWindow.setMinimumSize(QSize(1200, 850))
-
-
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
 "	background: transparent;\n"
@@ -217,9 +212,7 @@ class Ui_HomePage(object):
 
         self.verticalLayout_4.addWidget(self.frame_4)
 
-
         self.verticalLayout_3.addWidget(self.widget)
-
 
         self.horizontalLayout_2.addWidget(self.leftMenu)
 
@@ -253,7 +246,6 @@ class Ui_HomePage(object):
         font1.setBold(True)
         font1.setWeight(75)
 
-
         self.showPatientFormButton = QPushButton(self.frame_6)
         self.showPatientFormButton.setObjectName(u"showPatientFormButton")
         font2 = QFont()
@@ -267,7 +259,6 @@ class Ui_HomePage(object):
         self.showPatientFormButton.setIconSize(QSize(24, 26))
 
         self.horizontalLayout_5.addWidget(self.showPatientFormButton, 0, Qt.AlignRight)
-
 
         self.verticalLayout_14.addWidget(self.frame_6)
 
@@ -609,7 +600,6 @@ class Ui_HomePage(object):
         self.pages.addWidget(self.analysisPage)
 
         self.verticalLayout_2.addWidget(self.pages)
-
 
         self.horizontalLayout_2.addWidget(self.mainBodyContent)
 

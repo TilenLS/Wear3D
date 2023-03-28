@@ -1,15 +1,10 @@
 import base64
 import os
-import sys
 import requests
 from PySide2 import QtCore
 from PySide2.QtGui import Qt
-from requests.exceptions import ConnectionError
-from image_viewer import ImageViewer
 from PySide2.QtCore import QObject
-from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox, QPushButton, QMainWindow
-import open3d as o3d
-import numpy as np
+from PySide2.QtWidgets import QTableWidgetItem, QFileDialog, QMessageBox, QPushButton
 import json
 
 domain = "20.127.200.67:8080"
