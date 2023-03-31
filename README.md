@@ -91,3 +91,6 @@ Note: This must be done on Windows.
 **Step 4:** Navigate into the app folder from the extracted zip file and open "Wear3D.exe" to run Wear3D.
 
 Note: If your local device generates a "Windows protected your PC" warning when attempting to run the app, click on 'More info' and then 'Run anyway'.
+
+### More info
+For more information on how we implement the back-end: https://github.com/HongruiTang/tooth-wear-dl
