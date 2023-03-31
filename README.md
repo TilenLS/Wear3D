@@ -1,5 +1,4 @@
 # Wear3D
-## Description
 
 Wear3D is a project under the COMP0016 module at UCL as a part of the Industry Exchange Network (IXN) program in partnership with the Eastman Dental Institute. It is an early stage Clinical Decision Support System (CDSS) app that aims to provide treatment plan suggestions for patients with tooth wear, to ultimately save dentists time, resources, and help provide more accurate prognosis. For an expansive overview of the project visit our website at: http://students.cs.ucl.ac.uk/2022/group10/
 
